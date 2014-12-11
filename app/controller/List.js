@@ -725,6 +725,12 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				};
 				storeInventory.add(newpro);
 			}
+			// set src for static map
+			console.log("lat and lng for the static map:");
+			console.log(SeaGrant_Proto.detailView);
+			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ index.data.lat +','+ index.data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ index.data.lat +','+ index.data.lng;
+			console.log(dest);
+			SeaGrant_Proto.statmap.setSrc(dest);
 			// for stack that tracks navigaion
 			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'detail';
 			SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount] = index;
@@ -935,6 +941,9 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.use = 1;
 		SeaGrant_Proto.use2 = 1;
 		SeaGrant_Proto.infowindowFlag = 0;
+
+		SeaGrant_Proto.detailView = this.getDetailView();
+		SeaGrant_Proto.statmap = SeaGrant_Proto.detailView.getComponent('staticmap');
 		// console.log("launch");
 	},
 	init: function(){
