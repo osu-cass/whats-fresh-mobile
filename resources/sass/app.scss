@@ -17,6 +17,14 @@
 
 }
 
+#ext-image-1{
+	left: 50%;
+	top: 2.5%;
+	height: 45%;
+	width: 45%;
+}
+
+
 //LIST PAGE ELEMENT HEIGHTS
 
 #ext-list-1{
@@ -90,6 +98,7 @@ div.gm-style-iw{
 }
 
 // RANDOM COLORS ON THE HOME PAGE
+/*
 #ext-element-49{
 	background-color: #00FF00;
 }
@@ -102,7 +111,7 @@ div.gm-style-iw{
 #ext-input-5{
 	background-color: #33CC00;
 }
-
+*/
 
 // Examples of using the icon mixin:
 // @include icon('user');

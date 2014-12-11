@@ -100,22 +100,22 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): Drop Down list Location');
 		// var loc = this.getHomeView();
 		// console.log(record);
-		SeaGrant_Proto.location = record._value.data.title;
+		var key = 0;
+		var LocStore = Ext.getStore('Location');
+		if(key === 0){
+			LocStore.insert(0, [
+				{
+					name: 'Please choose a location',
+					id: 0
+				}
+			]);
+			key = 1;
+		}
+		SeaGrant_Proto.location = record._value.data.name;
 		console.log('Location is: '+ SeaGrant_Proto.location +'\n'); 
-		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
-		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
-		// FUNCTION WILL NOT WORK
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
-		// OLD DATA THAT WORKED TO FILTER BY LOCATION ONLY
-		// var locationfilter = new Ext.util.Filter({
-		// 	filterFn: function(item, record){
-		// 		return item.get('city') === SeaGrant_Proto.location;
-		// 	},
-		// 	root: 'data'
-		// });
-		// store.clearFilter(); // this is the fix
-		// store.filter(locationfilter); //now it works
+		
 		var len = store.data.all.length;
 		if(SeaGrant_Proto.location !== 'Please choose a location'){
 			var locationfilter = new Ext.util.Filter({
@@ -203,6 +203,17 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// then we check to see if a product is chosen, if one is we sort by product
 		console.log('In controller(home): Drop Down list Products');
 		// console.log(record);
+		var key = 0;
+		var ProdStore = Ext.getStore('Product');
+		if(key === 0){
+			ProdStore.insert(0, [
+				{
+					name: 'Please choose a product',
+					id: 0
+				}
+			]);
+			key = 1;
+		}
 		console.log('Product is: '+ record._value.data.name +'\n'); 
 		SeaGrant_Proto.product = record._value.data.name;
 		var store = Ext.data.StoreManager.lookup('Vendor');
@@ -714,6 +725,12 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				};
 				storeInventory.add(newpro);
 			}
+			// set src for static map
+			console.log("lat and lng for the static map:");
+			console.log(SeaGrant_Proto.detailView);
+			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ index.data.lat +','+ index.data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ index.data.lat +','+ index.data.lng;
+			console.log(dest);
+			SeaGrant_Proto.statmap.setSrc(dest);
 			// for stack that tracks navigaion
 			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'detail';
 			SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount] = index;
@@ -868,6 +885,11 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			}
 			// Sets the title of the header on detail page
 			Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
+			console.log('Checking index for location data');
+			console.log(detailView);
+			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ detailView.items.items[1]._data.lat +','+ detailView.items.items[1]._data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ detailView.items.items[1]._data.lat +','+ detailView.items.items[1]._data.lng;
+			console.log(dest);
+			SeaGrant_Proto.statmap.setSrc(dest);
 			if(SeaGrant_Proto.backFlag === 0){
 				// adding a log item to the "stack"
 				SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'detail';
@@ -884,7 +906,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	        			num2 = w;
 	        		}
 	        	}
-	       		detailView.items.items[2].select(storeInventory.data.all[num2]);
+	        	console.log(detailView.items);
+	       		detailView.items.items[3].select(storeInventory.data.all[num2]);
 	        	Ext.Viewport.animateActiveItem(detailView, this.slideRightTransition);
 	        }
 		}		
@@ -916,9 +939,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	// Initialize functions
 	launch: function(){
 		this.callParent(arguments);
-		// console.log("launch");
-	},
-	init: function(){
 		this.callParent(arguments);
 		SeaGrant_Proto.pvalue = [];
 		SeaGrant_Proto.path = [];
@@ -927,6 +947,13 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.use = 1;
 		SeaGrant_Proto.use2 = 1;
 		SeaGrant_Proto.infowindowFlag = 0;
+
+		SeaGrant_Proto.detailView = this.getDetailView();
+		SeaGrant_Proto.statmap = SeaGrant_Proto.detailView.getComponent('staticmap');
+		// console.log("launch");
+	},
+	init: function(){
+		
 		// console.log("init");
 	}
 });
