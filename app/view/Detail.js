@@ -39,7 +39,12 @@ Ext.define('WhatsFresh.view.Detail', {
 				xtype: 'panel',
 				itemId: 'infoBlock',
 				tpl: '</pre><div class="list-item-title">{name}</div><div class="list-item-description">{description}</div><div class="list-item-phone">Phone #: {phone}</div><div class="list-item-description">Representative: {contact_name}</div><div class="list-item-email">E-mail: {email}</div><div class="list-item-website">Website: {website}</div><pre>'
-			},			
+			},
+			{
+				xtype: 'image',
+				itemId: 'staticmap',
+				// src: 'http://maps.googleapis.com/maps/api/staticmap?center=44.632442,-124.057761&zoom=14&size=200x200'
+			},					
 			{
 				config: {
 					scrollable: {

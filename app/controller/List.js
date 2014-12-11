@@ -632,6 +632,12 @@ Ext.define('WhatsFresh.controller.List', {
 				};
 				storeInventory.add(newpro);
 			}
+			// set src for static map
+			console.log("lat and lng for the static map:");
+			console.log(WhatsFresh.detailView);
+			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ index.data.lat +','+ index.data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ index.data.lat +','+ index.data.lng;
+			console.log(dest);
+			WhatsFresh.statmap.setSrc(dest);
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -838,6 +844,9 @@ Ext.define('WhatsFresh.controller.List', {
             Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
             Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
             Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
+
+            WhatsFresh.detailView = this.getDetailView();
+	    WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
 	},
     onLocationStoreRefresh: function(){
         console.log("Location store data has changed, selectfield should be updated.");
