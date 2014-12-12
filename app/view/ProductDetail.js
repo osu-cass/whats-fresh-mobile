@@ -40,6 +40,12 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 				xtype: 'panel',
 				itemId: 'infoBlock',
 				tpl: '</pre><div class="list-item-title">{preparation} {name}</div><div class="list-item-description">description:  {description}</div><pre>'
+			},
+			{
+				xtype: 'button',
+				ui: 'action',
+				iconCls: 'info',
+				itemId: 'infoButton'
 			},			
 			{
 				config: {

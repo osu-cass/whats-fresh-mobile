@@ -4,7 +4,7 @@ isPresent = true;
 
 Ext.define('WhatsFresh.controller.List', {
 	extend: 'Ext.app.Controller',
-	requires: ['Ext.MessageBox', 'Ext.device.Geolocation'],
+	requires: ['Ext.MessageBox', 'Ext.device.Geolocation', 'Ext.data.Connection', 'Ext.Video'],
 	alias: 'cont',
 	config: {
 		refs: {
@@ -698,8 +698,25 @@ Ext.define('WhatsFresh.controller.List', {
 			this.onViewDpageListItemCommand(a, b, WhatsFresh.pvalue[WhatsFresh.pcount-2]);
 		}
 	},
-	onViewInfoCommand: function(){
+	onViewInfoCommand: function(index){
 		console.log('In controller(detail): View Info Page Button');
+		console.log(index);
+		// need to then get the index data item from the product store, so that I can populate the story store correctly
+		// var ProdStore = Ext.getStore('Product');
+		// console.log(ProdStore);
+		// for(i = 0; i < ProdStore.data.items.length; i++){
+		// 	if(index.data.name === ProdStore.data.items[i].data.name){
+		// 		console.log(SeaGrant_Proto.StoryStore);
+		// 		console.log("the story id");
+		// 		console.log(ProdStore.data.items[i].data.story);
+		// 		// this store load doesn't seem to be working, it is probably because we have not reloaded the store yet
+		// 		SeaGrant_Proto.StoryStore._proxy._url = 'http://seagrant-staging-api.osuosl.org/1/stories/'+ProdStore.data.items[i].data.story;
+		// 		Ext.getStore('Story').load();
+		// 		SeaGrant_Proto.StoryStore.on('load', function(){
+		// 			console.log("story loaded");
+		// 		})
+		// 	}
+		// }
 		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
 	},	
 	onViewDpageListItemCommand: function(record, list, index){

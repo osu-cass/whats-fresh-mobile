@@ -13,7 +13,7 @@ Ext.define('WhatsFresh.model.Products', {
             'market_price',
             'link',
             'alt_name',
-            'story_id',
+            'story',
             'name',
             'id'
         ]
