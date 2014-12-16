@@ -1,4 +1,4 @@
-describe('SeaGrant_Proto.model.Vendors', function() {
+describe('WhatsFresh.model.Vendors', function() {
 
     var model;
 
@@ -13,14 +13,14 @@ describe('SeaGrant_Proto.model.Vendors', function() {
     });
 
     it('exists', function() {
-        model = Ext.create('SeaGrant_Proto.model.Vendors');
-        expect(model.$className).toEqual('SeaGrant_Proto.model.Vendors');
+        model = Ext.create('WhatsFresh.model.Vendors');
+        expect(model.$className).toEqual('WhatsFresh.model.Vendors');
     });
 
     it('stores profile data on vendors', function() {
         //Write vendor model field tests and then implement them such
         //that they pass.
-		model = Ext.create('SeaGrant_Proto.model.Vendors',{
+		model = Ext.create('WhatsFresh.model.Vendors',{
 			city: 'Newport',
 			updated: true,
 			description: 'a place with stuff',

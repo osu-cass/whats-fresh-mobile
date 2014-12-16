@@ -1,9 +1,9 @@
-Ext.define('SeaGrant_Proto.store.VendorInventory', {
+Ext.define('WhatsFresh.store.VendorInventory', {
     extend: 'Ext.data.Store',
     storeId: 'VendorInventory',
  
     config: {
-        model: 'SeaGrant_Proto.model.VendorInventories',
+        model: 'WhatsFresh.model.VendorInventories',
         data: [
             {
                 "name": "test Fish",

@@ -30,7 +30,7 @@ var mystyles =[
 
 ];
 
-Ext.define('SeaGrant_Proto.view.Map', {
+Ext.define('WhatsFresh.view.Map', {
     extend: 'Ext.Container',
     requires: ['Ext.Map'],
     xtype: 'SeaGrantMap',
@@ -86,14 +86,14 @@ Ext.define('SeaGrant_Proto.view.Map', {
     initMap: function(){
  
         var mapPanel = this.down('map');
-        SeaGrant_Proto.gMap = mapPanel.getMap();
+        WhatsFresh.gMap = mapPanel.getMap();
 
         // console.log('in the initmap function:');
-        // console.log(SeaGrant_Proto);
+        // console.log(WhatsFresh);
 
         // this should reset our map center, but it doesn't
         //  setTimeout(function() {
-        //    SeaGrant_Proto.gMap.panTo(new google.maps.LatLng(44.634115, -124.062796));
+        //    WhatsFresh.gMap.panTo(new google.maps.LatLng(44.634115, -124.062796));
         // }, 100);
 
         // I first of all thought that 
@@ -105,13 +105,13 @@ Ext.define('SeaGrant_Proto.view.Map', {
         // press is enough to recenter the mapp to the correct location.
         // var cent = new google.maps.LatLng(44.634115, -124.062796);
         // setTimeout(function() {
-        //    SeaGrant_Proto.gMap.panTo(cent);
-        //    // SeaGrant_Proto.gMap.zoom(14);
+        //    WhatsFresh.gMap.panTo(cent);
+        //    // WhatsFresh.gMap.zoom(14);
         // }, 100);
          
          // This sets a static hard coded marker
         // var marker = new google.maps.Marker({
-        //     map: SeaGrant_Proto.gMap,
+        //     map: WhatsFresh.gMap,
         //     animation: google.maps.Animation.DROP,
         //     position: new google.maps.LatLng(44.634115, -124.062796)
         // });

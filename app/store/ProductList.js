@@ -1,9 +1,9 @@
-Ext.define('SeaGrant_Proto.store.ProductList', {
+Ext.define('WhatsFresh.store.ProductList', {
     extend: 'Ext.data.Store',
     storeId: 'ProductList',
  
     config: {
-        model: 'SeaGrant_Proto.model.ProductLists',
+        model: 'WhatsFresh.model.ProductLists',
         data: [
             {
                 "name": "test Fish",

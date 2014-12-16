@@ -1,10 +1,10 @@
-describe('SeaGrant_Proto.store.Location',function() {
+describe('WhatsFresh.store.Location',function() {
 
     var store;
 
     beforeEach(function() {
 	jasmine.Ajax.install();
-	store = Ext.create('SeaGrant_Proto.store.Location');
+	store = Ext.create('WhatsFresh.store.Location');
     });
 
     afterEach(function() {
@@ -14,7 +14,7 @@ describe('SeaGrant_Proto.store.Location',function() {
 
 
     it('exists', function() {
-        expect(store.$className).toEqual('SeaGrant_Proto.store.Location');
+        expect(store.$className).toEqual('WhatsFresh.store.Location');
     });
 
     it('calls out to the proper url', function() {
@@ -104,7 +104,7 @@ describe('SeaGrant_Proto.store.Location',function() {
 
         pending(); // Feature not  yet implemented.
 
-        store = Ext.create('SeaGrant_Proto.store.Location');
+        store = Ext.create('WhatsFresh.store.Location');
         //Let's test this with sample data.
         console.log(store);
         expect(store.data.length).toBeGreaterThan(0);

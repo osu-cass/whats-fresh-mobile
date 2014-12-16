@@ -1,6 +1,6 @@
-Ext.define('SeaGrant_Proto.view.ListView', {
+Ext.define('WhatsFresh.view.ListView', {
 	extend: 'Ext.Panel',
-	requires: ['Ext.form.FieldSet', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox', 'SeaGrant_Proto.view.Map'],
+	requires: ['Ext.form.FieldSet', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox', 'WhatsFresh.view.Map'],
     xtype: 'ListView',
 	alias: 'widget.listview',
 	config: {
@@ -48,11 +48,11 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 				xtype: 'list',
 				itemId: 'Lpagelist',
 				// store: 'Vendor',
-				// store: SeaGrant_Proto.tplStore,
+				// store: WhatsFresh.tplStore,
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
 				itemTpl: '</pre><div class="list-item-name">{preparation} {name}</div><pre>'
-				// itemTpl: '</pre><div class="list-item-name">'SeaGrant_Proto.writer'</div><pre>'
+				// itemTpl: '</pre><div class="list-item-name">'WhatsFresh.writer'</div><pre>'
 			}
 		],
 		listeners: [

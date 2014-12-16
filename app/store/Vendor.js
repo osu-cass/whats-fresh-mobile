@@ -1,7 +1,7 @@
-Ext.define('SeaGrant_Proto.store.Vendor', {
+Ext.define('WhatsFresh.store.Vendor', {
     extend: 'Ext.data.Store',
     config: {
-	model: 'SeaGrant_Proto.model.Vendors',
+	model: 'WhatsFresh.model.Vendors',
 	autoLoad: true,
 	proxy: {
 	    type: 'ajax',

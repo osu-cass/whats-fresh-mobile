@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.model.Vendors', {
+Ext.define('WhatsFresh.model.Vendors', {
     extend: 'Ext.data.Model',
     // requires: ['Ext.data.Field'],
     config: {
