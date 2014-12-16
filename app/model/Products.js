@@ -15,7 +15,7 @@ Ext.define('SeaGrant_Proto.model.Products', {
             'alt_name',
             'story_id',
             'name',
-            'value'
+            'id'
         ]
     }
 });

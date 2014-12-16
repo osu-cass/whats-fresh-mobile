@@ -24,7 +24,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 				label: 'within',
 				labelWrap: true,
 				displayField: 'distance',
-				store: 'Distance',
+				store: 'Distance'
 				// valueField: 'id'
 			},
 			{	
@@ -41,9 +41,10 @@ Ext.define('SeaGrant_Proto.view.Home', {
 						itemId: 'selectlocation',
 						label: 'Location',
 						labelWrap: true,
-						displayField: 'title',
+						displayField: 'name',
 						store: 'Location',
-						// valueField: 'id'
+                            value: "Loading, please wait...",
+						 valueField: 'location'
 					},
 	                {
 						xtype: 'selectfield',			
@@ -52,7 +53,8 @@ Ext.define('SeaGrant_Proto.view.Home', {
 						labelWrap: true,
 						displayField: 'name',
 						store: 'Product',
-						// valueField: 'title'
+                            value: "Loading, please wait...",
+						valueField: 'id'
 					}					
 	            ]	                  
 	        },	       

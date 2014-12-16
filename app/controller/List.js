@@ -100,103 +100,20 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): Drop Down list Location');
 		// var loc = this.getHomeView();
 		// console.log(record);
-		SeaGrant_Proto.location = record._value.data.title;
+		SeaGrant_Proto.location = record._value.data.name;
 		console.log('Location is: '+ SeaGrant_Proto.location +'\n'); 
+            
 		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
 		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
 		// FUNCTION WILL NOT WORK
-		var store = Ext.data.StoreManager.lookup('Vendor');
-		var pstore = Ext.data.StoreManager.lookup('ProductList');
-		// OLD DATA THAT WORKED TO FILTER BY LOCATION ONLY
-		// var locationfilter = new Ext.util.Filter({
-		// 	filterFn: function(item, record){
-		// 		return item.get('city') === SeaGrant_Proto.location;
-		// 	},
-		// 	root: 'data'
-		// });
-		// store.clearFilter(); // this is the fix
-		// store.filter(locationfilter); //now it works
-		var len = store.data.all.length;
-		if(SeaGrant_Proto.location !== 'Please choose a location'){
-			var locationfilter = new Ext.util.Filter({
-				filterFn: function(item, record){
-					return item.get('city') === SeaGrant_Proto.location;
-				},
-				root: 'data'
-			});
-			store.clearFilter(); // this is the fix
-			store.filter(locationfilter); //now it works
-		}else{
-			store.clearFilter();
-		}
-		var view = this.getListView();
-		if(SeaGrant_Proto.product !== 'Please choose a product'){
-			SeaGrant_Proto.use2 = 0;
-			// view.down('list').setStore(pstore);
-			var prodFilter = new Ext.util.Filter({
-				filterFn: function(item, record){
-					for(b = 0; b < item.data.products.length; b++){ // cycles through the vendor's products
-						// console.log(b+'  '+item.data.products[b].name);
-						if(item.data.products[b].name === SeaGrant_Proto.product){ // returns true for vendors with selected product
-							return item.data.products[b].name === SeaGrant_Proto.product;
-						}
-					}				
-				},
-				root: 'data'
-			});
-			store.filter(prodFilter);			
-			this.populatePstore(store, pstore);
-		}else{
-			// console.log('vendor store set');
-			// view.down('list').setStore(store);
-			SeaGrant_Proto.use2 = 1;
-		}
-		
-		this.numberOfVendors(store);
+		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
-		var vendcount;
-		// console.log(vendcount);
-		var homeView = this.getHomeView();
-		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
-		// This defines how the tpl data is printed out given the drop down table states
-		if ((SeaGrant_Proto.location !== 'Please choose a location') || (SeaGrant_Proto.product !== 'Please choose a product')){
-			if(SeaGrant_Proto.location === 'Please choose a location'){
-					vendcount = {
-						th: 'There are ',
-						numItems: store.getCount(),
-						v: ' vendors ',
-						w: ' with ',
-						prod: SeaGrant_Proto.product,
-						end: '.'			
-					};
-			}else{
-				if (SeaGrant_Proto.product !== 'Please choose a product'){
-					// console.log('Prod ok');
-					vendcount = {
-						th: 'There are ',
-						numItems: store.getCount(),
-						v: ' vendors ',
-						i: 'in ',
-						loc: SeaGrant_Proto.location,
-						w: ' with ',
-						prod: SeaGrant_Proto.product,
-						end: '.'			
-					};
-				}else{
-					// console.log('Prod is horid');
-					vendcount = {
-						th: 'There are ',
-						numItems: store.getCount(),
-						v: ' vendors ',
-						i: 'in ',
-						loc: SeaGrant_Proto.location,
-						end: '.'			
-					};
-				}
-			}			
-		}
-		crud.setData(vendcount); // needed to display tpl data on home view
-		Ext.Viewport.setActiveItem(homeView);
+            this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
+	    this.numberOfVendors(vendorStore);
+	    var homeView = this.getHomeView();
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));
+	    //Ext.Viewport.setActiveItem(homeView);
 	},
 	onChooseProduct: function(index, record){
 		// We first check to see if a location is chosen, if one is we sort by locataion,
@@ -205,92 +122,16 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// console.log(record);
 		console.log('Product is: '+ record._value.data.name +'\n'); 
 		SeaGrant_Proto.product = record._value.data.name;
-		var store = Ext.data.StoreManager.lookup('Vendor');
-		var pstore = Ext.data.StoreManager.lookup('ProductList');
+		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+		var productStore = Ext.data.StoreManager.lookup('ProductList');
 		// console.log(store.data.all);
-		var len = store.data.all.length;
 		// console.log(store);
-		if(SeaGrant_Proto.location !== 'Please choose a location'){			
-			// console.log('IN LOC FILTER');
-			var locationfilter = new Ext.util.Filter({
-				filterFn: function(item, record){
-					return item.get('city') === SeaGrant_Proto.location;
-				},
-				root: 'data'
-			});
-			store.clearFilter();
-			store.filter(locationfilter);
-		}else{
-			
-			store.clearFilter();
-		}
-		var view = this.getListView();
-		if(SeaGrant_Proto.product !== 'Please choose a product'){
-			SeaGrant_Proto.use = 0;
-			// view.down('list').setStore(pstore);
-			var prodFilter = new Ext.util.Filter({
-				filterFn: function(item, record){
-					for(b = 0; b < item.data.products.length; b++){ // cycles through the vendor's products// console.log(b+'  '+item.data.products[b].name);
-						if(item.data.products[b].name === SeaGrant_Proto.product){ // returns true for vendors with selected product
-							return item.data.products[b].name === SeaGrant_Proto.product;
-						}
-					}				
-				},
-				root: 'data'
-			});
-			store.filter(prodFilter);
-			this.populatePstore(store, pstore);
-		}else{
-			// console.log('vendor store set');
-			// view.down('list').setStore(store);
-			SeaGrant_Proto.use = 1;
-		}
 
-		this.numberOfVendors(store);
-
-		var homeView = this.getHomeView();
-		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
-		var vendcount;
-		// This defines how the tpl data is printed out given the drop down table states
-		if ((SeaGrant_Proto.location !== 'Please choose a location') || (SeaGrant_Proto.product !== 'Please choose a product')){
-			if(SeaGrant_Proto.product === 'Please choose a product'){
-					vendcount = {
-						th: 'There are ',
-						numItems: store.getCount(),
-						v: ' vendors ',
-						i: 'in ',
-						loc: SeaGrant_Proto.location,
-						end: '.'			
-					};
-			}else{
-				if(SeaGrant_Proto.location !== 'Please choose a location'){
-					console.log('Prod ok');
-					vendcount = {
-						th: 'There are ',
-						numItems: store.getCount(),
-						v: ' vendors ',
-						i: 'in ',
-						loc: SeaGrant_Proto.location,
-						w: ' with ',
-						prod: SeaGrant_Proto.product,
-						end: '.'			
-					};
-				}else{
-					console.log('Prod is horid');
-					vendcount = {
-						th: 'There are ',
-						numItems: store.getCount(),
-						v: ' vendors ',
-						w: ' with ',
-						prod: SeaGrant_Proto.product,
-						end: '.'			
-					};
-				}
-			}
-			
-		}
-		crud.setData(vendcount); // needed to display tpl data on home view
-		Ext.Viewport.setActiveItem(homeView);
+            this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
+	    this.numberOfVendors(vendorStore);
+	    var homeView = this.getHomeView();
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));       
+	    Ext.Viewport.setActiveItem(homeView);
 	},
 	numberOfVendors: function(store){
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
@@ -420,6 +261,77 @@ Ext.define('SeaGrant_Proto.controller.List', {
         SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
+
+    // Home Screen Helper Functions
+
+    filterVendorStore: function(selectedLocationName, selectedProductName) {
+        
+        //Function Variables
+        var self = this;
+        var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+        var criteria;
+
+        vendorStore.clearFilter();
+
+        criteria = new Ext.util.Filter({
+            filterFn: function(item){
+                return (self.matchesLocation(item, selectedLocationName)) && (self.matchesProduct(item, selectedProductName));
+            },
+            root: 'data'
+        });
+
+        vendorStore.filter(criteria);
+    },
+
+    matchesLocation: function(storeItem, comparator){
+        if (comparator !== "Please choose a location"){
+            return storeItem.get('city') === comparator;
+        }else{
+            return true;
+        }
+    },
+    matchesProduct: function(storeItem, comparator){
+        if (comparator !== "Please choose a product"){
+            for(b = 0; b < storeItem.data.products.length; b++){
+		if(storeItem.data.products[b].name === comparator){
+		    return true;
+		}
+	    }
+	    return false;
+        }else{
+            return true;
+        }
+    },
+    buildInventorySummary: function(locationString, productString){
+
+        var vendors = Ext.data.StoreManager.lookup('Vendor');
+
+        console.log("inside buildInventorySummary");
+        var summary = {
+            th: "There are ",
+            numItems: vendors.getCount(),
+            v: " vendors ",
+            i: "in ",
+            loc: "the database",
+            end: "."
+        };
+        
+        // Location/City is specified:
+        // "There are <number> vendors near <location>."
+        if (locationString !== "Please choose a location"){
+            summary.i = "near ";
+            summary.loc = locationString;
+        }
+
+        // Product is specified:
+        // "There are <number> vendors ... with <product>."
+        if (productString !== "Please choose a product"){
+            summary.w = " with ";
+            summary.prod = productString;
+        }
+
+        return summary;
+    },
 	// Functions dealing with 
 	// LIST
 	// stuff	######################################################################################	LIST
@@ -917,7 +829,24 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	launch: function(){
 		this.callParent(arguments);
 		// console.log("launch");
+            Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
+            Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
+            Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
 	},
+    onLocationStoreRefresh: function(){
+        console.log("Location store data has changed, selectfield should be updated.");
+        this.getHomeView().down('[itemId=selectlocation]').reset();
+    },
+    onProductStoreRefresh: function (){
+        console.log("Product store data has changed, selectfield should be updated.");
+        this.getHomeView().down('[itemId=selectproduct]').reset();
+    },
+    onVendorStoreLoad: function(){
+        SeaGrant_Proto.location = "Please choose a location";
+        SeaGrant_Proto.product = "Please choose a product";
+        this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
+        this.getHomeView().getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));
+    },
 	init: function(){
 		this.callParent(arguments);
 		SeaGrant_Proto.pvalue = [];

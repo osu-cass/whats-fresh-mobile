@@ -2,6 +2,7 @@ Ext.define('SeaGrant_Proto.model.Locations', {
     extend: 'Ext.data.Model',
     config: {
         fields:[
+            'location',
             'title',
             'text',
             'value',
@@ -9,7 +10,8 @@ Ext.define('SeaGrant_Proto.model.Locations', {
             'Latlng',
             'id',
             'address',
-            'desc'
+            'desc',
+            'name'
         ]
     }
 });
