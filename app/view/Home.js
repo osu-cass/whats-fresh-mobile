@@ -1,6 +1,6 @@
-Ext.define('SeaGrant_Proto.view.Home', {
+Ext.define('WhatsFresh.view.Home', {
 	extend: 'Ext.Panel',
-	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select', 'SeaGrant_Proto.view.Map'],
+	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select', 'WhatsFresh.view.Map'],
     // fullscreen: true,
     xtype: 'Home',
 	alias: 'widget.home',

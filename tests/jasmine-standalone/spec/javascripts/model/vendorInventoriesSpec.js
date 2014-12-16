@@ -1,4 +1,4 @@
-describe('SeaGrant_Proto.model.VendorInventories', function() {
+describe('WhatsFresh.model.VendorInventories', function() {
 
     var model;
 
@@ -13,13 +13,13 @@ describe('SeaGrant_Proto.model.VendorInventories', function() {
     });
 
     it('exists', function() {
-        model = Ext.create('SeaGrant_Proto.model.VendorInventories');
-        expect(model.$className).toEqual('SeaGrant_Proto.model.VendorInventories');
+        model = Ext.create('WhatsFresh.model.VendorInventories');
+        expect(model.$className).toEqual('WhatsFresh.model.VendorInventories');
     });
 
     it('stores profile data on the vendor\'s inventory', function() {
         //Test model fields
-        model = Ext.create('SeaGrant_Proto.model.VendorInventories',{
+        model = Ext.create('WhatsFresh.model.VendorInventories',{
             name: 'Test Product Instance',
             preparation: 'Test prep'
         });

@@ -1,10 +1,10 @@
-describe('SeaGrant_Proto.store.VendorInventory',function() {
+describe('WhatsFresh.store.VendorInventory',function() {
 
     var store;
  
     beforeEach(function() {
 	jasmine.Ajax.install();
-	store = Ext.create('SeaGrant_Proto.store.VendorInventory');
+	store = Ext.create('WhatsFresh.store.VendorInventory');
     });
 
     afterEach(function() {
@@ -13,7 +13,7 @@ describe('SeaGrant_Proto.store.VendorInventory',function() {
     });
 
 	it('exists', function() {
-        expect(store.$className).toEqual('SeaGrant_Proto.store.VendorInventory');
+        expect(store.$className).toEqual('WhatsFresh.store.VendorInventory');
     });
 
     it('Is populated with first test item for vendorInventory', function(){

@@ -19,7 +19,7 @@ Ext.Loader.setConfig({
 });
  
 Ext.application({
-    name: 'SeaGrant_Proto',
+    name: 'WhatsFresh',
 
     controllers: ["List"],
     models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists"],
@@ -28,12 +28,12 @@ Ext.application({
 
 
     launch: function() {
-        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Home'));
-        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Map'));
-        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.ListView'));
-        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Detail')); 
-        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.ProductDetail')); 
-        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Info'));
-        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Specific'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.Home'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.Map'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.ListView'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.Detail')); 
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail')); 
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.Info'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
     }
 });

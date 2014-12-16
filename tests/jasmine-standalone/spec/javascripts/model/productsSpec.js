@@ -1,4 +1,4 @@
-describe('SeaGrant_Proto.model.Products', function() {
+describe('WhatsFresh.model.Products', function() {
 
     var model;
 
@@ -13,13 +13,13 @@ describe('SeaGrant_Proto.model.Products', function() {
     });
 
     it('exists', function() {
-        model = Ext.create('SeaGrant_Proto.model.Products');
-        expect(model.$className).toEqual('SeaGrant_Proto.model.Products');
+        model = Ext.create('WhatsFresh.model.Products');
+        expect(model.$className).toEqual('WhatsFresh.model.Products');
     });
 
     it('stores profile data on products', function() {
         //Test model fields
-        model = Ext.create('SeaGrant_Proto.model.Products',{
+        model = Ext.create('WhatsFresh.model.Products',{
             origin: 'TEST',
             available: false,
             description: 'This product is merely conceptual in nature and cannot be purchased.',

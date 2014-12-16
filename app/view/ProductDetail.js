@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.view.ProductDetail', {
+Ext.define('WhatsFresh.view.ProductDetail', {
 	extend: 'Ext.Panel',
 	requires: ['Ext.MessageBox', 'Ext.dataview.List'],
 	alias: 'widget.productdetail',

@@ -1,4 +1,4 @@
-// Ext.define('SeaGrant_Proto.view.Location', {
+// Ext.define('WhatsFresh.view.Location', {
 // 	extend: 'Ext.Map',
 // 	xtype: 'location',
 // 	// monitorResize: true,
@@ -43,9 +43,9 @@
 // 	// }
 // });
 
-Ext.define('SeaGrant_Proto.view.Location', {
+Ext.define('WhatsFresh.view.Location', {
 	extend: 'Ext.Container',
-	// requires: 'SeaGrant_Proto.view.Map',
+	// requires: 'WhatsFresh.view.Map',
 	alias: 'widget.location',
 	config: {
 		layout: {
@@ -115,7 +115,7 @@ Ext.define('SeaGrant_Proto.view.Location', {
 	}
 });
 
-// Ext.define('SeaGrant_Proto.view.Location', {
+// Ext.define('WhatsFresh.view.Location', {
 // 	extend: 'Ext.Carousel',
 // 	alias: 'widget.location',
 // 	fullscreen: true,

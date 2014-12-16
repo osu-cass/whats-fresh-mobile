@@ -13,8 +13,8 @@
                     // phonegap.remote.username=myname@domain.com
                     // phonegap.remote.password=mys3cr3tp@ssw0rd
                     //"remote":false,
-                    "id": "com.domain.SeaGrant_Proto",
-                    "name": "SeaGrant_Proto"
+                    "id": "com.domain.WhatsFresh",
+                    "name": "WhatsFresh"
                 }
             }
         }
@@ -24,7 +24,7 @@
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
-    "name": "SeaGrant_Proto",
+    "name": "WhatsFresh",
 
     /**
      * The file path to this application's front HTML document, relative to this app.json file

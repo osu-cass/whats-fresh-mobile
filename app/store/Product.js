@@ -1,7 +1,7 @@
-Ext.define('SeaGrant_Proto.store.Product', {
+Ext.define('WhatsFresh.store.Product', {
     extend: 'Ext.data.Store',
     config: {
-	model: 'SeaGrant_Proto.model.Products',
+	model: 'WhatsFresh.model.Products',
 	autoLoad: {
             callback: function(records, operation, success) {
                 var productStore = Ext.getStore('Product');

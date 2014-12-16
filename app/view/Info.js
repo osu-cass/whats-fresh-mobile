@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.view.Info', {
+Ext.define('WhatsFresh.view.Info', {
 	extend: 'Ext.Panel',
 	requires: ['Ext.form.FieldSet', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox'],
     fullscreen: true,

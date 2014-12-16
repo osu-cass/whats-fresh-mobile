@@ -2,7 +2,7 @@ var isPresent;
 isPresent = true;
 
 
-Ext.define('SeaGrant_Proto.controller.List', {
+Ext.define('WhatsFresh.controller.List', {
 	extend: 'Ext.app.Controller',
 	requires: ['Ext.MessageBox', 'Ext.device.Geolocation'],
 	alias: 'cont',
@@ -92,7 +92,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	onSetDistance: function(index, record){
 		console.log("In controller(home): Distance from user chosen");
 		// console.log(record._value.data.val);
-		SeaGrant_Proto.dist = record._value.data.val;
+		WhatsFresh.dist = record._value.data.val;
 	},
 	onChooseLocation: function(index, record){
 		// We first check to see if a location is chosen, if one is we sort by locataion,
@@ -100,8 +100,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): Drop Down list Location');
 		// var loc = this.getHomeView();
 		// console.log(record);
-		SeaGrant_Proto.location = record._value.data.name;
-		console.log('Location is: '+ SeaGrant_Proto.location +'\n'); 
+		WhatsFresh.location = record._value.data.name;
+		console.log('Location is: '+ WhatsFresh.location +'\n'); 
             
 		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
 		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
@@ -109,10 +109,10 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
-            this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
+            this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
 	    this.numberOfVendors(vendorStore);
 	    var homeView = this.getHomeView();
-            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	    //Ext.Viewport.setActiveItem(homeView);
 	},
 	onChooseProduct: function(index, record){
@@ -121,26 +121,26 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): Drop Down list Products');
 		// console.log(record);
 		console.log('Product is: '+ record._value.data.name +'\n'); 
-		SeaGrant_Proto.product = record._value.data.name;
+		WhatsFresh.product = record._value.data.name;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 		// console.log(store.data.all);
 		// console.log(store);
 
-            this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
+            this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
 	    this.numberOfVendors(vendorStore);
 	    var homeView = this.getHomeView();
-            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));       
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));       
 	    Ext.Viewport.setActiveItem(homeView);
 	},
 	numberOfVendors: function(store){
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
-		SeaGrant_Proto.Litem = new Array();
-		SeaGrant_Proto.VstoreLength = store.data.items.length;
+		WhatsFresh.Litem = new Array();
+		WhatsFresh.VstoreLength = store.data.items.length;
 		// console.log(store.data.items);
 		for (j = 0; j < store.data.items.length; j++){
-			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
-			// console.log(SeaGrant_Proto.Litem[j]);
+			WhatsFresh.Litem[j] = store.data.items[j].data;			
+			// console.log(WhatsFresh.Litem[j]);
 		}
 	},
 	populatePstore: function(store, pstore, usekey){
@@ -173,7 +173,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					pstore.data.items[newNum].data.vendors.push(addVendor);
 				}
 				// if the prod/prep DNE, then creat a new product from the current vendor as long as its name is same as chosen product name
-				if(((flag === 0) && (store.data.items[i].data.products[j].name === SeaGrant_Proto.product)) | ((flag === 0) && (usekey === 1))){
+				if(((flag === 0) && (store.data.items[i].data.products[j].name === WhatsFresh.product)) | ((flag === 0) && (usekey === 1))){
 					var newpro = {
 						name: store.data.items[i].data.products[j].name, 
 						preparation: store.data.items[i].data.products[j].preparation,
@@ -226,17 +226,17 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
 		var homeView = this.getHomeView();	
-		SeaGrant_Proto.iconImage = '/images/red.png';	
+		WhatsFresh.iconImage = '/images/red.png';	
 		this.addMapMarkers();
 		setTimeout(function() {
-           SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);
-           		SeaGrant_Proto.gMap.fitBounds(SeaGrant_Proto.bounds);
+           WhatsFresh.gMap.panTo(WhatsFresh.cent[0]);
+           		WhatsFresh.gMap.fitBounds(WhatsFresh.bounds);
            		// these statements make sure that our zoom is not to close or to far away from the marker
-           		if(SeaGrant_Proto.gMap.getZoom() > 15){
-					SeaGrant_Proto.gMap.setZoom(15);
+           		if(WhatsFresh.gMap.getZoom() > 15){
+					WhatsFresh.gMap.setZoom(15);
 				}
-				if(SeaGrant_Proto.gMap.getZoom() < 6){
-					SeaGrant_Proto.gMap.setZoom(6);
+				if(WhatsFresh.gMap.getZoom() < 6){
+					WhatsFresh.gMap.setZoom(6);
 				}
         }, 1000);
 		if(homeView.items.items[5].items.items[0]._checked === true){
@@ -244,21 +244,21 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		}
 		if(homeView.items.items[5].items.items[1]._checked === true){
 			console.log('use');
-			console.log(SeaGrant_Proto.use);
-			this.populatePstore(store, pstore, SeaGrant_Proto.use);
+			console.log(WhatsFresh.use);
+			this.populatePstore(store, pstore, WhatsFresh.use);
 			view.down('list').setStore(pstore);
 		}
 		// If the checkboxes are both unused again we need to make sure that we set the correct stores for the items being searched
 		if((homeView.items.items[5].items.items[0]._checked === false) && (homeView.items.items[5].items.items[1]._checked === false)){
-			if(((SeaGrant_Proto.use === 1) && (SeaGrant_Proto.use2 === 1)) | ((SeaGrant_Proto.use === 1) && (SeaGrant_Proto.use2 === 0))){
+			if(((WhatsFresh.use === 1) && (WhatsFresh.use2 === 1)) | ((WhatsFresh.use === 1) && (WhatsFresh.use2 === 0))){
 				view.down('list').setStore(store);
 			}
-			if(((SeaGrant_Proto.use === 0) && (SeaGrant_Proto.use2 === 1)) | ((SeaGrant_Proto.use === 0) && (SeaGrant_Proto.use2 === 0))){
+			if(((WhatsFresh.use === 0) && (WhatsFresh.use2 === 1)) | ((WhatsFresh.use === 0) && (WhatsFresh.use2 === 0))){
 				view.down('list').setStore(pstore);
 			}
 		}		
-        SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'list';
-        SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+        WhatsFresh.path[WhatsFresh.pcount] = 'list';
+        WhatsFresh.pcount = ++WhatsFresh.pcount;
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
 
@@ -338,11 +338,11 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	onViewBackHomeCommand: function(){
 		console.log('In controller(list): Back to Home Page Button');
 		// This removes the old markers from the map on the list page
-		SeaGrant_Proto.backFlag = 0;
-		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
-			SeaGrant_Proto.marker[i].setMap(null);
+		WhatsFresh.backFlag = 0;
+		for(i = 0; i < WhatsFresh.marker.length; i++){
+			WhatsFresh.marker[i].setMap(null);
 		}
-		SeaGrant_Proto.marker.length = 0;		
+		WhatsFresh.marker.length = 0;		
 		var listItems = this.getListView();
 		listItems._items.items[2].deselect(listItems._items.items[2].selected.items[0]);		
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
@@ -354,74 +354,74 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	// declareMap markers and infowindows as well as functions for the listview map
 	addMapMarkers: function(){
 		var self = this; // important to get the correct data to the viewport
-		SeaGrant_Proto.infoClickSelf = self;
+		WhatsFresh.infoClickSelf = self;
 		// Variables for setting marker attributes
-		SeaGrant_Proto.lastI = null;
-		SeaGrant_Proto.lastNodeSet = new Array();
-		SeaGrant_Proto.lastNodeSet[0] = null;
-		SeaGrant_Proto.lent = 0;
-		SeaGrant_Proto.animation = null;
-		// SeaGrant_Proto.opnum = 0.7;
+		WhatsFresh.lastI = null;
+		WhatsFresh.lastNodeSet = new Array();
+		WhatsFresh.lastNodeSet[0] = null;
+		WhatsFresh.lent = 0;
+		WhatsFresh.animation = null;
+		// WhatsFresh.opnum = 0.7;
 		var lat;
 		var lng;
-		SeaGrant_Proto.infowindow = new google.maps.InfoWindow();
-		SeaGrant_Proto.marker = new Array();
-		SeaGrant_Proto.cent = new Array();
-		SeaGrant_Proto.bounds = new google.maps.LatLngBounds();
-		for (k = 0; k < SeaGrant_Proto.VstoreLength; k++){
-			lat = SeaGrant_Proto.Litem[k].lat;
+		WhatsFresh.infowindow = new google.maps.InfoWindow();
+		WhatsFresh.marker = new Array();
+		WhatsFresh.cent = new Array();
+		WhatsFresh.bounds = new google.maps.LatLngBounds();
+		for (k = 0; k < WhatsFresh.VstoreLength; k++){
+			lat = WhatsFresh.Litem[k].lat;
 			// console.log(lat);
-			lng = SeaGrant_Proto.Litem[k].lng;
+			lng = WhatsFresh.Litem[k].lng;
 			// console.log(lng);
-			SeaGrant_Proto.cent[k] = new google.maps.LatLng(lat, lng);
+			WhatsFresh.cent[k] = new google.maps.LatLng(lat, lng);
 			//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
 			// THIS FUNCTION CREATES EACH LIST ITEM MARKER
-			this.addAMapMarker(k, SeaGrant_Proto.animation);
+			this.addAMapMarker(k, WhatsFresh.animation);
         	// This gets the map bounds based on the markers
-        	SeaGrant_Proto.bounds.extend(SeaGrant_Proto.marker[k].position);
+        	WhatsFresh.bounds.extend(WhatsFresh.marker[k].position);
         	
 		}
 	},
 	addAMapMarker: function(k, animation){
 		// I moved all of the code to create a single map marker with an infowindow and listener for that window
 		// out of the add map markers function in order to use it in the onViewLpageListHighlightCommand
-		SeaGrant_Proto.marker[k] = new google.maps.Marker({
-				map: SeaGrant_Proto.gMap,
+		WhatsFresh.marker[k] = new google.maps.Marker({
+				map: WhatsFresh.gMap,
 				animation: animation,
 				// opacity: opnum,
 				// zIndex: google.maps.Marker.MAX_ZINDEX + 1,
-				icon: SeaGrant_Proto.iconImage,
-				position: SeaGrant_Proto.cent[k],
+				icon: WhatsFresh.iconImage,
+				position: WhatsFresh.cent[k],
 				clickable: true
 			});			
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
-        	SeaGrant_Proto.marker[k].info = new google.maps.InfoWindow({
-        		content: '<button onclick=\"javascript:SeaGrant_Proto.infoClickSelf.onInfoWindowClick();\">'+ SeaGrant_Proto.Litem[k].name + '</button>',
-        		data: SeaGrant_Proto.Litem[k],
+        	WhatsFresh.marker[k].info = new google.maps.InfoWindow({
+        		content: '<button onclick=\"javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();\">'+ WhatsFresh.Litem[k].name + '</button>',
+        		data: WhatsFresh.Litem[k],
         		Lpos: k // used to index and highlight the correct list item
         	});
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
         	// WE WILL USE THIS LISTENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
-        	google.maps.event.addListener(SeaGrant_Proto.marker[k], 'click', function(){
-        		SeaGrant_Proto.storeItem = this;
+        	google.maps.event.addListener(WhatsFresh.marker[k], 'click', function(){
+        		WhatsFresh.storeItem = this;
         		// console.log('THIS IN THE EVENT LISTENER');
         		// console.log(this);
-        		SeaGrant_Proto.infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
-        		SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, this); // this opens the infowindow defined above
+        		WhatsFresh.infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
+        		WhatsFresh.infowindow.open(WhatsFresh.gMap, this); // this opens the infowindow defined above
         	});	
 	},
 	onInfoWindowClick: function(record, list, index){
-		var lv = SeaGrant_Proto.infoClickSelf.getListView();
+		var lv = WhatsFresh.infoClickSelf.getListView();
 		lv._items.items[2].deselect(lv._items.items[2].selected.items[0]);
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
 		var selectListItemFlag = 0;
 		// console.log(pstore);
-		// console.log('SeaGrant_Proto.storeItem');
-		// console.log(SeaGrant_Proto.storeItem);
+		// console.log('WhatsFresh.storeItem');
+		// console.log(WhatsFresh.storeItem);
 		// If the vendors store is used, we can select a list item in here
 		if(lv._items.items[2]._store._storeId === 'Vendor'){
         	// console.log("I shouldn't see this when I'm in the products list");
-			lv._items.items[2].select(SeaGrant_Proto.storeItem.info.Lpos);
+			lv._items.items[2].select(WhatsFresh.storeItem.info.Lpos);
 		}
 		// if the productlist store is selected, we need to select the first product and prep in the productlist store
 		// that contains our vendor as a seller of that product
@@ -431,8 +431,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				for(j = 0; j < pstore.data.all[i].data.vendors.length; j++){
 					// if vendor exists in the productlist item as carrying that product, then set highlight flag
 					// console.log(pstore.data.all[i].data.vendors[j]);
-					// console.log(SeaGrant_Proto.storeItem.info.data.name);
-					if(SeaGrant_Proto.storeItem.info.data.name === pstore.data.all[i].data.vendors[j]){
+					// console.log(WhatsFresh.storeItem.info.data.name);
+					if(WhatsFresh.storeItem.info.data.name === pstore.data.all[i].data.vendors[j]){
 						if(selectListItemFlag !== 2){
 							selectListItemFlag = 1;
 						}
@@ -449,108 +449,108 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			}
 			selectListItemFlag = 0;
 		}
-		SeaGrant_Proto.infowindowFlag = 1;
+		WhatsFresh.infowindowFlag = 1;
 		// THIS USES THE SAME DETAIL PAGE DATA POPULATING CODE THAT THE ON CLICK LIST ITEM EVENT DOES
-		SeaGrant_Proto.infoClickSelf.onViewLpageListItemCommand(this, SeaGrant_Proto.infoClickSelf, SeaGrant_Proto.storeItem.info);
+		WhatsFresh.infoClickSelf.onViewLpageListItemCommand(this, WhatsFresh.infoClickSelf, WhatsFresh.storeItem.info);
 	},
 	onViewLpageListHighlightCommand: function(record, list, index){
 		var view = this.getListView();
 		var t = 0;
 		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELETED LIST ITEM
-		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
-			// console.log('SeaGrant_Proto.marker[i].info.data.id   '+ SeaGrant_Proto.marker[i].info.data.id +'   index.id   '+ index.id +'\n');
+		for(i = 0; i < WhatsFresh.marker.length; i++){
+			// console.log('WhatsFresh.marker[i].info.data.id   '+ WhatsFresh.marker[i].info.data.id +'   index.id   '+ index.id +'\n');
 			// console.log('marker data   ');
-			// console.log(SeaGrant_Proto.marker[i].icon);
+			// console.log(WhatsFresh.marker[i].icon);
 			// console.log('Index');
 			// console.log(index.data);
 
 
 			// Here we want to set all previous blue nodes to red, then we will navigate into the respective function and turn
 			// a node or nodes blue depending on our criteria.
-			if((SeaGrant_Proto.lastNodeSet[0] != null) && (t == 0)){
+			if((WhatsFresh.lastNodeSet[0] != null) && (t == 0)){
 				console.log("removing last set of blue markers");
-				// console.log("SeaGrant_Proto.lent = "+ SeaGrant_Proto.lent);
-				for(h = 0; h < SeaGrant_Proto.lent; h++){
+				// console.log("WhatsFresh.lent = "+ WhatsFresh.lent);
+				for(h = 0; h < WhatsFresh.lent; h++){
 					// get rid of last blue marker
-					SeaGrant_Proto.marker[SeaGrant_Proto.lastNodeSet[h]].setMap(null);
+					WhatsFresh.marker[WhatsFresh.lastNodeSet[h]].setMap(null);
 					// console.log('removed');
-					// console.log(SeaGrant_Proto.lastNodeSet[h]);
+					// console.log(WhatsFresh.lastNodeSet[h]);
 					// reset marker to red
-					SeaGrant_Proto.iconImage = '/images/red.png';
+					WhatsFresh.iconImage = '/images/red.png';
 					// Setting the animation to null
-					SeaGrant_Proto.animation = null;
+					WhatsFresh.animation = null;
 					// Set the opacity of the pin
-					// SeaGrant_Proto.opnum = 0.5;
+					// WhatsFresh.opnum = 0.5;
 					// remake the red marker
-					this.addAMapMarker(SeaGrant_Proto.lastNodeSet[h], SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
+					this.addAMapMarker(WhatsFresh.lastNodeSet[h], WhatsFresh.animation, WhatsFresh.opnum);
 					// console.log('added');
 					// reset t so that the new set of nodes for a product are populated
 					t = 0;
 				}
-				SeaGrant_Proto.lent = 0;
+				WhatsFresh.lent = 0;
 	        }
-	     //    if(SeaGrant_Proto.lastI != null){
+	     //    if(WhatsFresh.lastI != null){
 						// // get rid of last blue marker
 						// console.log('get rid of last blue marker');
-						// SeaGrant_Proto.marker[SeaGrant_Proto.lastI].setMap(null);
+						// WhatsFresh.marker[WhatsFresh.lastI].setMap(null);
 						// // reset marker to red
-						// SeaGrant_Proto.iconImage = '/images/red.png';
-						// SeaGrant_Proto.animation = null;
+						// WhatsFresh.iconImage = '/images/red.png';
+						// WhatsFresh.animation = null;
 						// // Set the opacity of the pin
-						// // SeaGrant_Proto.opnum = 0.5;
+						// // WhatsFresh.opnum = 0.5;
 						// // remake the red marker
-						// this.addAMapMarker(SeaGrant_Proto.lastI, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);						
+						// this.addAMapMarker(WhatsFresh.lastI, WhatsFresh.animation, WhatsFresh.opnum);						
 			   //      }
 
-			if((view._items.items[2]._store._storeId === 'ProductList') && (SeaGrant_Proto.infowindowFlag !== 1)){
+			if((view._items.items[2]._store._storeId === 'ProductList') && (WhatsFresh.infowindowFlag !== 1)){
 				// Use this for loop to find all the vendors that sell this product
 				for(j = 0; j < index.data.vendors.length; j++){					
 					// this if statement finds vendors who carry the specific product
-					if(SeaGrant_Proto.marker[i].info.data.name === index.data.vendors[j]){
+					if(WhatsFresh.marker[i].info.data.name === index.data.vendors[j]){
 						// check to make sure that we have a previous set of nodes to turn red again
 						// also checks that we only reset the nodes once when we search for and change 
 						// the new nodes for the new product to blue
 						this.blueMapMarkers(t, i);
 				        // get rid of red marker for selected list item
-				  //       SeaGrant_Proto.marker[i].setMap(null);
+				  //       WhatsFresh.marker[i].setMap(null);
 				  //       // reset marker to blue
-						// SeaGrant_Proto.iconImage = '/images/blue.png';
+						// WhatsFresh.iconImage = '/images/blue.png';
 						// // Setting the animation to drop
-						// SeaGrant_Proto.animation = google.maps.Animation.DROP;
+						// WhatsFresh.animation = google.maps.Animation.DROP;
 						// // Set the opacity of the pin
-						// // SeaGrant_Proto.opnum = 1.0;
+						// // WhatsFresh.opnum = 1.0;
 						// // make the blue marker
-						// this.addAMapMarker(i, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
-						// SeaGrant_Proto.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
-						// SeaGrant_Proto.lastNodeSet[t] = i;
+						// this.addAMapMarker(i, WhatsFresh.animation, WhatsFresh.opnum);
+						// WhatsFresh.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+						// WhatsFresh.lastNodeSet[t] = i;
 			   			t = t+1;
-			   			// SeaGrant_Proto.lent = t;
+			   			// WhatsFresh.lent = t;
 					}
 				}
 			}
-			if((view._items.items[2]._store._storeId === 'Vendor') | (SeaGrant_Proto.infowindowFlag === 1)){
-				if(SeaGrant_Proto.marker[i].info.data.id === index.data.id){					
+			if((view._items.items[2]._store._storeId === 'Vendor') | (WhatsFresh.infowindowFlag === 1)){
+				if(WhatsFresh.marker[i].info.data.id === index.data.id){					
 					// This is setting the pin of the selected list item to be blue and popping open its infowindow
 					this.blueMapMarkers(t, i);
 			        // get rid of red marker for selected list item
-			  //       SeaGrant_Proto.marker[i].setMap(null);
+			  //       WhatsFresh.marker[i].setMap(null);
 			  //       // reset marker to blue
-					// SeaGrant_Proto.iconImage = '/images/blue.png';
-					// SeaGrant_Proto.animation = google.maps.Animation.DROP;
+					// WhatsFresh.iconImage = '/images/blue.png';
+					// WhatsFresh.animation = google.maps.Animation.DROP;
 					// // Set the opacity of the pin
-					// // SeaGrant_Proto.opnum = 1.0;
+					// // WhatsFresh.opnum = 1.0;
 					// // make the blue marker
-					// this.addAMapMarker(i, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
-					// SeaGrant_Proto.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+					// this.addAMapMarker(i, WhatsFresh.animation, WhatsFresh.opnum);
+					// WhatsFresh.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
 					// add data to blue marker info window and open it
-					SeaGrant_Proto.infowindow.setContent(SeaGrant_Proto.marker[i].info.content); // sets the infowindow that coresponds to the selected list
-			        SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, SeaGrant_Proto.marker[i]); // this opens the infowindow defined above
+					WhatsFresh.infowindow.setContent(WhatsFresh.marker[i].info.content); // sets the infowindow that coresponds to the selected list
+			        WhatsFresh.infowindow.open(WhatsFresh.gMap, WhatsFresh.marker[i]); // this opens the infowindow defined above
 					
-			        // SeaGrant_Proto.lastNodeSet[t] = i;
+			        // WhatsFresh.lastNodeSet[t] = i;
 		   			t = t+1;
-		   // 			SeaGrant_Proto.lent = t;
+		   // 			WhatsFresh.lent = t;
 
-					// SeaGrant_Proto.lastI = i;
+					// WhatsFresh.lastI = i;
 			    }
 			}
 		}
@@ -558,19 +558,19 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	// having trouble with the passed in value t, when we are removing old map markers
 	blueMapMarkers: function(t, i){
 		// get rid of red marker for selected list item
-        SeaGrant_Proto.marker[i].setMap(null);
+        WhatsFresh.marker[i].setMap(null);
         // reset marker to blue
-		SeaGrant_Proto.iconImage = '/images/blue.png';
+		WhatsFresh.iconImage = '/images/blue.png';
 		// Setting the animation to drop
-		SeaGrant_Proto.animation = google.maps.Animation.DROP;
+		WhatsFresh.animation = google.maps.Animation.DROP;
 		// Set the opacity of the pin
-		// SeaGrant_Proto.opnum = 1.0;
+		// WhatsFresh.opnum = 1.0;
 		// make the blue marker
-		this.addAMapMarker(i, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
-		SeaGrant_Proto.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
-		SeaGrant_Proto.lastNodeSet[t] = i;
+		this.addAMapMarker(i, WhatsFresh.animation, WhatsFresh.opnum);
+		WhatsFresh.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+		WhatsFresh.lastNodeSet[t] = i;
 		t = t+1;
-		SeaGrant_Proto.lent = t;
+		WhatsFresh.lent = t;
 	},		
 	onViewLpageListItemCommand: function(record, list, index){
 		console.log('In controller(list): Select list item');
@@ -607,16 +607,16 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// console.log(view);
 
 		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELECTED LIST ITEM
-		// for(i = 0; i < SeaGrant_Proto.marker.length; i++){
-		// 	if(SeaGrant_Proto.marker[i].info.data.id === index.id){
-		// 		SeaGrant_Proto.infowindow.setContent(SeaGrant_Proto.marker[i].info.content); // sets the infowindow that coresponds to the selected list
-		//         SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, SeaGrant_Proto.marker[i]); // this opens the infowindow defined above
+		// for(i = 0; i < WhatsFresh.marker.length; i++){
+		// 	if(WhatsFresh.marker[i].info.data.id === index.id){
+		// 		WhatsFresh.infowindow.setContent(WhatsFresh.marker[i].info.content); // sets the infowindow that coresponds to the selected list
+		//         WhatsFresh.infowindow.open(WhatsFresh.gMap, WhatsFresh.marker[i]); // this opens the infowindow defined above
 		//     }
 		// }
 		this.onViewLpageListHighlightCommand(record, list, index);
 		
 		// console.log(index);
-		if((view._items.items[2]._store._storeId === 'Vendor') | (SeaGrant_Proto.infowindowFlag === 1)){
+		if((view._items.items[2]._store._storeId === 'Vendor') | (WhatsFresh.infowindowFlag === 1)){
 			// Store is populated with items from selected vendor
 			// console.log(index.data.products.length);
 			for(i = 0; i < index.data.products.length; i++){
@@ -627,12 +627,12 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				storeInventory.add(newpro);
 			}
 			// for stack that tracks navigaion
-			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'detail';
-			SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount] = index;
-        	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
+			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
+        	WhatsFresh.pcount = ++WhatsFresh.pcount;
         	Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
 		}
-		if((view._items.items[2]._store._storeId === 'ProductList') && (SeaGrant_Proto.infowindowFlag !== 1)){
+		if((view._items.items[2]._store._storeId === 'ProductList') && (WhatsFresh.infowindowFlag !== 1)){
 			console.log('going to productdetailView');
 			// console.log(index);
 			for(i = 0; i < index.data.vendors.length; i++){
@@ -654,14 +654,14 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				}
 			}
 			// for stack that tracks navigaion
-			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'productdetail';
-			SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount] = index;
-        	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+			WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';
+			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
+        	WhatsFresh.pcount = ++WhatsFresh.pcount;
 			Ext.Viewport.animateActiveItem(productdetailView, this.slideLeftTransition);
 		}
 		console.log(index);
 		//
-		SeaGrant_Proto.infowindowFlag = 0;		
+		WhatsFresh.infowindowFlag = 0;		
 	},
 	// Functions dealing with 
 	// DETAIL
@@ -672,22 +672,22 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		
 		// console.log("this is our path item **************************");
 
-		// console.log('SeaGrant_Proto.pcount - 2');
-		// console.log(SeaGrant_Proto.pcount - 2);
-		// console.log('SeaGrant_Proto.path[SeaGrant_Proto.pcount - 2]');
-		// console.log(SeaGrant_Proto.path[SeaGrant_Proto.pcount - 2]);
-		// console.log('SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount- 2]');
-		// console.log(SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount-2]);
-		if(SeaGrant_Proto.path[SeaGrant_Proto.pcount - 2] === 'list'){
-			SeaGrant_Proto.pcount = --SeaGrant_Proto.pcount;
+		// console.log('WhatsFresh.pcount - 2');
+		// console.log(WhatsFresh.pcount - 2);
+		// console.log('WhatsFresh.path[WhatsFresh.pcount - 2]');
+		// console.log(WhatsFresh.path[WhatsFresh.pcount - 2]);
+		// console.log('WhatsFresh.pvalue[WhatsFresh.pcount- 2]');
+		// console.log(WhatsFresh.pvalue[WhatsFresh.pcount-2]);
+		if(WhatsFresh.path[WhatsFresh.pcount - 2] === 'list'){
+			WhatsFresh.pcount = --WhatsFresh.pcount;
 			Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
 		}
-		if((SeaGrant_Proto.path[SeaGrant_Proto.pcount - 2] === 'detail') | (SeaGrant_Proto.path[SeaGrant_Proto.pcount - 2] === 'productdetail')){
-			// SeaGrant_Proto.pcount = SeaGrant_Proto.pcount-1;	
-			SeaGrant_Proto.backFlag = 1;
+		if((WhatsFresh.path[WhatsFresh.pcount - 2] === 'detail') | (WhatsFresh.path[WhatsFresh.pcount - 2] === 'productdetail')){
+			// WhatsFresh.pcount = WhatsFresh.pcount-1;	
+			WhatsFresh.backFlag = 1;
 			// console.log('PCOUNT');
-			// console.log(SeaGrant_Proto.pcount);		
-			this.onViewDpageListItemCommand(a, b, SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount-2]);
+			// console.log(WhatsFresh.pcount);		
+			this.onViewDpageListItemCommand(a, b, WhatsFresh.pvalue[WhatsFresh.pcount-2]);
 		}
 	},
 	onViewInfoCommand: function(){
@@ -707,7 +707,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 
 		// Check to see if we are currently on the detail page or productdetail page, so that we know how to deal
 		// with our data selection
-		if(SeaGrant_Proto.path[SeaGrant_Proto.pcount - 1] === 'detail'){
+		if(WhatsFresh.path[WhatsFresh.pcount - 1] === 'detail'){
 			// Store is populated with items from selected vendor
 			console.log('we are going from the detail page to the productsdetail page');
 			var productstore = Ext.data.StoreManager.lookup('Product');
@@ -739,25 +739,25 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				}
 			}
 			Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.name);
-			if(SeaGrant_Proto.backFlag === 0){
-				SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'productdetail';
-				SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount] = index;
-	        	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+			if(WhatsFresh.backFlag === 0){
+				WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';
+				WhatsFresh.pvalue[WhatsFresh.pcount] = index;
+	        	WhatsFresh.pcount = ++WhatsFresh.pcount;
 	        	Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideLeftTransition);
 	        }
-	        if(SeaGrant_Proto.backFlag === 1){
-	        	SeaGrant_Proto.pcount = --SeaGrant_Proto.pcount;
-	        	SeaGrant_Proto.backFlag = 0;
+	        if(WhatsFresh.backFlag === 1){
+	        	WhatsFresh.pcount = --WhatsFresh.pcount;
+	        	WhatsFresh.backFlag = 0;
         	   	for(w = 0; w < storeInventory.data.all.length; w++){
 	        		// check to see if list item name is equal to the list item that was previously selected
-	        		if(storeInventory.data.all[w].data.name === SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount].data.name){
+	        		if(storeInventory.data.all[w].data.name === WhatsFresh.pvalue[WhatsFresh.pcount].data.name){
 	        			num2 = w;
 	        		}
 	        	}
 		        productdetailView.items.items[2].select(storeInventory.data.all[num2]);
 	        	Ext.Viewport.animateActiveItem(productdetailView, this.slideRightTransition);				
 	        }
-		}else if(SeaGrant_Proto.path[SeaGrant_Proto.pcount - 1] === 'productdetail'){
+		}else if(WhatsFresh.path[WhatsFresh.pcount - 1] === 'productdetail'){
 			console.log('Leaving the productdetail page to see the detail page');
 
 			// WE ALSO HAVE A PROBLEM WHERE THE TITLE OF THE INFO BLOCK IS NOT INCLUDING THE PROPER PREPARATION.
@@ -780,19 +780,19 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			}
 			// Sets the title of the header on detail page
 			Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
-			if(SeaGrant_Proto.backFlag === 0){
+			if(WhatsFresh.backFlag === 0){
 				// adding a log item to the "stack"
-				SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'detail';
-				SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount] = index; 
-	        	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
+				WhatsFresh.pvalue[WhatsFresh.pcount] = index; 
+	        	WhatsFresh.pcount = ++WhatsFresh.pcount;
 	       		Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
 	       	}
-	       	if(SeaGrant_Proto.backFlag === 1){
-	       		SeaGrant_Proto.pcount = --SeaGrant_Proto.pcount;
-	       		SeaGrant_Proto.backFlag = 0;
+	       	if(WhatsFresh.backFlag === 1){
+	       		WhatsFresh.pcount = --WhatsFresh.pcount;
+	       		WhatsFresh.backFlag = 0;
 	       		for(w = 0; w < storeInventory.data.all.length; w++){
 	        		// check to see if list item name is equal to the list item that was previously selected
-	        		if(storeInventory.data.all[w].data.name === SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount].data.name){
+	        		if(storeInventory.data.all[w].data.name === WhatsFresh.pvalue[WhatsFresh.pcount].data.name){
 	        			num2 = w;
 	        		}
 	        	}
@@ -842,20 +842,20 @@ Ext.define('SeaGrant_Proto.controller.List', {
         this.getHomeView().down('[itemId=selectproduct]').reset();
     },
     onVendorStoreLoad: function(){
-        SeaGrant_Proto.location = "Please choose a location";
-        SeaGrant_Proto.product = "Please choose a product";
-        this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
-        this.getHomeView().getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));
+        WhatsFresh.location = "Please choose a location";
+        WhatsFresh.product = "Please choose a product";
+        this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
+        this.getHomeView().getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
     },
 	init: function(){
 		this.callParent(arguments);
-		SeaGrant_Proto.pvalue = [];
-		SeaGrant_Proto.path = [];
-		SeaGrant_Proto.pcount = 0;
-		SeaGrant_Proto.backFlag = 0;
-		SeaGrant_Proto.use = 1;
-		SeaGrant_Proto.use2 = 1;
-		SeaGrant_Proto.infowindowFlag = 0;
+		WhatsFresh.pvalue = [];
+		WhatsFresh.path = [];
+		WhatsFresh.pcount = 0;
+		WhatsFresh.backFlag = 0;
+		WhatsFresh.use = 1;
+		WhatsFresh.use2 = 1;
+		WhatsFresh.infowindowFlag = 0;
 		// console.log("init");
 	}
 });

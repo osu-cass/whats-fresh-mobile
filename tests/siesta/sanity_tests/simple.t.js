@@ -1,6 +1,6 @@
 StartTest(function(t) {
 	t.diag("My simple test page");
-	t.requireOk( ['SeaGrant_Proto.view.Home'], function(){
+	t.requireOk( ['WhatsFresh.view.Home'], function(){
 		t.chain(
 		{
 			waitFor: 'CQ',

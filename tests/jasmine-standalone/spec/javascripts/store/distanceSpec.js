@@ -1,12 +1,12 @@
-describe('SeaGrant_Proto.store.Distance',function() {
+describe('WhatsFresh.store.Distance',function() {
 
-    // Ext.require('SeaGrant_Proto.store.Distance');
+    // Ext.require('WhatsFresh.store.Distance');
 
     var store;
  
     beforeEach(function() {
 	jasmine.Ajax.install();
-	store = Ext.create('SeaGrant_Proto.store.Distance');
+	store = Ext.create('WhatsFresh.store.Distance');
     });
 
     afterEach(function() {
@@ -15,7 +15,7 @@ describe('SeaGrant_Proto.store.Distance',function() {
     });
 
     it('exists', function() {
-        expect(store.$className).toEqual('SeaGrant_Proto.store.Distance');
+        expect(store.$className).toEqual('WhatsFresh.store.Distance');
     });
 
     it('Is populated with distance data', function(){
