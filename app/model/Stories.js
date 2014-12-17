@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.model.Stories', {
+Ext.define('WhatsFresh.model.Stories', {
     extend: 'Ext.data.Model',
     config: {
         fields:[
