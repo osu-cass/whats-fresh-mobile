@@ -4,7 +4,7 @@ isPresent = true;
 
 Ext.define('WhatsFresh.controller.List', {
 	extend: 'Ext.app.Controller',
-	requires: ['Ext.MessageBox', 'Ext.device.Geolocation', 'Ext.data.Connection', 'Ext.Video'],
+	requires: ['Ext.MessageBox', 'Ext.device.Geolocation'],
 	alias: 'cont',
 	config: {
 		refs: {
@@ -120,6 +120,17 @@ Ext.define('WhatsFresh.controller.List', {
 		// then we check to see if a product is chosen, if one is we sort by product
 		console.log('In controller(home): Drop Down list Products');
 		// console.log(record);
+		var key = 0;
+		var ProdStore = Ext.getStore('Product');
+		if(key === 0){
+			ProdStore.insert(0, [
+				{
+					name: 'Please choose a product',
+					id: 0
+				}
+			]);
+			key = 1;
+		}
 		console.log('Product is: '+ record._value.data.name +'\n'); 
 		WhatsFresh.product = record._value.data.name;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
@@ -698,25 +709,8 @@ Ext.define('WhatsFresh.controller.List', {
 			this.onViewDpageListItemCommand(a, b, WhatsFresh.pvalue[WhatsFresh.pcount-2]);
 		}
 	},
-	onViewInfoCommand: function(index){
+	onViewInfoCommand: function(){
 		console.log('In controller(detail): View Info Page Button');
-		console.log(index);
-		// need to then get the index data item from the product store, so that I can populate the story store correctly
-		// var ProdStore = Ext.getStore('Product');
-		// console.log(ProdStore);
-		// for(i = 0; i < ProdStore.data.items.length; i++){
-		// 	if(index.data.name === ProdStore.data.items[i].data.name){
-		// 		console.log(SeaGrant_Proto.StoryStore);
-		// 		console.log("the story id");
-		// 		console.log(ProdStore.data.items[i].data.story);
-		// 		// this store load doesn't seem to be working, it is probably because we have not reloaded the store yet
-		// 		SeaGrant_Proto.StoryStore._proxy._url = 'http://seagrant-staging-api.osuosl.org/1/stories/'+ProdStore.data.items[i].data.story;
-		// 		Ext.getStore('Story').load();
-		// 		SeaGrant_Proto.StoryStore.on('load', function(){
-		// 			console.log("story loaded");
-		// 		})
-		// 	}
-		// }
 		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
 	},	
 	onViewDpageListItemCommand: function(record, list, index){
@@ -866,6 +860,16 @@ Ext.define('WhatsFresh.controller.List', {
 	// Initialize functions
 	launch: function(){
 		this.callParent(arguments);
+		WhatsFresh.pvalue = [];
+		WhatsFresh.path = [];
+		WhatsFresh.pcount = 0;
+		WhatsFresh.backFlag = 0;
+		WhatsFresh.use = 1;
+		WhatsFresh.use2 = 1;
+		WhatsFresh.infowindowFlag = 0;
+
+		WhatsFresh.detailView = this.getDetailView();
+		WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
 		// console.log("launch");
             Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
             Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
@@ -890,16 +894,5 @@ Ext.define('WhatsFresh.controller.List', {
     },
 	init: function(){
 		this.callParent(arguments);
-
-            // Initializing UI globals
-		WhatsFresh.pvalue = [];
-		WhatsFresh.path = [];
-		WhatsFresh.pcount = 0;
-		WhatsFresh.backFlag = 0;
-		WhatsFresh.use = 1;
-		WhatsFresh.use2 = 1;
-		WhatsFresh.infowindowFlag = 0;
-
-		// console.log("init");
 	}
 });
