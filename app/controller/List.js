@@ -634,7 +634,6 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			// set src for static map
 			console.log("lat and lng for the static map:");
-			console.log(WhatsFresh.detailView);
 			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ index.data.lat +','+ index.data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ index.data.lat +','+ index.data.lng;
 			console.log(dest);
 			WhatsFresh.statmap.setSrc(dest);
