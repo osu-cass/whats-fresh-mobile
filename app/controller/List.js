@@ -110,7 +110,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
             this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
-	    this.numberOfVendors(vendorStore);
+
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	    //Ext.Viewport.setActiveItem(homeView);
@@ -128,7 +128,7 @@ Ext.define('WhatsFresh.controller.List', {
 		// console.log(store);
 
             this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
-	    this.numberOfVendors(vendorStore);
+
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));       
 	    Ext.Viewport.setActiveItem(homeView);
@@ -228,17 +228,19 @@ Ext.define('WhatsFresh.controller.List', {
 		var homeView = this.getHomeView();	
 		WhatsFresh.iconImage = '/images/red.png';	
 		this.addMapMarkers();
-		setTimeout(function() {
-           WhatsFresh.gMap.panTo(WhatsFresh.cent[0]);
-           		WhatsFresh.gMap.fitBounds(WhatsFresh.bounds);
-           		// these statements make sure that our zoom is not to close or to far away from the marker
-           		if(WhatsFresh.gMap.getZoom() > 15){
-					WhatsFresh.gMap.setZoom(15);
-				}
-				if(WhatsFresh.gMap.getZoom() < 6){
-					WhatsFresh.gMap.setZoom(6);
-				}
-        }, 1000);
+
+	    setTimeout(function() {
+                WhatsFresh.gMap.panTo(WhatsFresh.cent[0]);
+           	WhatsFresh.gMap.fitBounds(WhatsFresh.bounds);
+           	// these statements make sure that our zoom is not to close or to far away from the marker
+           	if(WhatsFresh.gMap.getZoom() > 15){
+		    WhatsFresh.gMap.setZoom(15);
+		}
+		if(WhatsFresh.gMap.getZoom() < 6){
+		    WhatsFresh.gMap.setZoom(6);
+		}
+            }, 1000);
+
 		if(homeView.items.items[5].items.items[0]._checked === true){
 			view.down('list').setStore(store);
 		}
@@ -368,12 +370,14 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.marker = new Array();
 		WhatsFresh.cent = new Array();
 		WhatsFresh.bounds = new google.maps.LatLngBounds();
-		for (k = 0; k < WhatsFresh.VstoreLength; k++){
-			lat = WhatsFresh.Litem[k].lat;
-			// console.log(lat);
-			lng = WhatsFresh.Litem[k].lng;
-			// console.log(lng);
+
+            var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+
+		for (k = 0; k < vendorStore.getCount(); k++){
+			lat = vendorStore.data.items[k].data.lat;
+			lng = vendorStore.data.items[k].data.lng;
 			WhatsFresh.cent[k] = new google.maps.LatLng(lat, lng);
+
 			//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
 			// THIS FUNCTION CREATES EACH LIST ITEM MARKER
 			this.addAMapMarker(k, WhatsFresh.animation);
@@ -385,6 +389,8 @@ Ext.define('WhatsFresh.controller.List', {
 	addAMapMarker: function(k, animation){
 		// I moved all of the code to create a single map marker with an infowindow and listener for that window
 		// out of the add map markers function in order to use it in the onViewLpageListHighlightCommand
+            var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+            
 		WhatsFresh.marker[k] = new google.maps.Marker({
 				map: WhatsFresh.gMap,
 				animation: animation,
@@ -396,8 +402,8 @@ Ext.define('WhatsFresh.controller.List', {
 			});			
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
         	WhatsFresh.marker[k].info = new google.maps.InfoWindow({
-        		content: '<button onclick=\"javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();\">'+ WhatsFresh.Litem[k].name + '</button>',
-        		data: WhatsFresh.Litem[k],
+        		content: '<button onclick=\"javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();\">'+ vendorStore.data.items[k].data.name + '</button>',
+        		data: vendorStore.data.items[k].data,
         		Lpos: k // used to index and highlight the correct list item
         	});
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
@@ -849,6 +855,8 @@ Ext.define('WhatsFresh.controller.List', {
     },
 	init: function(){
 		this.callParent(arguments);
+
+            // Initializing UI globals
 		WhatsFresh.pvalue = [];
 		WhatsFresh.path = [];
 		WhatsFresh.pcount = 0;
@@ -856,6 +864,7 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.use = 1;
 		WhatsFresh.use2 = 1;
 		WhatsFresh.infowindowFlag = 0;
+
 		// console.log("init");
 	}
 });
