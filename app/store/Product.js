@@ -15,17 +15,17 @@ Ext.define('WhatsFresh.store.Product', {
                 productStore.fireEvent('refresh');
             }
         },
-	proxy: {
-	    type: 'ajax',
-	    url: 'http://seagrant-staging.osuosl.org/1/products',
-	    noCache: false,
-            pageParam: false,
-            limitParam: false,
-            startParam: false,
-	    reader: {
-		type: 'json',
-		rootProperty: 'products'
-	    }
-	}
+		proxy: {
+		    type: 'ajax',
+		    url: 'http://seagrant-staging.osuosl.org/1/products',
+		    noCache: false,
+	            pageParam: false,
+	            limitParam: false,
+	            startParam: false,
+		    reader: {
+			type: 'json',
+			rootProperty: 'products'
+		    }
+		}
     }
 });
