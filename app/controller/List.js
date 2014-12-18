@@ -674,6 +674,7 @@ Ext.define('WhatsFresh.controller.List', {
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
+			WhatsFresh.pname = index.data.name;
         	WhatsFresh.pcount = ++WhatsFresh.pcount;
 			Ext.Viewport.animateActiveItem(productdetailView, this.slideLeftTransition);
 		}
@@ -713,20 +714,58 @@ Ext.define('WhatsFresh.controller.List', {
 		console.log(index);
 		console.log(WhatsFresh.pcount);
 		// need to then get the index data item from the product store, so that I can populate the story store correctly
-		var ProdStore = Ext.getStore('Product');
-		console.log(ProdStore);
+		console.log(WhatsFresh.ProductStore);
 		console.log(WhatsFresh.pname);
-		for(i = 0; i < ProdStore.data.items.length; i++){
-			if(WhatsFresh.pname === ProdStore.data.items[i].data.name){
+		for(i = 0; i < WhatsFresh.ProductStore.data.items.length; i++){
+			if(WhatsFresh.pname === WhatsFresh.ProductStore.data.items[i].data.name){
+				WhatsFresh.pnameData = WhatsFresh.ProductStore.data.items[i].data;
 				console.log(WhatsFresh.StoryStore);
 				console.log("the story id");
-				console.log(ProdStore.data.items[i].data.story);
-				// this store load doesn't seem to be working, it is probably because we have not reloaded the store yet
-				WhatsFresh.StoryStore._proxy._url = 'http://seagrant-staging-api.osuosl.org/1/stories/'+ProdStore.data.items[i].data.story;
-				Ext.getStore('Story').load();
-				WhatsFresh.StoryStore.on('load', function(){
-					console.log("story loaded");
-				})
+				console.log(WhatsFresh.ProductStore.data.items[i].data.story);
+				if(WhatsFresh.ProductStore.data.items[i].data.story === null){
+					console.log("No story id");
+					var histr = {
+						hist: "Sorry, no educational data exists for this product at this time"
+					};
+					WhatsFresh.INhistory.setData(histr);
+					// remove caption
+					var caption = {
+						cap: null
+					};
+					WhatsFresh.SVcaption.setData(caption);
+					WhatsFresh.INimage.hide();
+					WhatsFresh.INlist.hide();
+					Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
+				}else{
+					WhatsFresh.INimage.show();
+					WhatsFresh.INlist.show();
+					// this store load doesn't seem to be working, it is probably because we have not reloaded the store yet
+					WhatsFresh.StoryStore._proxy._url = 'http://seagrant-staging-api.osuosl.org/1/stories/'+WhatsFresh.ProductStore.data.items[i].data.story;
+					WhatsFresh.StoryStore.load();
+					WhatsFresh.StoryStore.on('load', function(){
+						console.log("story loaded");
+						
+					   if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
+							WhatsFresh.INimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
+							var caption = {
+								cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
+							};
+						}else{
+							// Set caption
+							var avail = {
+								avalible: "No image avalible"
+							};
+							WhatsFresh.INimage.hide();
+						}
+
+					    var histr = {
+					    	hist: WhatsFresh.StoryStore.data.items[0].data.history
+					    };
+					    WhatsFresh.INhistory.setData(histr);
+
+						Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
+					})
+				}
 			}
 		}
 		if(WhatsFresh.path[WhatsFresh.pcount - 1] === 'detail'){
@@ -738,12 +777,6 @@ Ext.define('WhatsFresh.controller.List', {
 	    WhatsFresh.pvalue[WhatsFresh.pcount] = "info";
 	    WhatsFresh.pcount = ++WhatsFresh.pcount;
 
-	    var histr = {
-	    	hist: WhatsFresh.StoryStore.data.items[0].data.history
-	    };
-	    WhatsFresh.INhistory.setData(histr);
-
-		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
 	},	
 	onViewDpageListItemCommand: function(record, list, index){
 		console.log('In controller(detail): Select list item');
@@ -902,72 +935,80 @@ Ext.define('WhatsFresh.controller.List', {
 		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
 
 		// console.log(WhatsFresh.StoryStore.data.items[0].data);
+		if(WhatsFresh.pnameData.story === null){
+			// Do nothing, because we have already set all data to null
+		}else{
+			switch(index.data.listItem){
+				case "Season":
+					var caption = {
+						cap: WhatsFresh.StoryStore.data.items[0].data.season
+					};
+					break;
+				case "Products":
+					var caption = {
+						cap: WhatsFresh.StoryStore.data.items[0].data.products
+					};
+					break;
+				case "Buying":
+					var caption = {
+						cap: WhatsFresh.StoryStore.data.items[0].data.buying
+					};
+					break;
+				case "History":
+					if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
+						// Then we show the image
+						console.log("Now you see the image");					
+						// Here we set the image source
+						WhatsFresh.SVimage.show();
+						console.log(WhatsFresh.SVimage);
+						// OSL will send us a full string, so we won't have to apend part of the url
+						WhatsFresh.SVimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
+						// WhatsFresh.SVimage.setSrc('http://michellesread.com/files/2013/04/smile.jpg');
+						// SVimage.setSrc(image);
+						// Finally we print the caption under the image
+						console.log("Caption is included");
+						// Set caption
+						var caption = {
+							cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
+						};
+						// We can later deal with multiple images, by using a for loop to set all of the images
+						// to show and to populate thier specific image and caption. In the back command, we will
+						// just use a for loop to set their images to hide and their captions to null.
+					}else{
+						// Set caption
+						var caption = {
+							cap: "No image avalible"
+						};
+					}
+					break;
+				case "Preparation":
+					// use tpl to print out the prepataion text/data
+					// Set caption
+					var caption = {
+						cap: WhatsFresh.StoryStore.data.items[0].data.preparing
+					};
+					break;
+				case "Videos":
+					if(WhatsFresh.StoryStore.data.items[0].data.videos.length > 0){
+						WhatsFresh.SVvideo.show();
+						console.log('set the video');
+						console.log(WhatsFresh.SVvideo);
+						// WhatsFresh.SVvideo._url[0] = WhatsFresh.StoryStore.data.items[0].data.videos[0].link;
+					
+						var caption = {
+							cap: WhatsFresh.StoryStore.data.items[0].data.videos[0].caption
+						};
+					}else{
+						// Set caption
+						var caption = {
+							cap: "No video avalible"
+						};
+					}
+					break;
 
-		switch(index.data.listItem){
-			case "Preparation":
-				// use tpl to print out the prepataion text/data
-				// Set caption
-				var caption = {
-					cap: WhatsFresh.StoryStore.data.items[0].data.preparing
-				};
-				break;
-			case "Season":
-				var caption = {
-					cap: WhatsFresh.StoryStore.data.items[0].data.season
-				};
-				break;
-			case "Buying":
-				var caption = {
-					cap: WhatsFresh.StoryStore.data.items[0].data.buying
-				};
-				break;
-			case "History":
-				if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
-					// Then we show the image
-					console.log("Now you see the image");					
-					// Here we set the image source
-					WhatsFresh.SVimage.show();
-					console.log(WhatsFresh.SVimage);
-					// OSL will send us a full string, so we won't have to apend part of the url
-					WhatsFresh.SVimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
-					// WhatsFresh.SVimage.setSrc('http://michellesread.com/files/2013/04/smile.jpg');
-					// SVimage.setSrc(image);
-					// Finally we print the caption under the image
-					console.log("Caption is included");
-					// Set caption
-					var caption = {
-						cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
-					};
-					// We can later deal with multiple images, by using a for loop to set all of the images
-					// to show and to populate thier specific image and caption. In the back command, we will
-					// just use a for loop to set their images to hide and their captions to null.
-				}else{
-					// Set caption
-					var caption = {
-						cap: "No image avalible"
-					};
-				}
-				break;
-			case "Videos":
-				if(WhatsFresh.StoryStore.data.items[0].data.videos.length > 0){
-					WhatsFresh.SVvideo.show();
-					console.log('set the video');
-					console.log(WhatsFresh.SVvideo);
-					// WhatsFresh.SVvideo._url[0] = WhatsFresh.StoryStore.data.items[0].data.videos[0].link;
-				
-					var caption = {
-						cap: WhatsFresh.StoryStore.data.items[0].data.videos[0].caption
-					};
-				}else{
-					// Set caption
-					var caption = {
-						cap: "No video avalible"
-					};
-				}
-				break;
-
+			}
+			WhatsFresh.SVcaption.setData(caption);
 		}
-		WhatsFresh.SVcaption.setData(caption);
 		WhatsFresh.IListItem = index.data.listItem;
 		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
 	},
@@ -978,22 +1019,15 @@ Ext.define('WhatsFresh.controller.List', {
 		console.log('In controller(specific): Back to Info Page Button');
 
 		switch(WhatsFresh.IListItem){
-			case "Preparation":
-				break;
-			case "Season":
-				break;
-			case "Buying":
-				break;
-			case "History":
-				// Remove the image source
-				WhatsFresh.SVimage.hide();
-				WhatsFresh.SVimage.setSrc('');				
-				break;
+			// case "History":
+			// 	// Remove the image source
+			// 	WhatsFresh.SVimage.hide();
+			// 	WhatsFresh.SVimage.setSrc('');				
+			// 	break;
 			case "Videos":
 				WhatsFresh.SVvideo._url[0] = null;
 				WhatsFresh.SVvideo.hide();
 				break;
-
 		}
 		// remove caption
 		var caption = {
@@ -1017,6 +1051,9 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.use2 = 1;
 			WhatsFresh.infowindowFlag = 0;
 
+		// Transitions
+		WhatsFresh.slideLeft = this.slideLeftTransition;
+		WhatsFresh.slideRight = this.slideRightTransition;
 
 		// View references to use in the controller
 		WhatsFresh.detailView = this.getDetailView();
@@ -1041,6 +1078,7 @@ Ext.define('WhatsFresh.controller.List', {
 			
 			// ON: Info page
 			WhatsFresh.INimage = WhatsFresh.infoView.getComponent('infoimage');
+			WhatsFresh.INlist = WhatsFresh.infoView.getComponent('Ipagelist');
 			WhatsFresh.INhistory = WhatsFresh.infoView.getComponent('history');
 
 			// ON: Specific page		

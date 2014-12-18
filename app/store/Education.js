@@ -4,19 +4,19 @@ Ext.define('WhatsFresh.store.Education', {
 		data: [
 			{
 				text: 'Ed item 1',
-				listItem: 'Preparation'
-			},
-			{
-				text: 'Ed item 2',
 				listItem: 'Season'
 			},
 			{
+				text: 'Ed item 2',
+				listItem: 'Products'
+			},
+			{
 				text: 'Ed item 3',
-				listItem: 'Price'
+				listItem: 'Buying'
 			},
 			{
 				text: 'Ed item 4',
-				listItem: 'History'
+				listItem: 'Preparation'
 			},
 			{
 				text: 'Ed item 5',
