@@ -24,9 +24,17 @@
 	width: 45%;
 }
 
+#ext-image-2{
+	height: 20%;
+	width: 100%;
+	background-color: green;
+	min-width: 320px;
+}
+
 #ext-image-3{
 	height: 300px;
 	width: 300px;
+	background-color: yellow;
 }
 
 #ext-button-11{
@@ -35,7 +43,12 @@
 	height: 10%;
 }
 
-//LIST PAGE ELEMENT HEIGHTS
+div.history{
+//	position: relative;
+	margin-top: 20%;
+}
+
+//LIST ELEMENT HEIGHTS
 
 #ext-list-1{
 	height: 50%;
@@ -48,7 +61,11 @@
 #ext-list-3{
 	height: 50%;
 	top: 50%;
-}	
+}
+#ext-list-4{
+	max-height: 50%;
+	top: 50%;
+}		
 
 // MAP STYLE
 #ext-SeaGrantMap-1{
