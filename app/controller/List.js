@@ -737,6 +737,12 @@ Ext.define('WhatsFresh.controller.List', {
 	    }
 	    WhatsFresh.pvalue[WhatsFresh.pcount] = "info";
 	    WhatsFresh.pcount = ++WhatsFresh.pcount;
+
+	    var histr = {
+	    	hist: WhatsFresh.StoryStore.data.items[0].data.history
+	    };
+	    WhatsFresh.INhistory.setData(histr);
+
 		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
 	},	
 	onViewDpageListItemCommand: function(record, list, index){
@@ -999,32 +1005,58 @@ Ext.define('WhatsFresh.controller.List', {
 	// Initialize functions
 	launch: function(){
 		this.callParent(arguments);
-		WhatsFresh.pvalue = [];
-		WhatsFresh.path = [];
-		WhatsFresh.pcount = 0;
-		WhatsFresh.backFlag = 0;
-		WhatsFresh.use = 1;
-		WhatsFresh.use2 = 1;
-		WhatsFresh.infowindowFlag = 0;
 
+		// Variables
+			// FOR: back button functionality
+			WhatsFresh.pvalue = [];
+			WhatsFresh.path = [];
+			WhatsFresh.pcount = 0;
+			WhatsFresh.backFlag = 0;
+			// FOR: checkboxes 
+			WhatsFresh.use = 1;
+			WhatsFresh.use2 = 1;
+			WhatsFresh.infowindowFlag = 0;
+
+
+		// View references to use in the controller
 		WhatsFresh.detailView = this.getDetailView();
-		WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
-		// Story store variables used in the info and specific windows
-		WhatsFresh.StoryStore = Ext.getStore('Story');
+		WhatsFresh.homeView = this.getHomeView();
+		WhatsFresh.infoView = this.getInfoView();
+		WhatsFresh.listView = this.getListView();
+		WhatsFresh.productDetailView = this.getProductdetailView();
 		WhatsFresh.specificView = this.getSpecificView();
-		WhatsFresh.INimage = WhatsFresh.specificView.getComponent('infoimage');
-		WhatsFresh.SVcaption = WhatsFresh.specificView.getComponent('caption');
-		WhatsFresh.SVimage = WhatsFresh.specificView.getComponent('specimage');
-		WhatsFresh.SVvideo = WhatsFresh.specificView.getComponent('video1');
-		WhatsFresh.SVimage.hide();
-		WhatsFresh.SVvideo.hide();
 
-            Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
-            Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
-            Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
+        // Store references for use in the controller
+		WhatsFresh.LocationStore = Ext.getStore('Location');
+		WhatsFresh.ProductStore = Ext.getStore('Product');
+		WhatsFresh.ProductListStore = Ext.getStore('ProductList');
+		WhatsFresh.StoryStore = Ext.getStore('Story');
+		WhatsFresh.VendorStore = Ext.getStore('Vendor');
+		WhatsFresh.VendorInventoryStore = Ext.getStore('VendorInventory');
 
-            WhatsFresh.detailView = this.getDetailView();
-	    WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
+		// Components
+			// ON: List page
+			WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
+			console.log(WhatsFresh.statmap);		
+			
+			// ON: Info page
+			WhatsFresh.INimage = WhatsFresh.infoView.getComponent('infoimage');
+			WhatsFresh.INhistory = WhatsFresh.infoView.getComponent('history');
+
+			// ON: Specific page		
+			WhatsFresh.SVcaption = WhatsFresh.specificView.getComponent('caption');
+			WhatsFresh.SVimage = WhatsFresh.specificView.getComponent('specimage');
+			WhatsFresh.SVvideo = WhatsFresh.specificView.getComponent('video1');
+			WhatsFresh.SVimage.hide();
+			WhatsFresh.SVvideo.hide();
+
+		// console.log("launch");
+		// Get store vars    
+		Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
+        Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
+        Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
+
+		
 	},
     onLocationStoreRefresh: function(){
         console.log("Location store data has changed, selectfield should be updated.");
