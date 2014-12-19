@@ -85,6 +85,7 @@ Ext.define('WhatsFresh.view.ListView', {
 	},
 	onBackHomeButtonTap: function(){
 		console.log('onBackButtonTap');
+		WhatsFresh.previousListItem = null;
 		this.fireEvent('viewBackHomeCommand', this);
 	},
 	onDetailButtonTap: function(){
@@ -93,7 +94,14 @@ Ext.define('WhatsFresh.view.ListView', {
 	},
 	onLpagelistHighlight: function(list, record, target, index, evt, options){
 		console.log('viewLpageListHighlightCommand');
-		this.fireEvent('viewLpageListHighlightCommand', this, record, index);
+		WhatsFresh.currentListItem = index.data.name;
+		// this way if a user has previously highlighted a list item, when they tap it again, they see its details
+		if(WhatsFresh.currentListItem === WhatsFresh.previousListItem){
+			this.fireEvent('viewLpageListItemCommand', this, record, index);			
+		}else{
+			this.fireEvent('viewLpageListHighlightCommand', this, record, index);
+			WhatsFresh.previousListItem = WhatsFresh.currentListItem;
+		}		
 	},
 	onLpagelistDisclose: function(list, record, target, index, evt, options){
 		console.log('viewLpageListItemCommand');
