@@ -632,6 +632,8 @@ Ext.define('WhatsFresh.controller.List', {
 				};
 				storeInventory.add(newpro);
 			}
+			// set src for static map
+			WhatsFresh.statmap.setSrc( this.buildStaticMap( index.data ) );
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -786,7 +788,9 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			// Sets the title of the header on detail page
 			Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
+			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.items.items[1]._data) );
 			if(WhatsFresh.backFlag === 0){
+
 				// adding a log item to the "stack"
 				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 				WhatsFresh.pvalue[WhatsFresh.pcount] = index; 
@@ -802,11 +806,22 @@ Ext.define('WhatsFresh.controller.List', {
 	        			num2 = w;
 	        		}
 	        	}
-	       		detailView.items.items[2].select(storeInventory.data.all[num2]);
+	        	console.log(detailView.items);
+	       		detailView.items.items[3].select(storeInventory.data.all[num2]);
 	        	Ext.Viewport.animateActiveItem(detailView, this.slideRightTransition);
 	        }
 		}		
 	},
+    
+    buildStaticMap: function(vendor){
+        var destination = 'http://maps.googleapis.com/maps/api/staticmap?center=' + 
+            vendor.lat +','+ vendor.lng +
+            '&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C' +
+            vendor.lat +','+ vendor.lng;
+        
+        return destination;
+    },
+    
 	// Functions dealing with 
 	// INFO 
 	// stuff	######################################################################################	INFO
@@ -838,6 +853,9 @@ Ext.define('WhatsFresh.controller.List', {
             Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
             Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
             Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
+
+            WhatsFresh.detailView = this.getDetailView();
+	    WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
 	},
     onLocationStoreRefresh: function(){
         console.log("Location store data has changed, selectfield should be updated.");
