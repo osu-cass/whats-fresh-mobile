@@ -633,10 +633,7 @@ Ext.define('WhatsFresh.controller.List', {
 				storeInventory.add(newpro);
 			}
 			// set src for static map
-			console.log("lat and lng for the static map:");
-			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ index.data.lat +','+ index.data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ index.data.lat +','+ index.data.lng;
-			console.log(dest);
-			WhatsFresh.statmap.setSrc(dest);
+			WhatsFresh.statmap.setSrc( this.buildStaticMap( index.data ) );
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -791,11 +788,7 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			// Sets the title of the header on detail page
 			Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
-			console.log('Checking index for location data');
-			console.log(detailView);
-			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ detailView.items.items[1]._data.lat +','+ detailView.items.items[1]._data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ detailView.items.items[1]._data.lat +','+ detailView.items.items[1]._data.lng;
-			console.log(dest);
-			WhatsFresh.statmap.setSrc(dest);
+			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.items.items[1]._data) );
 			if(WhatsFresh.backFlag === 0){
 
 				// adding a log item to the "stack"
@@ -819,6 +812,16 @@ Ext.define('WhatsFresh.controller.List', {
 	        }
 		}		
 	},
+    
+    buildStaticMap: function(vendor){
+        var destination = 'http://maps.googleapis.com/maps/api/staticmap?center=' + 
+            vendor.lat +','+ vendor.lng +
+            '&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C' +
+            vendor.lat +','+ vendor.lng;
+        
+        return destination;
+    },
+    
 	// Functions dealing with 
 	// INFO 
 	// stuff	######################################################################################	INFO
