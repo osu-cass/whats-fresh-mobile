@@ -709,7 +709,7 @@ Ext.define('WhatsFresh.controller.List', {
 			this.onViewDpageListItemCommand(a, b, WhatsFresh.pvalue[WhatsFresh.pcount-2]);
 		}
 	},
-	onViewInfoCommand: function(){
+	onViewInfoCommand: function(index){
 		console.log('In controller(detail): View Info Page Button');
 		console.log(index);
 		console.log(WhatsFresh.pcount);
