@@ -35,6 +35,7 @@ Ext.define('WhatsFresh.controller.List', {
 				viewBackListCommand: 'onViewBackListCommand',
 				viewBackHomeCommand: 'onViewBackHomeCommand',
 				viewInfoCommand: 'onViewInfoCommand',
+				intentFunction: 'onIntentFunction',
 				viewDpageListItemCommand: 'onViewDpageListItemCommand'
 			},
 			productdetailView: {
@@ -634,6 +635,7 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			// set src for static map
 			WhatsFresh.statmap.setSrc( this.buildStaticMap( index.data ) );
+			WhatsFresh.statmap.coords = index.data;
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -671,6 +673,7 @@ Ext.define('WhatsFresh.controller.List', {
 		//
 		WhatsFresh.infowindowFlag = 0;		
 	},
+	//navigate outside of the app
 	// Functions dealing with 
 	// DETAIL
 	// stuff	######################################################################################	DETAIL
@@ -814,13 +817,26 @@ Ext.define('WhatsFresh.controller.List', {
 	},
     
     buildStaticMap: function(vendor){
+		console.log('build map');
         var destination = 'http://maps.googleapis.com/maps/api/staticmap?center=' + 
             vendor.lat +','+ vendor.lng +
             '&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C' +
             vendor.lat +','+ vendor.lng;
+		console.log(vendor.lat);
         
         return destination;
     },
+	//this lets you click the static map built above and receive directions.
+	onIntentFunction: function(index){
+		console.log(index.coords.lat);
+		if(navigator.userAgent.match(/(Android)/)){
+			navigator.app.loadUrl('https://maps.google.com/?daddr=' + index.coords.lat + ',' + index.coords.lng, {openExternal: true});
+		}else if(navigator.userAgent.match(/(ios)/)){
+			window.open("maps:");
+		}else {
+			window.open('https://maps.google.com?daddr=' + index.coords.lat + ',' + index.coords.lng);
+		}
+	},
     
 	// Functions dealing with 
 	// INFO 
