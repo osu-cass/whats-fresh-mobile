@@ -120,13 +120,23 @@ Ext.define('WhatsFresh.controller.List', {
 		// then we check to see if a product is chosen, if one is we sort by product
 		console.log('In controller(home): Drop Down list Products');
 		// console.log(record);
+		var key = 0;
+		var ProdStore = Ext.getStore('Product');
+		if(key === 0){
+			ProdStore.insert(0, [
+				{
+					name: 'Please choose a product',
+					id: 0
+				}
+			]);
+			key = 1;
+		}
 		console.log('Product is: '+ record._value.data.name +'\n'); 
 		WhatsFresh.product = record._value.data.name;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 		// console.log(store.data.all);
 		// console.log(store);
-
             this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
 
 	    var homeView = this.getHomeView();
@@ -664,6 +674,7 @@ Ext.define('WhatsFresh.controller.List', {
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
+			WhatsFresh.pname = index.data.name;
         	WhatsFresh.pcount = ++WhatsFresh.pcount;
 			Ext.Viewport.animateActiveItem(productdetailView, this.slideLeftTransition);
 		}
@@ -698,9 +709,74 @@ Ext.define('WhatsFresh.controller.List', {
 			this.onViewDpageListItemCommand(a, b, WhatsFresh.pvalue[WhatsFresh.pcount-2]);
 		}
 	},
-	onViewInfoCommand: function(){
+	onViewInfoCommand: function(index){
 		console.log('In controller(detail): View Info Page Button');
-		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
+		console.log(index);
+		console.log(WhatsFresh.pcount);
+		// need to then get the index data item from the product store, so that I can populate the story store correctly
+		console.log(WhatsFresh.ProductStore);
+		console.log(WhatsFresh.pname);
+		for(i = 0; i < WhatsFresh.ProductStore.data.items.length; i++){
+			if(WhatsFresh.pname === WhatsFresh.ProductStore.data.items[i].data.name){
+				WhatsFresh.pnameData = WhatsFresh.ProductStore.data.items[i].data;
+				console.log(WhatsFresh.StoryStore);
+				console.log("the story id");
+				console.log(WhatsFresh.ProductStore.data.items[i].data.story);
+				if(WhatsFresh.ProductStore.data.items[i].data.story === null){
+					console.log("No story id");
+					var histr = {
+						hist: "Sorry, no educational data exists for this product at this time"
+					};
+					WhatsFresh.INhistory.setData(histr);
+					// remove caption
+					var caption = {
+						cap: null
+					};
+					WhatsFresh.SVcaption.setData(caption);
+					WhatsFresh.INimage.hide();
+					WhatsFresh.INlist.hide();
+					Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
+				}else{
+					WhatsFresh.INimage.show();
+					WhatsFresh.INlist.show();
+					// this store load doesn't seem to be working, it is probably because we have not reloaded the store yet
+					WhatsFresh.StoryStore._proxy._url = 'http://seagrant-staging-api.osuosl.org/1/stories/'+WhatsFresh.ProductStore.data.items[i].data.story;
+					WhatsFresh.StoryStore.load();
+					WhatsFresh.StoryStore.on('load', function(){
+						console.log("story loaded");
+						
+					   if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
+							WhatsFresh.INimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
+							var caption = {
+								cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
+							};
+						}else{
+							// Set caption
+							var avail = {
+								avalible: "No image avalible"
+							};
+							WhatsFresh.INimage.hide();
+						}
+
+					    var histr = {
+					    	hist: WhatsFresh.StoryStore.data.items[0].data.history
+					    };
+					    WhatsFresh.INhistory.setData(histr);
+
+						Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
+					})
+				}
+			}
+		}
+		if(WhatsFresh.path[WhatsFresh.pcount - 1] === 'detail'){
+			WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';			
+	    }
+	    if(WhatsFresh.path[WhatsFresh.pcount - 1] === 'productdetail'){
+	    	WhatsFresh.path[WhatsFresh.pcount] = 'detail';
+	    }
+	    WhatsFresh.pvalue[WhatsFresh.pcount] = "info";
+	    WhatsFresh.pcount = ++WhatsFresh.pcount;
+
 	},	
 	onViewDpageListItemCommand: function(record, list, index){
 		console.log('In controller(detail): Select list item');
@@ -750,20 +826,28 @@ Ext.define('WhatsFresh.controller.List', {
 			if(WhatsFresh.backFlag === 0){
 				WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';
 				WhatsFresh.pvalue[WhatsFresh.pcount] = index;
+				WhatsFresh.pname = index.data.name;
+				console.log("Here is the index");
+				console.log(index);
 	        	WhatsFresh.pcount = ++WhatsFresh.pcount;
 	        	Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideLeftTransition);
 	        }
 	        if(WhatsFresh.backFlag === 1){
 	        	WhatsFresh.pcount = --WhatsFresh.pcount;
 	        	WhatsFresh.backFlag = 0;
-        	   	for(w = 0; w < storeInventory.data.all.length; w++){
-	        		// check to see if list item name is equal to the list item that was previously selected
-	        		if(storeInventory.data.all[w].data.name === WhatsFresh.pvalue[WhatsFresh.pcount].data.name){
-	        			num2 = w;
-	        		}
-	        	}
-		        productdetailView.items.items[2].select(storeInventory.data.all[num2]);
-	        	Ext.Viewport.animateActiveItem(productdetailView, this.slideRightTransition);				
+	        	if(WhatsFresh.pvalue[WhatsFresh.pcount] !== 'info'){
+	        	   	for(w = 0; w < storeInventory.data.all.length; w++){
+		        		// check to see if list item name is equal to the list item that was previously selected
+		        		console.log(storeInventory.data.all[w].data.name);
+		        		console.log(WhatsFresh.pvalue[WhatsFresh.pcount].data.name);
+		        		if(storeInventory.data.all[w].data.name === WhatsFresh.pvalue[WhatsFresh.pcount].data.name){
+		        			num2 = w;
+		        		}
+		        	}
+		        	productdetailView.items.items[3].select(storeInventory.data.all[num2]);
+		        }	
+		        console .log("returning to the products detail page from the "+ WhatsFresh.path[WhatsFresh.pcount] +" page");	        
+	        	Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideRightTransition);	
 	        }
 		}else if(WhatsFresh.path[WhatsFresh.pcount - 1] === 'productdetail'){
 			console.log('Leaving the productdetail page to see the detail page');
@@ -800,14 +884,16 @@ Ext.define('WhatsFresh.controller.List', {
 	       	if(WhatsFresh.backFlag === 1){
 	       		WhatsFresh.pcount = --WhatsFresh.pcount;
 	       		WhatsFresh.backFlag = 0;
-	       		for(w = 0; w < storeInventory.data.all.length; w++){
-	        		// check to see if list item name is equal to the list item that was previously selected
-	        		if(storeInventory.data.all[w].data.name === WhatsFresh.pvalue[WhatsFresh.pcount].data.name){
-	        			num2 = w;
-	        		}
-	        	}
-	        	console.log(detailView.items);
-	       		detailView.items.items[3].select(storeInventory.data.all[num2]);
+	       		if(WhatsFresh.pvalue[WhatsFresh.pcount] !== 'info'){
+	        	   for(w = 0; w < storeInventory.data.all.length; w++){
+		        		// check to see if list item name is equal to the list item that was previously selected
+		        		if(storeInventory.data.all[w].data.name === WhatsFresh.pvalue[WhatsFresh.pcount].data.name){
+		        			num2 = w;
+		        		}
+		        	}
+		        	console.log(detailView.items);
+		       		detailView.items.items[3].select(storeInventory.data.all[num2]);
+		        }
 	        	Ext.Viewport.animateActiveItem(detailView, this.slideRightTransition);
 	        }
 		}		
@@ -827,7 +913,17 @@ Ext.define('WhatsFresh.controller.List', {
 	// stuff	######################################################################################	INFO
 	onViewBackDetailCommand: function(){
 		console.log('In controller(info): Back to Detail Page Button');
-		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideRightTransition);
+		var a, b;
+		if((WhatsFresh.path[WhatsFresh.pcount - 2] === 'detail') | (WhatsFresh.path[WhatsFresh.pcount - 2] === 'productdetail')){
+			// WhatsFresh.pcount = WhatsFresh.pcount-1;	
+			WhatsFresh.backFlag = 1;
+			console.log("path variable");
+			console.log(WhatsFresh.path[WhatsFresh.pcount - 2]);
+			// console.log('PCOUNT');
+			// console.log(WhatsFresh.pcount);		
+			this.onViewDpageListItemCommand(a, b, WhatsFresh.pvalue[WhatsFresh.pcount-2]);
+		}
+		// Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideRightTransition);
 	},
 	onViewSpecificCommand: function(){
 		console.log('In controller(info): View Specific Page Button');
@@ -837,6 +933,83 @@ Ext.define('WhatsFresh.controller.List', {
 		console.log('In controller(info): Selected');
 		// Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
 		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
+
+		// console.log(WhatsFresh.StoryStore.data.items[0].data);
+		if(WhatsFresh.pnameData.story === null){
+			// Do nothing, because we have already set all data to null
+		}else{
+			switch(index.data.listItem){
+				case "Season":
+					var caption = {
+						cap: WhatsFresh.StoryStore.data.items[0].data.season
+					};
+					break;
+				case "Products":
+					var caption = {
+						cap: WhatsFresh.StoryStore.data.items[0].data.products
+					};
+					break;
+				case "Buying":
+					var caption = {
+						cap: WhatsFresh.StoryStore.data.items[0].data.buying
+					};
+					break;
+				case "History":
+					if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
+						// Then we show the image
+						console.log("Now you see the image");					
+						// Here we set the image source
+						WhatsFresh.SVimage.show();
+						console.log(WhatsFresh.SVimage);
+						// OSL will send us a full string, so we won't have to apend part of the url
+						WhatsFresh.SVimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
+						// WhatsFresh.SVimage.setSrc('http://michellesread.com/files/2013/04/smile.jpg');
+						// SVimage.setSrc(image);
+						// Finally we print the caption under the image
+						console.log("Caption is included");
+						// Set caption
+						var caption = {
+							cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
+						};
+						// We can later deal with multiple images, by using a for loop to set all of the images
+						// to show and to populate thier specific image and caption. In the back command, we will
+						// just use a for loop to set their images to hide and their captions to null.
+					}else{
+						// Set caption
+						var caption = {
+							cap: "No image avalible"
+						};
+					}
+					break;
+				case "Preparation":
+					// use tpl to print out the prepataion text/data
+					// Set caption
+					var caption = {
+						cap: WhatsFresh.StoryStore.data.items[0].data.preparing
+					};
+					break;
+				case "Videos":
+					if(WhatsFresh.StoryStore.data.items[0].data.videos.length > 0){
+						WhatsFresh.SVvideo.show();
+						console.log('set the video');
+						console.log(WhatsFresh.SVvideo);
+						// WhatsFresh.SVvideo._url[0] = WhatsFresh.StoryStore.data.items[0].data.videos[0].link;
+					
+						var caption = {
+							cap: WhatsFresh.StoryStore.data.items[0].data.videos[0].caption
+						};
+					}else{
+						// Set caption
+						var caption = {
+							cap: "No video avalible"
+						};
+					}
+					break;
+
+			}
+			WhatsFresh.SVcaption.setData(caption);
+		}
+		WhatsFresh.IListItem = index.data.listItem;
 		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
 	},
 	// Functions dealing with
@@ -844,18 +1017,84 @@ Ext.define('WhatsFresh.controller.List', {
 	// stuff	######################################################################################	SPECIFIC
 	onViewBackInfoCommand: function(){
 		console.log('In controller(specific): Back to Info Page Button');
+
+		switch(WhatsFresh.IListItem){
+			// case "History":
+			// 	// Remove the image source
+			// 	WhatsFresh.SVimage.hide();
+			// 	WhatsFresh.SVimage.setSrc('');				
+			// 	break;
+			case "Videos":
+				WhatsFresh.SVvideo._url[0] = null;
+				WhatsFresh.SVvideo.hide();
+				break;
+		}
+		// remove caption
+		var caption = {
+			cap: null
+		};
+		WhatsFresh.SVcaption.setData(caption);
 		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideRightTransition);
 	},
 	// Initialize functions
 	launch: function(){
 		this.callParent(arguments);
-		// console.log("launch");
-            Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
-            Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
-            Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
 
-            WhatsFresh.detailView = this.getDetailView();
-	    WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
+		// Variables
+			// FOR: back button functionality
+			WhatsFresh.pvalue = [];
+			WhatsFresh.path = [];
+			WhatsFresh.pcount = 0;
+			WhatsFresh.backFlag = 0;
+			// FOR: checkboxes 
+			WhatsFresh.use = 1;
+			WhatsFresh.use2 = 1;
+			WhatsFresh.infowindowFlag = 0;
+
+		// Transitions
+		WhatsFresh.slideLeft = this.slideLeftTransition;
+		WhatsFresh.slideRight = this.slideRightTransition;
+
+		// View references to use in the controller
+		WhatsFresh.detailView = this.getDetailView();
+		WhatsFresh.homeView = this.getHomeView();
+		WhatsFresh.infoView = this.getInfoView();
+		WhatsFresh.listView = this.getListView();
+		WhatsFresh.productDetailView = this.getProductdetailView();
+		WhatsFresh.specificView = this.getSpecificView();
+
+        // Store references for use in the controller
+		WhatsFresh.LocationStore = Ext.getStore('Location');
+		WhatsFresh.ProductStore = Ext.getStore('Product');
+		WhatsFresh.ProductListStore = Ext.getStore('ProductList');
+		WhatsFresh.StoryStore = Ext.getStore('Story');
+		WhatsFresh.VendorStore = Ext.getStore('Vendor');
+		WhatsFresh.VendorInventoryStore = Ext.getStore('VendorInventory');
+
+		// Components
+			// ON: List page
+			WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
+			console.log(WhatsFresh.statmap);		
+			
+			// ON: Info page
+			WhatsFresh.INimage = WhatsFresh.infoView.getComponent('infoimage');
+			WhatsFresh.INlist = WhatsFresh.infoView.getComponent('Ipagelist');
+			WhatsFresh.INhistory = WhatsFresh.infoView.getComponent('history');
+
+			// ON: Specific page		
+			WhatsFresh.SVcaption = WhatsFresh.specificView.getComponent('caption');
+			WhatsFresh.SVimage = WhatsFresh.specificView.getComponent('specimage');
+			WhatsFresh.SVvideo = WhatsFresh.specificView.getComponent('video1');
+			WhatsFresh.SVimage.hide();
+			WhatsFresh.SVvideo.hide();
+
+		// console.log("launch");
+		// Get store vars    
+		Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
+        Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
+        Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
+
+		
 	},
     onLocationStoreRefresh: function(){
         console.log("Location store data has changed, selectfield should be updated.");
@@ -873,16 +1112,5 @@ Ext.define('WhatsFresh.controller.List', {
     },
 	init: function(){
 		this.callParent(arguments);
-
-            // Initializing UI globals
-		WhatsFresh.pvalue = [];
-		WhatsFresh.path = [];
-		WhatsFresh.pcount = 0;
-		WhatsFresh.backFlag = 0;
-		WhatsFresh.use = 1;
-		WhatsFresh.use2 = 1;
-		WhatsFresh.infowindowFlag = 0;
-
-		// console.log("init");
 	}
 });

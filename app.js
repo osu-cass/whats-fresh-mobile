@@ -22,8 +22,8 @@ Ext.application({
     name: 'WhatsFresh',
 
     controllers: ["List"],
-    models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists"],
-    stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList"],
+    models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists", "Stories"],
+    stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList", "Story"],
     views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail"],
 
 
