@@ -52,7 +52,7 @@ describe('WhatsFresh.store.Distance',function() {
         expect(store.data.items[10].data.val).toEqual(10);
     });
     it('Is populated with distance data', function(){
-        expect(store.data.items{11].data.val).toEqual(5);
+        expect(store.data.items[11].data.val).toEqual(5);
     });
 
 });
