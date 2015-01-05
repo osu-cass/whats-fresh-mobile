@@ -11,11 +11,10 @@
   <script type="text/javascript" src="lib/jasmine-2.0.1/jasmine-html.js"></script>
   <script type="text/javascript" src="lib/jasmine-2.0.1/boot.js"></script>
 
-  <!-- ExtJS -->
+  <!-- ExtJS, Ajax mocking, and test data resources -->
   <script type="text/javascript" src="../../touch/sencha-touch-all-debug.js"></script>
-
-  <!-- include source files here... -->
   <script type="text/javascript" src="spec/javascripts/helpers/mock-ajax.js"></script>
+  <script type="text/javascript" src="spec/javascripts/helpers/test-data.js"></script>
 
   <!-- Models --> 
   <script type="text/javascript" src="../../app/model/Locations.js"></script>
@@ -31,20 +30,11 @@
   <script type="text/javascript" src="../../app/store/Vendor.js"></script>
   <script type="text/javascript" src="../../app/store/VendorInventory.js"></script>
 
-  <!-- Views -->
+  <!-- Utils -->
+  <script type="text/javascript" src="../../app/util/Search.js"></script>
 
   <!-- Controller -->
   <script type="text/javascript" src="../../app/controller/List.js"></script>
-
-  <!--
-  <script type="text/javascript" src="..\app/view/Home.js"></script>
-  <script id="microloader" type="text/javascript" src="..\.sencha/app/microloader/development.js"></script>
-  <script type="text/javascript" src="..\app/view/Detail.js"></script>
-  <script type="text/javascript" src="..\app/view/Location.js"></script>
-  <script type="text/javascript" src="..\app/controller/List.js"></script>
-  <script type="text/javascript" src="..\app.js"></script>
-  <script type="text/javascript" src="..\touch/sencha-touch-all-debug.js"></script>
-  -->
 
   <!-- include spec files here... -->
   <script type="text/javascript" src="spec/javascripts/sanitySpec.js"></script>
@@ -62,8 +52,9 @@
   <script type="text/javascript" src="spec/javascripts/store/productSpec.js"></script>
   <script type="text/javascript" src="spec/javascripts/store/vendorSpec.js"></script>
   <script type="text/javascript" src="spec/javascripts/store/vendorInventorySpec.js"></script>
- 
 
+  <!-- Util tests -->
+  <script type="text/javascript" src="spec/javascripts/util/searchSpec.js"></script>
 
 </head>
 
