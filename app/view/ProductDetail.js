@@ -45,6 +45,7 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 				xtype: 'button',
 				ui: 'action',
 				iconCls: 'info',
+				id: 'InfoButton',
 				itemId: 'infoButton'
 			},			
 			{
@@ -58,6 +59,7 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 				// the list screen. Perhaps we will have to deal with the products root
 				// of the vendor selected, and link the vendors products to the product store.
 				xtype: 'list',
+				id: 'ProductDetailList',
 				store: 'VendorInventory',
 				itemId: 'Dpagelist',
 				loadingText: 'Loading Notes ...',

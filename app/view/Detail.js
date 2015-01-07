@@ -42,6 +42,7 @@ Ext.define('WhatsFresh.view.Detail', {
 			},
 			{
 				xtype: 'image',
+				id: 'StaticMap',
 				itemId: 'staticmap',
 				// src: 'http://maps.googleapis.com/maps/api/staticmap?center=44.632442,-124.057761&zoom=14&size=200x200'
 			},					
@@ -56,6 +57,7 @@ Ext.define('WhatsFresh.view.Detail', {
 				// the list screen. Perhaps we will have to deal with the products root
 				// of the vendor selected, and link the vendors products to the product store.
 				xtype: 'list',
+				id: 'DetailList',
 				store: 'VendorInventory',
 				itemId: 'Dpagelist',
 				loadingText: 'Loading Notes ...',

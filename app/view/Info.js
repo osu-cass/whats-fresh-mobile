@@ -38,6 +38,7 @@ Ext.define('WhatsFresh.view.Info', {
 			},
 			{	
 				xtype: 'image',
+				id: 'InfoImage',
 				itemId: 'infoimage'
 				// src: '{im}'
 				// src: 'http://michellesread.com/files/2013/04/smile.jpg'
@@ -56,6 +57,7 @@ Ext.define('WhatsFresh.view.Info', {
 					}
 				},
 				xtype: 'list',
+				id: 'InfoList',
 				store: 'Education',
 				itemId: 'Ipagelist',
 				loadingText: 'Loading Notes ...',

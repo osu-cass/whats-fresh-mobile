@@ -35,6 +35,7 @@ Ext.define('WhatsFresh.view.ListView', {
 			},
 			{
 				xtype: 'SeaGrantMap',
+				id: 'ListMap',
 				itemId: 'listmap'
 			},					
 			{
@@ -47,6 +48,7 @@ Ext.define('WhatsFresh.view.ListView', {
 				// I assumed that the commented out lines would make my list dynamic, but they are not doing what I expected
 				xtype: 'list',
 				itemId: 'Lpagelist',
+				id: 'ListPageList',
 				// store: 'Vendor',
 				// store: WhatsFresh.tplStore,
 				loadingText: 'Loading Notes ...',
