@@ -7,47 +7,53 @@
 // Custom code goes here..
 
 //LIST PAGE ELEMENT HEIGHTS
-#ext-SeaGrantMap-1{
-	height: 50%;
-	
-}
 
-#ext-SeaGrantMap-2{
-	height: 50%;
-
-}
-
-#ext-image-1{
+#StaticMap{
 	left: 50%;
 	top: 2.5%;
 	height: 45%;
 	width: 45%;
 }
 
+#InfoImage{
+	height: 20%;
+	width: 100%;
+//	background-color: green;
+	min-width: 320px;
+}
 
-//LIST PAGE ELEMENT HEIGHTS
 
-#ext-list-1{
+#InfoButton{
+	top: 40%;
+	width: 50px;
+	height: 10%;
+}
+
+div.history{
+//	position: relative;
+	margin-top: 20%;
+}
+
+//LIST ELEMENT HEIGHTS
+
+#ListPageList{
 	height: 50%;
 	top: 50%;
 }	
-#ext-list-2{
+#DetailList{
 	height: 50%;
 	top: 50%;
 }	
-#ext-list-3{
+#ProductDetailList{
 	height: 50%;
 	top: 50%;
-}	
+}
+#InfoList{
+	max-height: 50%;
+	top: 50%;
+}		
 
 // MAP STYLE
-#ext-SeaGrantMap-1{
-	height: 50%;	
-}
-
-#ext-SeaGrantMap-2{
-	height: 50%;
-}
 
 // LIST VIEW MAP PIN INFO STYLE
 
