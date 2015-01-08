@@ -12,12 +12,14 @@ describe('WhatsFresh.util.Search', function () {
         expect(WhatsFresh.util.Search.options.position).toBeNull();
         expect(WhatsFresh.util.Search.options.distance).toBeNull();
         expect(WhatsFresh.util.Search.options.location).toBeNull();
+        expect(WhatsFresh.util.Search.options.product).toBeNull();
         });
 
     it('has filter-by logic functions', function() {
         var Search = WhatsFresh.util.Search;
         expect(Search.canFilterByDistance).toBeDefined();
         expect(Search.canFilterByLocation).toBeDefined();
+        expect(Search.canFilterByProduct).toBeDefined();
         });
 
     it('can create a store-filtering function', function() {
@@ -37,6 +39,7 @@ describe('WhatsFresh.util.Search', function () {
             Search.options.position = null;
             Search.options.distance = null;
             Search.options.location = null;
+            Search.options.product  = null;
             // These may be overridden by testcase beforeEach
             });
 
@@ -50,15 +53,21 @@ describe('WhatsFresh.util.Search', function () {
                 expect(Search.canFilterByLocation()).toBe(false);
                 });
 
-            it('includes any point of interest', function() {
+            it('includes any vendor', function() {
                 var filter = Search.buildFilterFunction();
-                var anyPOI = TestData.PointOfInterestArray[0];
-                expect(filter(anyPOI)).toBe(true);
+                var anyVendor = TestData.VendorArray[0];
+                expect(filter(anyVendor)).toBe(true);
                 });
+
+            it('includes any product', function() {
+                var filter = Search.buildFilterFunction();
+                var anyProduct = TestData.VendorArray[0];
+                expect(filter(anyProduct)).toBe(true);
+            });
 
             });
 
-        describe('where position and distance are set', function () {
+        describe('where position and distance are set and product is not set', function () {
 
             var filter;
 
@@ -89,17 +98,17 @@ describe('WhatsFresh.util.Search', function () {
                 });
 
             it('includes a point within 50 miles', function () {
-                var model = TestData.modelify(TestData.PointOfInterestArray[0]);
+                var model = TestData.modelify(TestData.VendorArray[0]);
                 expect(filter(model)).toBe(true);
                 });
 
             it('includes a point still within 50 miles', function () {
-                var model = TestData.modelify(TestData.PointOfInterestArray[1]);
+                var model = TestData.modelify(TestData.VendorArray[1]);
                 expect(filter(model)).toBe(true);
                 });
 
             it('excludes a point beyond 50 miles', function () {
-                var model = TestData.modelify(TestData.PointOfInterestArray[2]);
+                var model = TestData.modelify(TestData.VendorArray[2]);
                 expect(filter(model)).toBe(false);
                 });
 
@@ -127,17 +136,17 @@ describe('WhatsFresh.util.Search', function () {
                 });
 
             it('includes a point with same city name', function () {
-                var model = TestData.modelify(TestData.PointOfInterestArray[2]);
+                var model = TestData.modelify(TestData.VendorArray[2]);
                 expect(filter(model)).toBe(true);
                 });
 
             it('excludes a point with different city name', function () {
-                var model = TestData.modelify(TestData.PointOfInterestArray[1]);
+                var model = TestData.modelify(TestData.VendorArray[1]);
                 expect(filter(model)).toBe(false);
                 });
 
             it('excludes a point with no city name', function () {
-                var model = TestData.modelify(TestData.PointOfInterestArray[0]);
+                var model = TestData.modelify(TestData.VendorArray[0]);
                 expect(filter(model)).toBe(false);
                 });
 
@@ -175,12 +184,12 @@ describe('WhatsFresh.util.Search', function () {
                 });
 
             it('includes a point within 50 miles with no city', function () {
-                var model = TestData.modelify(TestData.PointOfInterestArray[0]);
+                var model = TestData.modelify(TestData.VendorArray[0]);
                 expect(filter(model)).toBe(true);
                 });
 
             it('excludes a point beyond 50 miles with same city', function () {
-                var model = TestData.modelify(TestData.PointOfInterestArray[2]);
+                var model = TestData.modelify(TestData.VendorArray[2]);
                 expect(filter(model)).toBe(false);
                 });
 

@@ -1,63 +1,65 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Jasmine Spec Runner v2.0.1</title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Jasmine Spec Runner v2.0.1</title>
 
-  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.1/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.1/jasmine.css">
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.1/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.1/jasmine.css">
 
-  <script type="text/javascript" src="lib/jasmine-2.0.1/jasmine.js"></script>
-  <script type="text/javascript" src="lib/jasmine-2.0.1/jasmine-html.js"></script>
-  <script type="text/javascript" src="lib/jasmine-2.0.1/boot.js"></script>
+    <script type="text/javascript" src="lib/jasmine-2.0.1/jasmine.js"></script>
+    <script type="text/javascript" src="lib/jasmine-2.0.1/jasmine-html.js"></script>
+    <script type="text/javascript" src="lib/jasmine-2.0.1/boot.js"></script>
 
-  <!-- ExtJS, Ajax mocking, and test data resources -->
-  <script type="text/javascript" src="../../touch/sencha-touch-all-debug.js"></script>
-  <script type="text/javascript" src="spec/javascripts/helpers/mock-ajax.js"></script>
-  <script type="text/javascript" src="spec/javascripts/helpers/test-data.js"></script>
+    <!-- ExtJS, Ajax mocking, and test data resources -->
+    <script type="text/javascript" src="../../touch/sencha-touch-all-debug.js"></script>
+    <script type="text/javascript" src="spec/javascripts/helpers/mock-ajax.js"></script>
+    <script type="text/javascript" src="spec/javascripts/helpers/test-data.js"></script>
 
-  <!-- Models --> 
-  <script type="text/javascript" src="../../app/model/Locations.js"></script>
-  <script type="text/javascript" src="../../app/model/Products.js"></script>
-  <script type="text/javascript" src="../../app/model/Vendors.js"></script>
-  <script type="text/javascript" src="../../app/model/VendorInventories.js"></script>
+    <!-- Models --> 
+    <script type="text/javascript" src="../../app/model/Locations.js"></script>
+    <script type="text/javascript" src="../../app/model/Products.js"></script>
+    <script type="text/javascript" src="../../app/model/Vendors.js"></script>
+    <script type="text/javascript" src="../../app/model/VendorInventories.js"></script>
 
-  <!-- Stores -->
-  <script type="text/javascript" src="../../app/store/Distance.js"></script>
-  <script type="text/javascript" src="../../app/store/Education.js"></script>
-  <script type="text/javascript" src="../../app/store/Location.js"></script>
-  <script type="text/javascript" src="../../app/store/Product.js"></script>
-  <script type="text/javascript" src="../../app/store/Vendor.js"></script>
-  <script type="text/javascript" src="../../app/store/VendorInventory.js"></script>
+    <!-- Stores -->
+    <script type="text/javascript" src="../../app/store/Distance.js"></script>
+    <script type="text/javascript" src="../../app/store/Education.js"></script>
+    <script type="text/javascript" src="../../app/store/Location.js"></script>
+    <script type="text/javascript" src="../../app/store/Product.js"></script>
+    <script type="text/javascript" src="../../app/store/Vendor.js"></script>
+    <script type="text/javascript" src="../../app/store/VendorInventory.js"></script>
 
-  <!-- Utils -->
-  <script type="text/javascript" src="../../app/util/Search.js"></script>
+    <!-- Utils -->
+    <script type="text/javascript" src="../../app/util/Geography.js"></script>
+    <script type="text/javascript" src="../../app/util/Search.js"></script>
 
-  <!-- Controller -->
-  <script type="text/javascript" src="../../app/controller/List.js"></script>
+    <!-- Controller -->
+    <script type="text/javascript" src="../../app/controller/List.js"></script>
 
-  <!-- include spec files here... -->
-  <script type="text/javascript" src="spec/javascripts/sanitySpec.js"></script>
-   <!-- Controller Testing Spec files -->
-  <script type="text/javascript" src="spec/javascripts/controller/listSpec.js"></script>
-  <!-- Model Testing Spec files -->
-  <script type="text/javascript" src="spec/javascripts/model/locationsSpec.js"></script>
-  <script type="text/javascript" src="spec/javascripts/model/productsSpec.js"></script>
-  <script type="text/javascript" src="spec/javascripts/model/vendorsSpec.js"></script>
-  <script type="text/javascript" src="spec/javascripts/model/vendorInventoriesSpec.js"></script>
-  <!-- Store Testing Spec files -->
-  <script type="text/javascript" src="spec/javascripts/store/distanceSpec.js"></script>
-  <script type="text/javascript" src="spec/javascripts/store/educationSpec.js"></script>
-  <script type="text/javascript" src="spec/javascripts/store/locationSpec.js"></script>
-  <script type="text/javascript" src="spec/javascripts/store/productSpec.js"></script>
-  <script type="text/javascript" src="spec/javascripts/store/vendorSpec.js"></script>
-  <script type="text/javascript" src="spec/javascripts/store/vendorInventorySpec.js"></script>
+    <!-- include spec files here... -->
+    <script type="text/javascript" src="spec/javascripts/sanitySpec.js"></script>
+    <!-- Controller Testing Spec files -->
+    <script type="text/javascript" src="spec/javascripts/controller/listSpec.js"></script>
+    <!-- Model Testing Spec files -->
+    <script type="text/javascript" src="spec/javascripts/model/locationsSpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/model/productsSpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/model/vendorsSpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/model/vendorInventoriesSpec.js"></script>
+    <!-- Store Testing Spec files -->
+    <script type="text/javascript" src="spec/javascripts/store/distanceSpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/store/educationSpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/store/locationSpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/store/productSpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/store/vendorSpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/store/vendorInventorySpec.js"></script>
 
-  <!-- Util tests -->
-  <script type="text/javascript" src="spec/javascripts/util/searchSpec.js"></script>
+    <!-- Util tests -->
+    <script type="text/javascript" src="spec/javascripts/util/geographySpec.js"></script>
+    <script type="text/javascript" src="spec/javascripts/util/searchSpec.js"></script>
 
-</head>
+  </head>
 
-<body>
-</body>
+  <body>
+  </body>
 </html>
