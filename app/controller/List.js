@@ -82,6 +82,8 @@ Ext.define('WhatsFresh.controller.List', {
 			    },
 			    failure: function() {
 			        console.log('something went wrong!');
+			        WhatsFresh.util.Messages.showLocationError();
+					this.getUseLocationToggle().setValue(0);
 			    }
 			});
 			
