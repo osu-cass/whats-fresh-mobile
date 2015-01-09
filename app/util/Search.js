@@ -25,9 +25,13 @@ Ext.define('WhatsFresh.util.Search', {
             var pos= singleton.options.position;
             var dist= singleton.options.distance;
             var loc= singleton.options.location;
-            
+            var prod= singleton.options.product;
+
             // Composable filters
             var hasProduct, isNear, isInCity;
+
+            // Discard placeholders
+            if (vendorStoreRecord.is_not_filterable) return false;
 
             // If position and distance are set, filter on those. If
             // not, include everything.
@@ -52,13 +56,20 @@ Ext.define('WhatsFresh.util.Search', {
 
             // If the product is set, filter. If not, include everything.
             if (singleton.canFilterByProduct()) {
-                // todo: iterate through vendor inventory and
-                // cross-filter w/products
+                var vendorProducts= vendorStoreRecord.get('products');
+
+                hasProduct= false;
+                for (var i = 0; i < vendorProducts.length; i++){
+                    if (prod.name === vendorProducts[i].name){
+                        hasProduct = true;
+                        break;
+                    }
+                }
             } else {
                 hasProduct= true;
             }
 
-            // Otherwise, include everything.
+            // Return all filters
             return isNear && isInCity && hasProduct;
         };
         return filter;
