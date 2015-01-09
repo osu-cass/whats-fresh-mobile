@@ -85,12 +85,21 @@ Ext.define('WhatsFresh.view.Detail', {
 				delegate: '#Dpagelist',
 				event: 'itemtap',
 				fn: 'onDpagelistDisclose'
+			},
+			{
+				delegate: '#staticmap',
+				event: 'tap',
+				fn: 'onIntentTap'
 			}
 		]
 	},
 	onBackButtonTap: function(){
 		console.log('onBackButtonTap');
 		this.fireEvent('viewBackListCommand', this);
+	},
+	onIntentTap: function(index){
+		console.log('map tap');
+		this.fireEvent('intentFunction', index);
 	},
 	onBackHomeButtonTap: function(){
 		console.log('onBackButtonTap');
