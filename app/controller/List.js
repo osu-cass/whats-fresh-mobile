@@ -4,7 +4,7 @@ isPresent = true;
 
 Ext.define('WhatsFresh.controller.List', {
 	extend: 'Ext.app.Controller',
-	requires: ['Ext.MessageBox', 'Ext.device.Geolocation', 'WhatsFresh.util.Link'],
+	requires: ['Ext.MessageBox', 'Ext.device.Geolocation', 'WhatsFresh.util.Geography', 'WhatsFresh.util.Search'],
 	alias: 'cont',
 	config: {
 		refs: {
@@ -110,7 +110,10 @@ Ext.define('WhatsFresh.controller.List', {
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
-            this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
+			WhatsFresh.util.Search.options.location = record._value.data;
+            // WhatsFresh.VendorStore.filter();
+            WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+
 
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
@@ -124,9 +127,10 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.product = record._value.data.name;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
-		// console.log(store.data.all);
-		// console.log(store);
-            this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
+
+			WhatsFresh.util.Search.options.product = record._value.data;
+            // this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
+            WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
 
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));       
@@ -1062,6 +1066,9 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.StoryStore = Ext.getStore('Story');
 		WhatsFresh.VendorStore = Ext.getStore('Vendor');
 		WhatsFresh.VendorInventoryStore = Ext.getStore('VendorInventory');
+
+		// Applying filters to stores
+		WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
 
 		// Components
 			// ON: List page
