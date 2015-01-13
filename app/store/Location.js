@@ -9,7 +9,8 @@ Ext.define('WhatsFresh.store.Location', {
                 locationStore.insert( 0, 
                     {
                         name: "Please choose a location",
-                        location: locationIndex
+                        location: locationIndex,
+                        is_not_filterable: true
                     }
                 );
                 //console.log("Location Store: autoload result records:");
