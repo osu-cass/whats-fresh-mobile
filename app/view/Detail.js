@@ -75,6 +75,11 @@ Ext.define('WhatsFresh.view.Detail', {
 				fn: 'onInfoButtonTap'
 			},
 			{
+				delegate: '#staticmap',
+				event: 'tap',
+				fn: 'onNavigationTap'
+			},
+			{
 				delegate: '#backHomeButton',
 				event: 'tap',
 				fn: 'onBackHomeButtonTap'
@@ -94,6 +99,11 @@ Ext.define('WhatsFresh.view.Detail', {
 		console.log('onBackButtonTap');
 		this.fireEvent('viewBackHomeCommand', this);
 	},
+		onNavigationTap: function(index){
+			console.log('navigate!');
+			console.log(index);
+			this.fireEvent('navigationFunction', index.coords);
+		},
 	onInfoButtonTap: function(){
 		console.log('onInfoButtonTap');
 		this.fireEvent('viewInfoCommand', this);
