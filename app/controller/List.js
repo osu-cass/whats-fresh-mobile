@@ -110,10 +110,8 @@ Ext.define('WhatsFresh.controller.List', {
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
 			WhatsFresh.util.Search.options.location = record._value.data;
-            // WhatsFresh.VendorStore.filter();
-            WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
-
-
+			WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+            
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	    //Ext.Viewport.setActiveItem(homeView);
@@ -138,6 +136,7 @@ Ext.define('WhatsFresh.controller.List', {
             WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
             WhatsFresh.util.ProductSearch.applyFilterToPStore(productStore);
             this.populatePstore(vendorStore, productStore);
+            
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));       
 	    Ext.Viewport.setActiveItem(homeView);
@@ -191,7 +190,6 @@ Ext.define('WhatsFresh.controller.List', {
 					};
 					pstore.add(newpro);
 					n = n+1;
-					console.log(n);
 				}
 			}
 		}	
