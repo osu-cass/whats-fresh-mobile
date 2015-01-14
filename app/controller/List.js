@@ -4,7 +4,7 @@ isPresent = true;
 
 Ext.define('WhatsFresh.controller.List', {
 	extend: 'Ext.app.Controller',
-	requires: ['Ext.MessageBox', 'Ext.device.Geolocation'],
+	requires: ['Ext.MessageBox', 'Ext.device.Geolocation', 'WhatsFresh.util.Link'],
 	alias: 'cont',
 	config: {
 		refs: {
@@ -34,6 +34,7 @@ Ext.define('WhatsFresh.controller.List', {
 			detailView: {
 				viewBackListCommand: 'onViewBackListCommand',
 				viewBackHomeCommand: 'onViewBackHomeCommand',
+				navigationFunction: 'onNavigationFunction',
 				viewInfoCommand: 'onViewInfoCommand',
 				viewDpageListItemCommand: 'onViewDpageListItemCommand'
 			},
@@ -886,8 +887,11 @@ Ext.define('WhatsFresh.controller.List', {
 	        }
 		}		
 	},
-    
+	onNavigationFunction: function(index){
+		WhatsFresh.util.Link.openNavigation(index.lat, index.lng);
+	},
     buildStaticMap: function(vendor){
+		WhatsFresh.statmap.coords = vendor;
         var destination = 'http://maps.googleapis.com/maps/api/staticmap?center=' + 
             vendor.lat +','+ vendor.lng +
             '&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C' +
