@@ -1,6 +1,15 @@
 Ext.define('WhatsFresh.util.Link',{
-	singleton: true,
 
+    /**
+       The Link util defines a set of functions that navigate the user
+       out of the current app context an into either a navigation app
+       or a video app.
+
+       Each function is responsible for correctly rerouting the user
+       depending on their platform.
+     */
+
+	singleton: true,
 
 	openNavigation: function(lat, lng){
 		link="daddr="+lat+","+lng;

@@ -100,8 +100,6 @@ Ext.define('WhatsFresh.view.Detail', {
 		this.fireEvent('viewBackHomeCommand', this);
 	},
 		onNavigationTap: function(index){
-			console.log('navigate!');
-			console.log(index);
 			this.fireEvent('navigationFunction', index.coords);
 		},
 	onInfoButtonTap: function(){
