@@ -399,15 +399,14 @@ Ext.define('WhatsFresh.controller.List', {
 				position: WhatsFresh.cent[k],
 				clickable: true
 			});	
-			console.log("Map marker is created");		
+
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
         	WhatsFresh.marker[k].info = new google.maps.InfoWindow({
         		content: '<button onclick=\"javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();\">'+ vendorStore.data.items[k].data.name + '</button>',
         		data: vendorStore.data.items[k].data,
         		Lpos: k // used to index and highlight the correct list item
         	});
-        	// console.log(this);
-        	console.log(WhatsFresh.marker[k]);
+
         	WhatsFresh.storeItem = WhatsFresh.marker[k];
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
         	// WE WILL USE THIS LISTENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
