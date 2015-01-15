@@ -398,16 +398,21 @@ Ext.define('WhatsFresh.controller.List', {
 				icon: WhatsFresh.iconImage,
 				position: WhatsFresh.cent[k],
 				clickable: true
-			});			
+			});	
+
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
         	WhatsFresh.marker[k].info = new google.maps.InfoWindow({
         		content: '<button onclick=\"javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();\">'+ vendorStore.data.items[k].data.name + '</button>',
         		data: vendorStore.data.items[k].data,
         		Lpos: k // used to index and highlight the correct list item
         	});
+
+        	WhatsFresh.storeItem = WhatsFresh.marker[k];
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
         	// WE WILL USE THIS LISTENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
         	google.maps.event.addListener(WhatsFresh.marker[k], 'click', function(){
+        		// turns out that this is equal to WhatsFresh.marker[k], so we set WhatsFresh.storeItem 
+        		// to WhatsFresh.marker[k] above so that the storeItem is set when a list item is selected
         		WhatsFresh.storeItem = this;
         		// console.log('THIS IN THE EVENT LISTENER');
         		// console.log(this);
@@ -677,7 +682,7 @@ Ext.define('WhatsFresh.controller.List', {
 	onViewBackListCommand: function(record, index){
 		console.log('In controller(detail): Back to List Page Button');
 		var a, b;
-		
+		WhatsFresh.previousListItem = null;
 		// console.log("this is our path item **************************");
 
 		// console.log('WhatsFresh.pcount - 2');
