@@ -7,7 +7,7 @@ Ext.define('WhatsFresh.util.Messages', {
 			'Location Error', [
 				'Unable to get location!<br><br>',
 				'Check your device\'s privacy settings to see if ',
-				'location is enabled for WorkingWaterfronts.'
+				'location services are enabled.'
 			].join(''),
 			cb || Ext.emptyFn);
 	}
