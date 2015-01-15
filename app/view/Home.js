@@ -122,9 +122,8 @@ Ext.define('WhatsFresh.view.Home', {
 			}
 		]	      
 	},
-	onUseLocation: function(record){
-		console.log('setUseLocation');
-		this.fireEvent('setUseLocation', this, record);
+	onUseLocation: function(record, newVal, oldVal, eOpts){
+		this.fireEvent('setUseLocation', newVal);
 	},
 	onDistance: function(record){
 		console.log('setDistance');
