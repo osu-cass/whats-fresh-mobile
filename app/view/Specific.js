@@ -14,15 +14,15 @@ Ext.define('WhatsFresh.view.Specific', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						text: 'back',
-						itemId: 'backInfoButton'
+						// text: 'Home',
+						iconCls: 'home',
+						itemId: 'backHomeButton'
 					},
 					{
 						xtype: 'button',
 						ui: 'action',
-						// text: 'Home',
-						iconCls: 'home',
-						itemId: 'backHomeButton'
+						text: 'back',
+						itemId: 'backInfoButton'
 					}
 				]
 			},

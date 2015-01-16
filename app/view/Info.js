@@ -16,23 +16,17 @@ Ext.define('WhatsFresh.view.Info', {
 				docked: 'top',
 				items: [
 					{
-						xtype: 'button',
-						ui: 'action',
-						text: 'back',
-						itemId: 'backDetailButton'
-					},
-					{
-						xtype: 'button',
-						ui: 'action',
-						text: 'specific',
-						itemId: 'specificButton'
-					},
-					{
 						xtype: 'button', 
 						ui: 'action',
 						// text: 'Home',
 						iconCls: 'home',
 						itemId: 'backHomeButton'
+					},
+					{
+						xtype: 'button',
+						ui: 'action',
+						text: 'back',
+						itemId: 'backDetailButton'
 					}
 				]
 			},
@@ -72,11 +66,6 @@ Ext.define('WhatsFresh.view.Info', {
 				fn: 'onBackButtonTap'
 			},
 			{
-				delegate: '#specificButton',
-				event: 'tap',
-				fn: 'onSpecificButtonTap'
-			},
-			{
 				delegate: '#backHomeButton',
 				event: 'tap',
 				fn: 'onBackHomeButtonTap'
@@ -95,10 +84,6 @@ Ext.define('WhatsFresh.view.Info', {
 	onBackHomeButtonTap: function(){
 		console.log('onBackButtonTap');
 		this.fireEvent('viewBackHomeCommand', this);
-	},
-	onSpecificButtonTap: function(){
-		console.log('onSpecificButtonTap');
-		this.fireEvent('viewSpecificCommand', this);
 	},
 	onIpagelistDisclose: function(list, record, taget, index, evt, option){
 		console.log('viewIpageListItemCommand');
