@@ -4,11 +4,17 @@ isPresent = true;
 
 Ext.define('WhatsFresh.controller.List', {
 	extend: 'Ext.app.Controller',
-	requires: ['Ext.MessageBox', 'Ext.device.Geolocation', 'WhatsFresh.util.Link'],
+	requires: [
+            'Ext.MessageBox',
+            'Ext.device.Geolocation',
+            'WhatsFresh.util.Link',
+            'WhatsFresh.util.Messages'
+        ],
 	alias: 'cont',
 	config: {
 		refs: {
 			homeView: 'home',
+                    useLocationToggle: '#userlocation',
 			listView: 'listview',
 			detailView: 'detail',
 			productdetailView: 'productdetail',			
@@ -67,28 +73,31 @@ Ext.define('WhatsFresh.controller.List', {
 	// Functions dealing with 
 	// HOME
 	// stuff	######################################################################################	HOME
-	onSetUseLocation: function(index, record){
-		console.log('In controller(home): User Location toggle');
-		console.log(record._component._value[0]);
-		console.log(record);
-		if(record._component._value[0] === 1){
-			// This updates the user's location and how far from their location they would like to search for vendors/products
-			Ext.device.Geolocation.watchPosition({
-			    frequency: 3000, // Update every 3 seconds
-			    callback: function(position) {
-			        console.log('Position updated!', position.coords);
-			        // console.log(index._items.items[2]._value.data.val);
-					var dist = index._items.items[2]._value.data.val;
-			    },
-			    failure: function() {
-			        console.log('something went wrong!');
-			    }
-			});
-			
-		}else{
-			Ext.device.Geolocation.clearWatch();
-		}
-	},
+    onSetUseLocation: function(newToggleValue){
+        var ctrl = this;
+	if(newToggleValue){
+	    // This updates the user's location and how far from their location they would like to search for vendors/products
+	    Ext.device.Geolocation.watchPosition({
+                scope : ctrl,
+		frequency : 10000, // Update every 10 seconds
+		callback: ctrl.devicePositionCallback,
+		failure: ctrl.devicePositionFailure
+	    });
+	}else{
+	    Ext.device.Geolocation.clearWatch();
+	}
+    },
+    devicePositionCallback: function(position) {
+        // todo: 
+        // 1) connect this data to search feature
+        // 2) remove below console.log statement
+        console.log('Position updated!', position.coords);
+    },
+    devicePositionFailure: function() {
+        var ctrl = this;
+        WhatsFresh.util.Messages.showLocationError();
+        ctrl.getUseLocationToggle().setValue(0);
+    },
 	// This function may be unnecessary due to the fact that we set the distance in the callback function above
 	onSetDistance: function(index, record){
 		console.log("In controller(home): Distance from user chosen");
