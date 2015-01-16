@@ -17,21 +17,15 @@ Ext.define('WhatsFresh.view.Detail', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						text: 'back',
-						itemId: 'backListButton'
-					},
-					{
-						xtype: 'button',
-						ui: 'action',
-						text: 'Info',
-						itemId: 'infoButton'
-					},
-					{
-						xtype: 'button',
-						ui: 'action',
 						// text: 'Home',
 						iconCls: 'home',
 						itemId: 'backHomeButton'
+					},
+					{
+						xtype: 'button',
+						ui: 'action',
+						text: 'back',
+						itemId: 'backListButton'
 					}
 				]
 			},
@@ -72,11 +66,6 @@ Ext.define('WhatsFresh.view.Detail', {
 				fn: 'onBackButtonTap'
 			},
 			{
-				delegate: '#infoButton',
-				event: 'tap',
-				fn: 'onInfoButtonTap'
-			},
-			{
 				delegate: '#staticmap',
 				event: 'tap',
 				fn: 'onNavigationTap'
@@ -101,12 +90,8 @@ Ext.define('WhatsFresh.view.Detail', {
 		console.log('onBackButtonTap');
 		this.fireEvent('viewBackHomeCommand', this);
 	},
-		onNavigationTap: function(index){
-			this.fireEvent('navigationFunction', index.coords);
-		},
-	onInfoButtonTap: function(){
-		console.log('onInfoButtonTap');
-		this.fireEvent('viewInfoCommand', this);
+	onNavigationTap: function(index){
+		this.fireEvent('navigationFunction', index.coords);
 	},
 	onDpagelistDisclose: function(list, record, target, index, evt, options){
 		console.log('viewDpageListItemCommand');
