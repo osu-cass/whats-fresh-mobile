@@ -271,17 +271,11 @@ Ext.define('WhatsFresh.controller.List', {
 		}
 		// If the checkboxes are both unused again we need to make sure that we set the correct stores for the items being searched
 		if((homeView.items.items[5].items.items[0]._checked === false) && (homeView.items.items[5].items.items[1]._checked === false)){
-			console.log('WhatsFresh.use');
-			console.log(WhatsFresh.use);
-			console.log('WhatsFresh.use2');
-			console.log(WhatsFresh.use2);
 			if(WhatsFresh.use2 === 1){
 				view.down('list').setStore(store);
-				console.log("Using vendor store");
 			}
 			if(WhatsFresh.use2 === 0){
 				view.down('list').setStore(pstore);
-				console.log("Using product store");
 			}
 		}		
         WhatsFresh.path[WhatsFresh.pcount] = 'list';
