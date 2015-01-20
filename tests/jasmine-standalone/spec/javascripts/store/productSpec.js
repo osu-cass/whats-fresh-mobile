@@ -41,7 +41,7 @@ describe('WhatsFresh.store.Product',function() {
                     market_price: 0,
                     link: null,
                     alt_name: 'Pretend Product, Elaborate Ruse',
-                    story_id: null,
+                    story: null,
                     name: 'Test Product Instance'
 		}
 	    ]
@@ -58,7 +58,7 @@ describe('WhatsFresh.store.Product',function() {
 	expect(store.getAt(0).get('market_price')).toEqual(0);
 	expect(store.getAt(0).get('link')).toEqual(null);
 	expect(store.getAt(0).get('alt_name')).toEqual('Pretend Product, Elaborate Ruse');
-        expect(store.getAt(0).get('story_id')).toEqual(null);
+        expect(store.getAt(0).get('story')).toEqual(null);
 	expect(store.getAt(0).get('name')).toEqual('Test Product Instance');
     });
 
@@ -80,7 +80,7 @@ describe('WhatsFresh.store.Product',function() {
                     market_price: 0,
                     link: null,
                     alt_name: 'Pretend Product, Elaborate Ruse',
-                    story_id: null,
+                    story: null,
                     name: 'Test Product Instance'
 		},
 		{
@@ -95,7 +95,7 @@ describe('WhatsFresh.store.Product',function() {
                     market_price: 10.55,
                     link: null,
                     alt_name: 'Pretend Product, Elaborate Ruse2',
-                    story_id: null,
+                    story: null,
                     name: 'Test Product Instance2'
 		}
 	    ]
@@ -112,7 +112,7 @@ describe('WhatsFresh.store.Product',function() {
 	expect(store.getAt(0).get('market_price')).toEqual(0);
 	expect(store.getAt(0).get('link')).toEqual(null);
         expect(store.getAt(0).get('alt_name')).toEqual('Pretend Product, Elaborate Ruse');
-        expect(store.getAt(0).get('story_id')).toEqual(null);
+        expect(store.getAt(0).get('story')).toEqual(null);
         expect(store.getAt(0).get('name')).toEqual('Test Product Instance');
 
 	//data store 2
@@ -127,7 +127,7 @@ describe('WhatsFresh.store.Product',function() {
         expect(store.getAt(1).get('market_price')).toEqual(10.55);
         expect(store.getAt(1).get('link')).toEqual(null);
         expect(store.getAt(1).get('alt_name')).toEqual('Pretend Product, Elaborate Ruse2');
-        expect(store.getAt(1).get('story_id')).toEqual(null);
+        expect(store.getAt(1).get('story')).toEqual(null);
         expect(store.getAt(1).get('name')).toEqual('Test Product Instance2');
     });
 
