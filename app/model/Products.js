@@ -15,7 +15,8 @@ Ext.define('WhatsFresh.model.Products', {
             'alt_name',
             'story',
             'name',
-            'id'
+            'id',
+            'is_not_filterable'
         ]
     }
 });

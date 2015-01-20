@@ -31,14 +31,14 @@ describe('WhatsFresh.model.Products', function() {
             market_price: 0,
             link: null,
             alt_name: 'Pretend Product, Elaborate Ruse',
-            story_id: null,
+            story: null,
             name: 'Test Product Instance'
         });
         
         //Justin will expect these to be moved into a helper function.
         //Please see Justin if you have questions.
         expect(model.get('name')).toEqual('Test Product Instance');
-        expect(model.get('story_id')).toBeNull();
+        expect(model.get('story')).toBeNull();
         expect(model.get('alt_name')).toEqual('Pretend Product, Elaborate Ruse');
         expect(model.get('link')).toBeNull();
         expect(model.get('market_price')).toEqual(0);

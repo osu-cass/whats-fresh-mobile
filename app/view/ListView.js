@@ -96,7 +96,7 @@ Ext.define('WhatsFresh.view.ListView', {
 	},
 	onLpagelistHighlight: function(list, record, target, index, evt, options){
 		console.log('viewLpageListHighlightCommand');
-		WhatsFresh.currentListItem = index.data.name;
+		WhatsFresh.currentListItem = index.data.id;
 		// this way if a user has previously highlighted a list item, when they tap it again, they see its details
 		if(WhatsFresh.currentListItem === WhatsFresh.previousListItem){
 			this.fireEvent('viewLpageListItemCommand', this, record, index);			

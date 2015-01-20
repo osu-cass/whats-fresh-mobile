@@ -8,8 +8,10 @@ Ext.define('WhatsFresh.controller.List', {
             'Ext.MessageBox',
             'Ext.device.Geolocation',
             'WhatsFresh.util.Link',
-            'WhatsFresh.util.Messages'
-        ],
+            'WhatsFresh.util.Messages',
+            'WhatsFresh.util.Geography',
+            'WhatsFresh.util.Search',
+            'WhatsFresh.util.ProductSearch'],
 	alias: 'cont',
 	config: {
 		refs: {
@@ -119,8 +121,9 @@ Ext.define('WhatsFresh.controller.List', {
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
-            this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
-
+			WhatsFresh.util.Search.options.location = record._value.data;
+			WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+            
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	    //Ext.Viewport.setActiveItem(homeView);
@@ -133,10 +136,19 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.product = record._value.data.name;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
-		// console.log(store.data.all);
-		// console.log(store);
-            this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
 
+		if(WhatsFresh.product !== 'Please choose a product'){
+			WhatsFresh.use2 = 0;
+		}else{
+			WhatsFresh.use2 = 1;
+		}
+			WhatsFresh.util.Search.options.product = record._value.data;
+			WhatsFresh.util.ProductSearch.options.product = record._value.data;
+            // this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
+            WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+            WhatsFresh.util.ProductSearch.applyFilterToPStore(productStore);
+            this.populatePstore(vendorStore, productStore);
+            
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));       
 	    Ext.Viewport.setActiveItem(homeView);
@@ -190,7 +202,6 @@ Ext.define('WhatsFresh.controller.List', {
 					};
 					pstore.add(newpro);
 					n = n+1;
-					console.log(n);
 				}
 			}
 		}	
@@ -260,10 +271,10 @@ Ext.define('WhatsFresh.controller.List', {
 		}
 		// If the checkboxes are both unused again we need to make sure that we set the correct stores for the items being searched
 		if((homeView.items.items[5].items.items[0]._checked === false) && (homeView.items.items[5].items.items[1]._checked === false)){
-			if(((WhatsFresh.use === 1) && (WhatsFresh.use2 === 1)) | ((WhatsFresh.use === 1) && (WhatsFresh.use2 === 0))){
+			if(WhatsFresh.use2 === 1){
 				view.down('list').setStore(store);
 			}
-			if(((WhatsFresh.use === 0) && (WhatsFresh.use2 === 1)) | ((WhatsFresh.use === 0) && (WhatsFresh.use2 === 0))){
+			if(WhatsFresh.use2 === 0){
 				view.down('list').setStore(pstore);
 			}
 		}		
@@ -1076,6 +1087,9 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.StoryStore = Ext.getStore('Story');
 		WhatsFresh.VendorStore = Ext.getStore('Vendor');
 		WhatsFresh.VendorInventoryStore = Ext.getStore('VendorInventory');
+
+		// Applying filters to stores
+		WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
 
 		// Components
 			// ON: List page

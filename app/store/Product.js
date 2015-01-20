@@ -8,6 +8,7 @@ Ext.define('WhatsFresh.store.Product', {
                 productStore.insert( 0, [
                     {
                         name: "Please choose a product",
+                        is_not_filterable: true
                     }
                 ]);
                 console.log("Product Store: autoload result records:");

@@ -11,7 +11,8 @@ Ext.define('WhatsFresh.model.Locations', {
             'id',
             'address',
             'desc',
-            'name'
+            'name',
+            'is_not_filterable'
         ]
     }
 });
