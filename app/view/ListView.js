@@ -14,23 +14,18 @@ Ext.define('WhatsFresh.view.ListView', {
 				items: [
 					{
 						xtype: 'button',
-						ui: 'action', 
-						text: 'back',
-						itemId: 'HomeButton'
-					},
-					{
-						xtype: 'button',
-						ui: 'action',
-						text: 'Detail',
-						itemId: 'detailButton'
-					},
-					{
-						xtype: 'button',
 						ui: 'action',
 						// text: 'Home',
 						iconCls: 'home',
 						itemId: 'backHomeButton'
+					},
+					{
+						xtype: 'button',
+						ui: 'action', 
+						text: 'back',
+						itemId: 'HomeButton'
 					}
+					
 				]
 			},
 			{
@@ -69,11 +64,6 @@ Ext.define('WhatsFresh.view.ListView', {
 				fn: 'onBackHomeButtonTap'
 			},
 			{
-				delegate: '#detailButton',
-				event: 'tap',
-				fn: 'onDetailButtonTap'
-			},
-			{
 				delegate: '#Lpagelist',
 				event: 'itemsingletap',
 				fn: 'onLpagelistHighlight'
@@ -89,10 +79,6 @@ Ext.define('WhatsFresh.view.ListView', {
 		console.log('onBackButtonTap');
 		WhatsFresh.previousListItem = null;
 		this.fireEvent('viewBackHomeCommand', this);
-	},
-	onDetailButtonTap: function(){
-		console.log('onDetailButtonTap');
-		this.fireEvent('viewDetailCommand', this);
 	},
 	onLpagelistHighlight: function(list, record, target, index, evt, options){
 		console.log('viewLpageListHighlightCommand');
