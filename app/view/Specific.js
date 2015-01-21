@@ -29,11 +29,10 @@ Ext.define('WhatsFresh.view.Specific', {
 				itemId: 'specimage'
 			},
 			{
-				xtype: 'video',
+				xtype: 'image',
 				width: 400,
 				height: 300,
 				itemId: 'video1',
-				posterUrl: 'http://msevents.microsoft.com/cui/resources/images/playbutton.png' 
 			},
 			{
 				xtype: 'panel',
@@ -48,11 +47,21 @@ Ext.define('WhatsFresh.view.Specific', {
 				fn: 'onBackButtonTap'
 			},
 			{
+				delegate: '#video1',
+				event: 'tap',
+				fn: 'onVideoTap'
+			},
+			{
 				delegate: '#backHomeButton',
 				event: 'tap',
 				fn: 'onBackHomeButtonTap'
 			}
 		]
+	},
+	onVideoTap: function(){
+		console.log('videoTap');
+		console.log(WhatsFresh.SVvideo.link);
+		this.fireEvent('videoTapFunction', WhatsFresh.SVvideo.link);
 	},
 	onBackButtonTap: function(){
 		this.fireEvent('viewBackInfoCommand', this);
