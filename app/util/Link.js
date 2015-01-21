@@ -23,13 +23,22 @@ Ext.define('WhatsFresh.util.Link',{
 	},
 
 	openVideo: function(link){
+		var videoLink = 'https://www.youtube.com/watch?v=' + link;
 		if(navigator.userAgent.match(/(Android)/)){
-			navigator.app.loadUrl(link, {openExternal: true});
+			navigator.app.loadUrl(videoLink, {openExternal: true});
 		}else if(navigator.userAgent.match(/(ios)/)){
-			window.open(link);
+			window.open(videoLink);
 		}else{
-			window.open(link);
+			window.open(videoLink);
 		}
+	},
+	formatVideoLink: function(link){
+		link = link.split('v=')[1];
+		var ampersandPosition = link.indexOf('&');
+		if(ampersandPosition != -1){
+			link = link.substring(0, ampersandPosition);
+		}
+		return link;
 	}
 
 });
