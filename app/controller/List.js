@@ -262,20 +262,24 @@ Ext.define('WhatsFresh.controller.List', {
 
 		if(homeView.items.items[5].items.items[0]._checked === true){
 			view.down('list').setStore(store);
+			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Vendors");
 		}
 		if(homeView.items.items[5].items.items[1]._checked === true){
-			console.log('use');
-			console.log(WhatsFresh.use);
+			// console.log('use');
+			// console.log(WhatsFresh.use);
 			this.populatePstore(store, pstore, WhatsFresh.use);
 			view.down('list').setStore(pstore);
+			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Products");
 		}
 		// If the checkboxes are both unused again we need to make sure that we set the correct stores for the items being searched
 		if((homeView.items.items[5].items.items[0]._checked === false) && (homeView.items.items[5].items.items[1]._checked === false)){
 			if(WhatsFresh.use2 === 1){
 				view.down('list').setStore(store);
+				Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Vendors");
 			}
 			if(WhatsFresh.use2 === 0){
 				view.down('list').setStore(pstore);
+				Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Products");
 			}
 		}		
         WhatsFresh.path[WhatsFresh.pcount] = 'list';
@@ -617,8 +621,7 @@ Ext.define('WhatsFresh.controller.List', {
 		// console.log(this);
 		// console.log(productdetailView._items.items[1]._data);
 		// console.log(detailView._items.items[1]._data);
-		
-		Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.name);
+		Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.preparation + ' ' + index.data.name);
 		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
 		// Trying to pass product data from selected vendor to new store, so that we
 		// can use the new store to correctly use tpl print to make selectable list 
@@ -836,7 +839,7 @@ Ext.define('WhatsFresh.controller.List', {
 					// console.log(productdetailView.getAt(1)._data);  
 				}
 			}
-			Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.name);
+			Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.preparation + ' ' + index.data.name);
 			if(WhatsFresh.backFlag === 0){
 				WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';
 				WhatsFresh.pvalue[WhatsFresh.pcount] = index;

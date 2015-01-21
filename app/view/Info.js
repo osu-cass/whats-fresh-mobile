@@ -11,7 +11,7 @@ Ext.define('WhatsFresh.view.Info', {
 		items: [
 			{
 				xtype: 'toolbar',
-				title: 'Info Page',
+				title: 'Info',
 				itemId: 'infoPageToolbar',
 				docked: 'top',
 				items: [

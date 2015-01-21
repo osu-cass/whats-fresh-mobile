@@ -8,7 +8,7 @@ Ext.define('WhatsFresh.view.ListView', {
 		items: [
 			{
 				xtype: 'toolbar',
-				title: 'List Page',
+				// title: 'List Page',
 				itemId: 'listPageToolbar',
 				docked: 'top',
 				items: [
