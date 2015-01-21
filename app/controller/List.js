@@ -265,8 +265,6 @@ Ext.define('WhatsFresh.controller.List', {
 			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Vendors");
 		}
 		if(homeView.items.items[5].items.items[1]._checked === true){
-			// console.log('use');
-			// console.log(WhatsFresh.use);
 			this.populatePstore(store, pstore, WhatsFresh.use);
 			view.down('list').setStore(pstore);
 			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Products");
