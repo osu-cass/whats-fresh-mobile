@@ -51,6 +51,7 @@ Ext.define('WhatsFresh.util.Geography', {
 	 */
 	standardizeDistance: function (distanceRecord) {
 		var Units = WhatsFresh.util.Geography.Reference.Units;
+		console.log(distanceRecord);
 		return Units[distanceRecord.unit].meters * distanceRecord.value;
 	},
 
