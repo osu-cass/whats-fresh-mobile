@@ -35,7 +35,6 @@ Ext.define('WhatsFresh.controller.List', {
 			},
 			listView: {
 				viewBackHomeCommand: 'onViewBackHomeCommand',
-				viewDetailCommand: 'onViewDetailCommand',
 				viewLpageListHighlightCommand: 'onViewLpageListHighlightCommand',
 				viewLpageListItemCommand: 'onViewLpageListItemCommand'
 			},
@@ -77,17 +76,17 @@ Ext.define('WhatsFresh.controller.List', {
 	// stuff	######################################################################################	HOME
     onSetUseLocation: function(newToggleValue){
         var ctrl = this;
-	if(newToggleValue){
-	    // This updates the user's location and how far from their location they would like to search for vendors/products
-	    Ext.device.Geolocation.watchPosition({
-                scope : ctrl,
-		frequency : 10000, // Update every 10 seconds
-		callback: ctrl.devicePositionCallback,
-		failure: ctrl.devicePositionFailure
-	    });
-	}else{
-	    Ext.device.Geolocation.clearWatch();
-	}
+		if(newToggleValue){
+		    // This updates the user's location and how far from their location they would like to search for vendors/products
+		    Ext.device.Geolocation.watchPosition({
+	                scope : ctrl,
+			frequency : 10000, // Update every 10 seconds
+			callback: ctrl.devicePositionCallback,
+			failure: ctrl.devicePositionFailure
+		    });
+		}else{
+		    Ext.device.Geolocation.clearWatch();
+		}
     },
     devicePositionCallback: function(position) {
         // todo: 
@@ -369,11 +368,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var listItems = this.getListView();
 		listItems._items.items[2].deselect(listItems._items.items[2].selected.items[0]);		
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
-	},
-	onViewDetailCommand: function(){
-		console.log('In controller(list): View Detail Page Button');
-		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideLeftTransition);
-	},		
+	},	
 	// declareMap markers and infowindows as well as functions for the listview map
 	addMapMarkers: function(){
 		var self = this; // important to get the correct data to the viewport
@@ -619,8 +614,6 @@ Ext.define('WhatsFresh.controller.List', {
 		// console.log(this);
 		// console.log(productdetailView._items.items[1]._data);
 		// console.log(detailView._items.items[1]._data);
-		Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.preparation + ' ' + index.data.name);
-		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
 		// Trying to pass product data from selected vendor to new store, so that we
 		// can use the new store to correctly use tpl print to make selectable list 
 		// items of each unique product.
@@ -837,7 +830,6 @@ Ext.define('WhatsFresh.controller.List', {
 					// console.log(productdetailView.getAt(1)._data);  
 				}
 			}
-			Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.preparation + ' ' + index.data.name);
 			if(WhatsFresh.backFlag === 0){
 				WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';
 				WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -886,7 +878,6 @@ Ext.define('WhatsFresh.controller.List', {
 				}
 			}
 			// Sets the title of the header on detail page
-			Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
 			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.items.items[1]._data) );
 			if(WhatsFresh.backFlag === 0){
 
@@ -943,10 +934,6 @@ Ext.define('WhatsFresh.controller.List', {
 		}
 		// Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideRightTransition);
 	},
-	onViewSpecificCommand: function(){
-		console.log('In controller(info): View Specific Page Button');
-		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
-	},	
 	onViewIpageListItemCommand: function(record, list, index){
 		console.log('In controller(info): Selected');
 		// Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
