@@ -86,17 +86,17 @@ Ext.define('WhatsFresh.controller.List', {
 		    });
 		}else{
 		    Ext.device.Geolocation.clearWatch();
+		    WhatsFresh.util.Search.options.position = null;
+		    //this.onChooseLocation();
 		}
     },
     devicePositionCallback: function(position) {
-        // todo:
-        // 1) connect this data to search feature
-        // 2) remove below console.log statement
         console.log('Position updated!', position.coords);
+        WhatsFresh.position = position;
         WhatsFresh.util.Search.options.position = position;
         WhatsFresh.util.Search.options.distance = WhatsFresh.dist;
-         WhatsFresh.util.Search.options.distance.value = WhatsFresh.dist.value;
         WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+        WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
     },
     devicePositionFailure: function() {
         var ctrl = this;
@@ -109,6 +109,7 @@ Ext.define('WhatsFresh.controller.List', {
 		// console.log(record._value.data.val);
 		WhatsFresh.dist = record._value.data;
 		console.log(WhatsFresh.dist);
+		//this.devicePositionCallback(WhatsFresh.position);
 	},
 	onChooseLocation: function(index, record){
 		// We first check to see if a location is chosen, if one is we sort by locataion,
@@ -119,17 +120,13 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.location = record._value.data.name;
 		console.log('Location is: '+ WhatsFresh.location +'\n');
 
-		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
-		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
-		// FUNCTION WILL NOT WORK
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
 			WhatsFresh.util.Search.options.location = record._value.data;
 			WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
 
-	    var homeView = this.getHomeView();
-            homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+            WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	    //Ext.Viewport.setActiveItem(homeView);
 	},
 	onChooseProduct: function(index, record){

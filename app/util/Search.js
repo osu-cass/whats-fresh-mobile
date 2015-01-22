@@ -41,10 +41,16 @@ Ext.define('WhatsFresh.util.Search', {
             	console.log(singleton.options.distance);
                 var φ1= pos.coords.latitude;
                 var λ1= pos.coords.longitude;
+                console.log(pos.coords.latitude);
+                console.log(pos.coords.longitude);
                 var φ2= vendorStoreRecord.get('lat');
                 var λ2= vendorStoreRecord.get('lng');
+                console.log(vendorStoreRecord.get('lat'));
+                console.log(vendorStoreRecord.get('lng'));
                 var dMax= Geo.standardizeDistance(dist);
                 var dCurr= Geo.getDistance(φ1,λ1,φ2,λ2);
+                console.log(Geo.standardizeDistance(dist));
+                console.log(Geo.getDistance(φ1,λ1,φ2,λ2));
                 isNear= dMax - dCurr >= 0;
             } else {
             	console.log("Not filterable by distance");
