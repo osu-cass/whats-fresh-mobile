@@ -23,5 +23,12 @@ describe('WhatsFresh.util.Link', function(){
 			videoLink = Link.formatVideoLink(videoLink);
 			expect(videoLink).toBe('efgDdSWDg0g');
 		});
+
+		it('Formats a video link with options properly', function(){
+			Link = WhatsFresh.util.Link;
+			var videoLink = "http://youtube.com/watch?v=somevalue&time=someoption";
+			videoLink = Link.formatVideoLink(videoLink);
+			expect(videoLink).toBe('somevalue');
+		});
 	});
 });
