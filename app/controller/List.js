@@ -375,14 +375,9 @@ Ext.define('WhatsFresh.controller.List', {
         // Product is specified:
         // "There are <number> vendors ... with <product>."
         if (productString !== "Please choose a product"){
-        	if((userLoc !== 1) & (locationString === "Please choose a location")){
-	        	summary. i = null;
-	        	summary.loc = null;
-	        }
             summary.w = " with ";
             summary.prod = productString;
         }
-
         return summary;
     },
 	// Functions dealing with
