@@ -10,4 +10,18 @@ describe('WhatsFresh.util.Link', function(){
 		Link = WhatsFresh.util.Link;
 		expect(Link.openNavigation).toBeDefined();
 	});
+
+	describe('WhatsFresh.util.Link.formatVideoLink', function(){
+		it('Format function exists',function(){
+			Link = WhatsFresh.util.Link;
+			expect(Link.formatVideoLink).toBeDefined();
+		});
+
+		it('Formats a video link properly', function(){
+			Link = WhatsFresh.util.Link;
+			var videoLink = TestData.StoryArray[0].videos[0].link;
+			videoLink = Link.formatVideoLink(videoLink);
+			expect(videoLink).toBe('efgDdSWDg0g');
+		});
+	});
 });
