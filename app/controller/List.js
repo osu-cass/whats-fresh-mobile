@@ -104,7 +104,6 @@ Ext.define('WhatsFresh.controller.List', {
         WhatsFresh.position = position;
         WhatsFresh.util.Search.options.position = position;
         WhatsFresh.util.Search.options.distance = WhatsFresh.dist;
-        WhatsFresh.util.Search.options.product = WhatsFresh.prod;
         WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
         WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
         this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
@@ -137,7 +136,6 @@ Ext.define('WhatsFresh.controller.List', {
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
 			WhatsFresh.util.Search.options.location = record._value.data;
-			WhatsFresh.util.Search.options.product = WhatsFresh.prod;
 			WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
 			WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
             this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
@@ -152,7 +150,6 @@ Ext.define('WhatsFresh.controller.List', {
 		console.log('In controller(home): Drop Down list Products');
 		console.log('Product is: '+ record._value.data.name +'\n');
 		WhatsFresh.product = record._value.data.name;
-		WhatsFresh.prod = record._value.data;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
