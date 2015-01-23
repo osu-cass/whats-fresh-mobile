@@ -16,7 +16,9 @@ Ext.define('WhatsFresh.controller.List', {
 	config: {
 		refs: {
 			homeView: 'home',
-                    useLocationToggle: '#userlocation',
+            useLocationToggle: '#userlocation',
+            distanceSelect: '#distance',
+            locationSelect: '#selectlocation',
 			listView: 'listview',
 			detailView: 'detail',
 			productdetailView: 'productdetail',
@@ -77,6 +79,8 @@ Ext.define('WhatsFresh.controller.List', {
     onSetUseLocation: function(newToggleValue){
         var ctrl = this;
 		if(newToggleValue){
+			ctrl.getDistanceSelect().enable();
+			ctrl.getLocationSelect().disable();
 			WhatsFresh.userLoc = 1;
 		    // This updates the user's location and how far from their location they would like to search for vendors/products
 		    Ext.device.Geolocation.watchPosition({
@@ -86,6 +90,8 @@ Ext.define('WhatsFresh.controller.List', {
 				failure: ctrl.devicePositionFailure
 		    });
 		}else{
+			ctrl.getDistanceSelect().disable();
+			ctrl.getLocationSelect().enable();
 		    Ext.device.Geolocation.clearWatch();
 		    WhatsFresh.util.Search.options.position = null;
 		    WhatsFresh.position = null;
@@ -1069,7 +1075,7 @@ Ext.define('WhatsFresh.controller.List', {
 	// Initialize functions
 	launch: function(){
 		this.callParent(arguments);
-
+		this.getDistanceSelect().disable();
 		// Variables
 			// FOR: back button functionality
 			WhatsFresh.pvalue = [];
