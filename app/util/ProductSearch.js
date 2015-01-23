@@ -25,7 +25,6 @@ Ext.define('WhatsFresh.util.ProductSearch', {
 
             // If the product is set, filter. If not, include everything.
             if (WhatsFresh.util.Search.canFilterByProduct()) {
-                console.log(WhatsFresh.util.Search.options);
                 var product= productStoreRecord.get('name');                
                 hasProduct= prod.name === product;
             } else {
