@@ -1071,23 +1071,7 @@ Ext.define('WhatsFresh.controller.List', {
 	launch: function(){
 		this.callParent(arguments);
 		this.getDistanceSelect().disable();
-		// Variables
-			// FOR: back button functionality
-			WhatsFresh.pvalue = [];
-			WhatsFresh.path = [];
-			WhatsFresh.pcount = 0;
-			WhatsFresh.backFlag = 0;
-			// FOR: checkboxes
-			WhatsFresh.use = 1;
-			WhatsFresh.use2 = 1;
-			WhatsFresh.infowindowFlag = 0;
-			// FOR: user location printout
-			WhatsFresh.userLoc = 0;
-			WhatsFresh.dist = {
-				distance: "200 miles", 
-				value: 200, 
-				unit: "miles"
-			};
+		
 
 		// Transitions
 		WhatsFresh.slideLeft = this.slideLeftTransition;
@@ -1134,7 +1118,20 @@ Ext.define('WhatsFresh.controller.List', {
 		Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
         Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
         Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
-
+		
+		// Variables
+			// FOR: back button functionality
+			WhatsFresh.pvalue = [];
+			WhatsFresh.path = [];
+			WhatsFresh.pcount = 0;
+			WhatsFresh.backFlag = 0;
+			// FOR: checkboxes
+			WhatsFresh.use = 1;
+			WhatsFresh.use2 = 1;
+			WhatsFresh.infowindowFlag = 0;
+			// FOR: user location printout
+			WhatsFresh.userLoc = 0;
+			WhatsFresh.dist = Ext.getStore('Distance').getData().all[0].data;
 
 	},
     onLocationStoreRefresh: function(){
