@@ -77,6 +77,7 @@ Ext.define('WhatsFresh.controller.List', {
     onSetUseLocation: function(newToggleValue){
         var ctrl = this;
 		if(newToggleValue){
+			WhatsFresh.userLoc = 1;
 		    // This updates the user's location and how far from their location they would like to search for vendors/products
 		    Ext.device.Geolocation.watchPosition({
 	            scope : ctrl,
@@ -87,7 +88,9 @@ Ext.define('WhatsFresh.controller.List', {
 		}else{
 		    Ext.device.Geolocation.clearWatch();
 		    WhatsFresh.util.Search.options.position = null;
-		    //this.onChooseLocation();
+		    WhatsFresh.position = null;
+		    WhatsFresh.userLoc = 0;
+		    this.onChooseLocation(WhatsFresh.locInd, WhatsFresh.locRec);
 		}
     },
     devicePositionCallback: function(position) {
@@ -95,8 +98,11 @@ Ext.define('WhatsFresh.controller.List', {
         WhatsFresh.position = position;
         WhatsFresh.util.Search.options.position = position;
         WhatsFresh.util.Search.options.distance = WhatsFresh.dist;
+        WhatsFresh.util.Search.options.product = WhatsFresh.prod;
         WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
-        WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+        WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+        this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+        WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
     },
     devicePositionFailure: function() {
         var ctrl = this;
@@ -109,7 +115,7 @@ Ext.define('WhatsFresh.controller.List', {
 		// console.log(record._value.data.val);
 		WhatsFresh.dist = record._value.data;
 		console.log(WhatsFresh.dist);
-		//this.devicePositionCallback(WhatsFresh.position);
+		this.devicePositionCallback(WhatsFresh.position);
 	},
 	onChooseLocation: function(index, record){
 		// We first check to see if a location is chosen, if one is we sort by locataion,
@@ -117,6 +123,8 @@ Ext.define('WhatsFresh.controller.List', {
 		console.log('In controller(home): Drop Down list Location');
 		// var loc = this.getHomeView();
 		// console.log(record);
+		WhatsFresh.locInd = index;
+		WhatsFresh.locRec = record;
 		WhatsFresh.location = record._value.data.name;
 		console.log('Location is: '+ WhatsFresh.location +'\n');
 
@@ -124,9 +132,13 @@ Ext.define('WhatsFresh.controller.List', {
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
 			WhatsFresh.util.Search.options.location = record._value.data;
+			WhatsFresh.util.Search.options.product = WhatsFresh.prod;
 			WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+			WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+            this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
 
-            WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+
+            WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
 	    //Ext.Viewport.setActiveItem(homeView);
 	},
 	onChooseProduct: function(index, record){
@@ -135,6 +147,7 @@ Ext.define('WhatsFresh.controller.List', {
 		console.log('In controller(home): Drop Down list Products');
 		console.log('Product is: '+ record._value.data.name +'\n');
 		WhatsFresh.product = record._value.data.name;
+		WhatsFresh.prod = record._value.data;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
@@ -144,14 +157,13 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.use2 = 1;
 		}
 			WhatsFresh.util.Search.options.product = record._value.data;
-			WhatsFresh.util.ProductSearch.options.product = record._value.data;
             // this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
             WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
-            WhatsFresh.util.ProductSearch.applyFilterToPStore(productStore);
-            this.populatePstore(vendorStore, productStore);
+            WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+            this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
 
 	    var homeView = this.getHomeView();
-            homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
 	    Ext.Viewport.setActiveItem(homeView);
 	},
 	numberOfVendors: function(store){
@@ -326,7 +338,7 @@ Ext.define('WhatsFresh.controller.List', {
             return true;
         }
     },
-    buildInventorySummary: function(locationString, productString){
+    buildInventorySummary: function(locationString, productString, userLoc){
 
         var vendors = Ext.data.StoreManager.lookup('Vendor');
 
@@ -340,16 +352,27 @@ Ext.define('WhatsFresh.controller.List', {
             end: "."
         };
 
-        // Location/City is specified:
-        // "There are <number> vendors near <location>."
-        if (locationString !== "Please choose a location"){
-            summary.i = "near ";
-            summary.loc = locationString;
-        }
+        // User Location specified:
+        // "There are <number> vendors near you."
+        if(userLoc === 1){
+        	summary.i = "near ";
+        	summary.loc = "you";
+        }else{
+	        // Location/City is specified:
+	        // "There are <number> vendors near <location>."
+	        if (locationString !== "Please choose a location"){
+	            summary.i = "near ";
+	            summary.loc = locationString;
+	        }
+	    }
 
         // Product is specified:
         // "There are <number> vendors ... with <product>."
         if (productString !== "Please choose a product"){
+        	if((userLoc !== 1) & (locationString === "Please choose a location")){
+	        	summary. i = null;
+	        	summary.loc = null;
+	        }
             summary.w = " with ";
             summary.prod = productString;
         }
@@ -1057,6 +1080,13 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.use = 1;
 			WhatsFresh.use2 = 1;
 			WhatsFresh.infowindowFlag = 0;
+			// FOR: user location printout
+			WhatsFresh.userLoc = 0;
+			WhatsFresh.dist = {
+				distance: "200 miles", 
+				value: 200, 
+				unit: "miles"
+			};
 
 		// Transitions
 		WhatsFresh.slideLeft = this.slideLeftTransition;

@@ -2,13 +2,8 @@ Ext.define('WhatsFresh.util.ProductSearch', {
 
     singleton: true,
 
-    requires: ['WhatsFresh.util.Geography'],
-    // Each of these options are of type record,
-    // Thus we must send in a record from the controller
-    options: { 
-        product: null
-    },
-
+    requires: ['WhatsFresh.util.Geography', 'WhatsFresh.util.Search'],
+    
     constructor: function() {},
 
     /* ------------------------------------------------------------------------
@@ -20,7 +15,7 @@ Ext.define('WhatsFresh.util.ProductSearch', {
         var singleton = WhatsFresh.util.ProductSearch;
         var Geo = WhatsFresh.util.Geography;
         var filter = function (productStoreRecord) {
-            var prod= singleton.options.product;
+            var prod= WhatsFresh.util.Search.options.product;
            
             // Composable filters
             var hasProduct;
@@ -29,7 +24,8 @@ Ext.define('WhatsFresh.util.ProductSearch', {
             if (productStoreRecord.is_not_filterable) return false;
 
             // If the product is set, filter. If not, include everything.
-            if (singleton.canFilterByProduct()) {
+            if (WhatsFresh.util.Search.canFilterByProduct()) {
+                console.log(WhatsFresh.util.Search.options);
                 var product= productStoreRecord.get('name');                
                 hasProduct= prod.name === product;
             } else {
@@ -59,15 +55,5 @@ Ext.define('WhatsFresh.util.ProductSearch', {
         });
         store.clearFilter();
         store.filter(criteria);
-    },
-
-    /* ------------------------------------------------------------------------
-       Utility and Helper Functions
-       ------------------------------------------------------------------------
-    */
-  
-    canFilterByProduct: function () {
-        var opt = this.options;
-        return !!opt.product && !opt.product.is_not_filterable;
     }
 });
