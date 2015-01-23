@@ -115,7 +115,6 @@ Ext.define('WhatsFresh.controller.List', {
         WhatsFresh.util.Messages.showLocationError();
         ctrl.getUseLocationToggle().setValue(0);
     },
-	// This function may be unnecessary due to the fact that we set the distance in the callback function above
 	onSetDistance: function(index, record){
 		console.log("In controller(home): Distance from user chosen");
 		// console.log(record._value.data.val);
@@ -303,9 +302,7 @@ Ext.define('WhatsFresh.controller.List', {
         WhatsFresh.pcount = ++WhatsFresh.pcount;
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
-
     // Home Screen Helper Functions
-
     filterVendorStore: function(selectedLocationName, selectedProductName) {
 
         //Function Variables
@@ -324,7 +321,6 @@ Ext.define('WhatsFresh.controller.List', {
 
         vendorStore.filter(criteria);
     },
-
     matchesLocation: function(storeItem, comparator){
         if (comparator !== "Please choose a location"){
             return storeItem.get('city') === comparator;
@@ -608,7 +604,6 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 		}
 	},
-	// having trouble with the passed in value t, when we are removing old map markers
 	blueMapMarkers: function(t, i){
 		// get rid of red marker for selected list item
         WhatsFresh.marker[i].setMap(null);
@@ -942,7 +937,6 @@ Ext.define('WhatsFresh.controller.List', {
 
         return destination;
     },
-
 	// Functions dealing with
 	// INFO
 	// stuff	######################################################################################	INFO
@@ -1072,7 +1066,6 @@ Ext.define('WhatsFresh.controller.List', {
 		this.callParent(arguments);
 		this.getDistanceSelect().disable();
 		
-
 		// Transitions
 		WhatsFresh.slideLeft = this.slideLeftTransition;
 		WhatsFresh.slideRight = this.slideRightTransition;
@@ -1132,7 +1125,6 @@ Ext.define('WhatsFresh.controller.List', {
 			// FOR: user location printout
 			WhatsFresh.userLoc = 0;
 			WhatsFresh.dist = Ext.getStore('Distance').getData().all[0].data;
-
 	},
     onLocationStoreRefresh: function(){
         console.log("Location store data has changed, selectfield should be updated.");
