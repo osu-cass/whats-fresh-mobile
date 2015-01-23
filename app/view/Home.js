@@ -12,29 +12,33 @@ Ext.define('WhatsFresh.view.Home', {
 		itemId: 'homePageToolbar',
 		docked: 'top'
 	    },
-	    {
-		xtype: 'togglefield',
-		name: 'userlocation',
-		label: 'Use Current Locaton',
-		itemId: 'userlocation'
-	    },
-	    {
-		xtype: 'selectfield',			
-		itemId: 'distance',
-		label: 'within',
-		labelWrap: true,
-		displayField: 'distance',
-		store: 'Distance'
-		// valueField: 'id'
-	    },
 	    {	
-	        xtype: 'panel',
+	        xtype: 'fieldset',
 	        itemId: 'vendnum',
 	        tpl: '</pre><div class="vendnum">{th}{numItems}{v}{i}{loc}{w}{prod}{end}</div><pre>'
 	    },
+            {
+                xtype: 'fieldset',
+                items: [
+	            {
+		        xtype: 'togglefield',
+		        name: 'userlocation',
+		        label: 'Use current locaton',
+                        labelWrap: true,
+		        itemId: 'userlocation'
+	            },
+	            {
+		        xtype: 'selectfield',			
+		        itemId: 'distance',
+		        label: 'Search within',
+		        labelWrap: true,
+		        displayField: 'distance',
+		        store: 'Distance'
+		        // valueField: 'id'
+	            },
+                ]},
 	    {
 	        xtype: 'fieldset',
-	        itemId: 'dropdown lists',
 	        items: [
 	            {
 			xtype: 'selectfield',			
@@ -45,7 +49,12 @@ Ext.define('WhatsFresh.view.Home', {
 			store: 'Location',
                         value: "Loading, please wait...",
 			valueField: 'location'
-		    },
+		    }
+                ]
+            },
+            {
+                xtype: 'fieldset',
+                items: [
 	            {
 			xtype: 'selectfield',			
 			itemId: 'selectproduct',
@@ -60,6 +69,7 @@ Ext.define('WhatsFresh.view.Home', {
 	    },	       
 	    {
 	   	// Checkboxes for sorting data on list page
+                xtype: 'fieldset',
 	        items: [
         	    {
         	        xtype: 'checkboxfield',
