@@ -1,8 +1,8 @@
 Ext.define('WhatsFresh.store.Location', {
     extend: 'Ext.data.Store',
     config: {
-	model: 'WhatsFresh.model.Locations',
-	autoLoad: {
+    	model: 'WhatsFresh.model.Locations',
+    	autoLoad: {
             callback: function(records, operation, success) {
                 var locationStore = Ext.getStore('Location');
                 var locationIndex = locationStore.data.length;
@@ -13,22 +13,20 @@ Ext.define('WhatsFresh.store.Location', {
                         is_not_filterable: true
                     }
                 );
-                //console.log("Location Store: autoload result records:");
-                //console.log(locationStore.data);
                 locationStore.fireEvent('refresh');
             }
         },
-	proxy: {
-	    type: 'ajax',
-	    url: 'http://seagrant-staging.osuosl.org/1/locations',
-	    noCache: false,
+    	proxy: {
+    	    type: 'ajax',
+    	    url: 'http://seagrant-staging.osuosl.org/1/locations',
+    	    noCache: false,
             pageParam: false,
             limitParam: false,
             startParam: false,
-	    reader: {
-		type: 'json',
-		rootProperty: 'locations'
-	    }
-	}
+    	    reader: {
+        		type: 'json',
+        		rootProperty: 'locations'
+    	    }
+    	}
     }
 });
