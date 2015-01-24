@@ -1,7 +1,6 @@
 Ext.define('WhatsFresh.view.Home', {
 	extend: 'Ext.Panel',
 	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select', 'WhatsFresh.view.Map'],
-    // fullscreen: true,
     xtype: 'Home',
 	alias: 'widget.home',
 	config: {
@@ -25,7 +24,6 @@ Ext.define('WhatsFresh.view.Home', {
 				labelWrap: true,
 				displayField: 'distance',
 				store: 'Distance'
-				// valueField: 'id'
 			},
 			{	
 	        	xtype: 'panel',
@@ -43,8 +41,8 @@ Ext.define('WhatsFresh.view.Home', {
 						labelWrap: true,
 						displayField: 'name',
 						store: 'Location',
-                            value: "Loading, please wait...",
-						 valueField: 'location'
+                        value: "Loading, please wait...",
+						valueField: 'location'
 					},
 	                {
 						xtype: 'selectfield',			
@@ -53,7 +51,7 @@ Ext.define('WhatsFresh.view.Home', {
 						labelWrap: true,
 						displayField: 'name',
 						store: 'Product',
-                            value: "Loading, please wait...",
+                        value: "Loading, please wait...",
 						valueField: 'id'
 					}					
 	            ]	                  
@@ -126,27 +124,21 @@ Ext.define('WhatsFresh.view.Home', {
 		this.fireEvent('setUseLocation', newVal);
 	},
 	onDistance: function(record){
-		console.log('setDistance');
 		this.fireEvent('setDistance', this, record);
 	},
 	onSelectLocation: function(record, index){
-		console.log('chosenLocation');
 		this.fireEvent('chosenLocation', this, record);
 	},
 	onSelectProduct: function(record){
-		console.log('chosenProduct');
 		this.fireEvent('chosenProduct', this, record);
 	},
 	onVendorSelect: function(record){
-		console.log('sortByVendorCommand');
 		this.fireEvent('sortByVendorCommand', this, record);
 	},
 	onProductSelect: function(record){
-		console.log('sortByProductCommand');
 		this.fireEvent('sortByProductCommand', this, record);
 	},
 	onGoButtonTap: function(list, record, target, index, evt, options){
-		console.log('viewGoCommand');
 		this.fireEvent('viewGoCommand');
 	}
 });

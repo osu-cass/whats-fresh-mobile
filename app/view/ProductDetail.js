@@ -10,7 +10,6 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 		items: [
 			{
 				xtype: 'toolbar',
-				// title: 'Detail Page',
 				itemId: 'productdetailPageToolbar',
 				tpl: '</pre><tpl>{preperation} {name}</tpl><pre>',
 				docked: 'top',
@@ -18,7 +17,6 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						// text: 'Home',
 						iconCls: 'home',
 						itemId: 'backHomeButton'
 					},
@@ -49,9 +47,6 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 						directionLock: true
 					}
 				},
-				// We want this list to have only products of the vendor selected in
-				// the list screen. Perhaps we will have to deal with the products root
-				// of the vendor selected, and link the vendors products to the product store.
 				xtype: 'list',
 				id: 'ProductDetailList',
 				store: 'VendorInventory',
@@ -85,19 +80,15 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 		]
 	},
 	onBackButtonTap: function(){
-		console.log('onBackButtonTap');
 		this.fireEvent('viewBackListCommand', this);
 	},
 	onBackHomeButtonTap: function(){
-		console.log('onBackButtonTap');
 		this.fireEvent('viewBackHomeCommand', this);
 	},
 	onInfoButtonTap: function(){
-		console.log('onInfoButtonTap');
 		this.fireEvent('viewInfoCommand', this);
 	},
 	onDpagelistDisclose: function(list, record, target, index, evt, options){
-		console.log('viewDpageListItemCommand');
 		this.fireEvent('viewDpageListItemCommand', this, record, index);
 	}
 });
