@@ -1,16 +1,14 @@
 describe('WhatsFresh.store.Education',function() {
 
-    // Ext.require('WhatsFresh.store.Distance');
-
     var store;
  
     beforeEach(function() {
-	jasmine.Ajax.install();
-	store = Ext.create('WhatsFresh.store.Education');
+    	jasmine.Ajax.install();
+    	store = Ext.create('WhatsFresh.store.Education');
     });
 
     afterEach(function() {
-	jasmine.Ajax.uninstall();
+	    jasmine.Ajax.uninstall();
         store = null;
     });
 

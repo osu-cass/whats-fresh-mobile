@@ -1,16 +1,14 @@
 describe('WhatsFresh.store.Distance',function() {
 
-    // Ext.require('WhatsFresh.store.Distance');
-
     var store;
  
     beforeEach(function() {
-	jasmine.Ajax.install();
-	store = Ext.create('WhatsFresh.store.Distance');
+    	jasmine.Ajax.install();
+    	store = Ext.create('WhatsFresh.store.Distance');
     });
 
     afterEach(function() {
-	jasmine.Ajax.uninstall();
+	    jasmine.Ajax.uninstall();
         store = null;
     });
 
