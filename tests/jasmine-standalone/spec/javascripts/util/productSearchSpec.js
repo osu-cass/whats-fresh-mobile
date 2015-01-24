@@ -32,7 +32,6 @@ describe('WhatsFresh.util.ProductSearch', function () {
 
         it('includes a vendor with the given product', function () {
             var model= TestData.modelify(TestData.ProductArray[0]);
-            console.log(model);
             expect(filter(model)).toBe(true);
         });
 
@@ -41,5 +40,4 @@ describe('WhatsFresh.util.ProductSearch', function () {
             expect(filter(model)).toBe(false);
         });
     });
-
 });

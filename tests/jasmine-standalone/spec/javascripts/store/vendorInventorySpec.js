@@ -3,12 +3,12 @@ describe('WhatsFresh.store.VendorInventory',function() {
     var store;
  
     beforeEach(function() {
-	jasmine.Ajax.install();
-	store = Ext.create('WhatsFresh.store.VendorInventory');
+    	jasmine.Ajax.install();
+    	store = Ext.create('WhatsFresh.store.VendorInventory');
     });
 
     afterEach(function() {
-	jasmine.Ajax.uninstall();
+	    jasmine.Ajax.uninstall();
         store = null;
     });
 
