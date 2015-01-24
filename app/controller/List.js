@@ -100,7 +100,6 @@ Ext.define('WhatsFresh.controller.List', {
 		}
     },
     devicePositionCallback: function(position) {
-        console.log('Position updated!', position.coords);
         WhatsFresh.position = position;
         WhatsFresh.util.Search.options.position = position;
         WhatsFresh.util.Search.options.distance = WhatsFresh.dist;
@@ -115,40 +114,25 @@ Ext.define('WhatsFresh.controller.List', {
         ctrl.getUseLocationToggle().setValue(0);
     },
 	onSetDistance: function(index, record){
-		console.log("In controller(home): Distance from user chosen");
-		// console.log(record._value.data.val);
 		WhatsFresh.dist = record._value.data;
-		console.log(WhatsFresh.dist);
 		this.devicePositionCallback(WhatsFresh.position);
 	},
 	onChooseLocation: function(index, record){
-		// We first check to see if a location is chosen, if one is we sort by locataion,
-		// then we check to see if a product is chosen, if one is we sort by product
-		console.log('In controller(home): Drop Down list Location');
-		// var loc = this.getHomeView();
-		// console.log(record);
 		WhatsFresh.locInd = index;
 		WhatsFresh.locRec = record;
 		WhatsFresh.location = record._value.data.name;
-		console.log('Location is: '+ WhatsFresh.location +'\n');
 
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
-			WhatsFresh.util.Search.options.location = record._value.data;
-			WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
-			WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-            this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+		WhatsFresh.util.Search.options.location = record._value.data;
+		WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+		WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+        this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
 
-
-            WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
-	    //Ext.Viewport.setActiveItem(homeView);
+        WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
 	},
 	onChooseProduct: function(index, record){
-		// We first check to see if a location is chosen, if one is we sort by locataion,
-		// then we check to see if a product is chosen, if one is we sort by product
-		console.log('In controller(home): Drop Down list Products');
-		console.log('Product is: '+ record._value.data.name +'\n');
 		WhatsFresh.product = record._value.data.name;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
@@ -158,24 +142,21 @@ Ext.define('WhatsFresh.controller.List', {
 		}else{
 			WhatsFresh.use2 = 1;
 		}
-			WhatsFresh.util.Search.options.product = record._value.data;
-            // this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
-            WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
-            WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-            this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+		WhatsFresh.util.Search.options.product = record._value.data;
+        WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+        WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+        this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
 
 	    var homeView = this.getHomeView();
-            homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
+        homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
 	    Ext.Viewport.setActiveItem(homeView);
 	},
 	numberOfVendors: function(store){
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
 		WhatsFresh.Litem = new Array();
 		WhatsFresh.VstoreLength = store.data.items.length;
-		// console.log(store.data.items);
 		for (j = 0; j < store.data.items.length; j++){
 			WhatsFresh.Litem[j] = store.data.items[j].data;
-			// console.log(WhatsFresh.Litem[j]);
 		}
 	},
 	populatePstore: function(store, pstore, usekey){
@@ -189,11 +170,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var n = 0;
 		pstore.removeAll();
 		for(i = 0; i < store.data.items.length; i++){
-			// console.log('store.data.items.length');
-			// console.log(store.data.items.length);
 			for(j = 0; j < store.data.items[i].data.products.length; j++){
-			// console.log('store.data.items[i].data.products.length');
-			// console.log(store.data.items[i].data.products.length);
 				flag = 0;
 				for(k = 0; k < pstore.data.length; k++){
 					// check to see if product and prep already exist
@@ -223,7 +200,6 @@ Ext.define('WhatsFresh.controller.List', {
 	},
 	// Need to reset the store when the check is clicked again, so store is set back to original store
 	onSortByVendorCommand: function(){
-		console.log('In controller(home): Vendor checkbox');
 		var view = this.getListView();
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		// Note: the code for the functionality of this command is included in the onViewGoCommand,
@@ -231,8 +207,6 @@ Ext.define('WhatsFresh.controller.List', {
 		// command, then we are able to make sure that the correct store is set. If a checkbox is set
 		// then the specific list view store will be set by the checkbox in the onViewGoCommand and if
 		// the checkbox is not set, then the list store has already been set.
-		console.log(this.getHomeView().items.items[5].items);
-		console.log(view.down('list'));
 		var homeView = this.getHomeView();
 		if(homeView.items.items[5].items.items[0]._checked === true){
 			// if vendors is true, then we must set products to false
@@ -242,7 +216,6 @@ Ext.define('WhatsFresh.controller.List', {
 		}
 	},
 	onSortByProductCommand: function(){
-		console.log('In controller(home): Product checkbox');
 		var view = this.getListView();
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
@@ -255,7 +228,6 @@ Ext.define('WhatsFresh.controller.List', {
 		}
 	},
 	onViewGoCommand: function(){
-		console.log('In controller(home): Go to List Page Button');
 		var view = this.getListView();
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
@@ -264,16 +236,16 @@ Ext.define('WhatsFresh.controller.List', {
 		this.addMapMarkers();
 
 	    setTimeout(function() {
-                WhatsFresh.gMap.panTo(WhatsFresh.cent[0]);
+            WhatsFresh.gMap.panTo(WhatsFresh.cent[0]);
            	WhatsFresh.gMap.fitBounds(WhatsFresh.bounds);
            	// these statements make sure that our zoom is not to close or to far away from the marker
            	if(WhatsFresh.gMap.getZoom() > 15){
-		    WhatsFresh.gMap.setZoom(15);
-		}
-		if(WhatsFresh.gMap.getZoom() < 6){
-		    WhatsFresh.gMap.setZoom(6);
-		}
-            }, 1000);
+		    	WhatsFresh.gMap.setZoom(15);
+			}
+			if(WhatsFresh.gMap.getZoom() < 6){
+			    WhatsFresh.gMap.setZoom(6);
+			}
+        }, 1000);
 
 		if(homeView.items.items[5].items.items[0]._checked === true){
 			view.down('list').setStore(store);
@@ -338,10 +310,7 @@ Ext.define('WhatsFresh.controller.List', {
         }
     },
     buildInventorySummary: function(locationString, productString, userLoc){
-
         var vendors = Ext.data.StoreManager.lookup('Vendor');
-
-        console.log("inside buildInventorySummary");
         var summary = {
             th: "There are ",
             numItems: vendors.getCount(),
@@ -377,7 +346,6 @@ Ext.define('WhatsFresh.controller.List', {
 	// LIST
 	// stuff	######################################################################################	LIST
 	onViewBackHomeCommand: function(){
-		console.log('In controller(list): Back to Home Page Button');
 		// This removes the old markers from the map on the list page
 		WhatsFresh.backFlag = 0;
 		for(i = 0; i < WhatsFresh.marker.length; i++){
@@ -398,7 +366,6 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.lastNodeSet[0] = null;
 		WhatsFresh.lent = 0;
 		WhatsFresh.animation = null;
-		// WhatsFresh.opnum = 0.7;
 		var lat;
 		var lng;
 		WhatsFresh.infowindow = new google.maps.InfoWindow();
@@ -424,13 +391,11 @@ Ext.define('WhatsFresh.controller.List', {
 	addAMapMarker: function(k, animation){
 		// I moved all of the code to create a single map marker with an infowindow and listener for that window
 		// out of the add map markers function in order to use it in the onViewLpageListHighlightCommand
-            var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+        var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 
 		WhatsFresh.marker[k] = new google.maps.Marker({
 				map: WhatsFresh.gMap,
 				animation: animation,
-				// opacity: opnum,
-				// zIndex: google.maps.Marker.MAX_ZINDEX + 1,
 				icon: WhatsFresh.iconImage,
 				position: WhatsFresh.cent[k],
 				clickable: true
@@ -447,11 +412,7 @@ Ext.define('WhatsFresh.controller.List', {
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
         	// WE WILL USE THIS LISTENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
         	google.maps.event.addListener(WhatsFresh.marker[k], 'click', function(){
-        		// turns out that this is equal to WhatsFresh.marker[k], so we set WhatsFresh.storeItem
-        		// to WhatsFresh.marker[k] above so that the storeItem is set when a list item is selected
         		WhatsFresh.storeItem = this;
-        		// console.log('THIS IN THE EVENT LISTENER');
-        		// console.log(this);
         		WhatsFresh.infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
         		WhatsFresh.infowindow.open(WhatsFresh.gMap, this); // this opens the infowindow defined above
         	});
@@ -461,34 +422,24 @@ Ext.define('WhatsFresh.controller.List', {
 		lv._items.items[2].deselect(lv._items.items[2].selected.items[0]);
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
 		var selectListItemFlag = 0;
-		// console.log(pstore);
-		// console.log('WhatsFresh.storeItem');
-		// console.log(WhatsFresh.storeItem);
 		// If the vendors store is used, we can select a list item in here
 		if(lv._items.items[2]._store._storeId === 'Vendor'){
-        	// console.log("I shouldn't see this when I'm in the products list");
 			lv._items.items[2].select(WhatsFresh.storeItem.info.Lpos);
 		}
 		// if the productlist store is selected, we need to select the first product and prep in the productlist store
 		// that contains our vendor as a seller of that product
 		if(lv._items.items[2]._store._storeId === 'ProductList'){
-			console.log('PRODUCTS LIST SELECT');
 			for(i = 0; i < pstore.data.all.length; i++){
 				for(j = 0; j < pstore.data.all[i].data.vendors.length; j++){
 					// if vendor exists in the productlist item as carrying that product, then set highlight flag
-					// console.log(pstore.data.all[i].data.vendors[j]);
-					// console.log(WhatsFresh.storeItem.info.data.name);
 					if(WhatsFresh.storeItem.info.data.name === pstore.data.all[i].data.vendors[j]){
 						if(selectListItemFlag !== 2){
 							selectListItemFlag = 1;
 						}
-						// console.log('the productlist item contains the vendor');
 					}
 				}
 				// if a productlist item contains the vendor, highlight it
 				if(selectListItemFlag === 1){
-					// console.log('highlight the correct list item');
-					// console.log(pstore.data.all[i].data);
 					lv._items.items[2].select(pstore.data.all[i].data.PLpos);
 					selectListItemFlag = 2;
 				}
@@ -504,50 +455,23 @@ Ext.define('WhatsFresh.controller.List', {
 		var t = 0;
 		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELETED LIST ITEM
 		for(i = 0; i < WhatsFresh.marker.length; i++){
-			// console.log('WhatsFresh.marker[i].info.data.id   '+ WhatsFresh.marker[i].info.data.id +'   index.id   '+ index.id +'\n');
-			// console.log('marker data   ');
-			// console.log(WhatsFresh.marker[i].icon);
-			// console.log('Index');
-			// console.log(index.data);
-
-
 			// Here we want to set all previous blue nodes to red, then we will navigate into the respective function and turn
 			// a node or nodes blue depending on our criteria.
 			if((WhatsFresh.lastNodeSet[0] != null) && (t == 0)){
-				console.log("removing last set of blue markers");
-				// console.log("WhatsFresh.lent = "+ WhatsFresh.lent);
 				for(h = 0; h < WhatsFresh.lent; h++){
 					// get rid of last blue marker
 					WhatsFresh.marker[WhatsFresh.lastNodeSet[h]].setMap(null);
-					// console.log('removed');
-					// console.log(WhatsFresh.lastNodeSet[h]);
 					// reset marker to red
 					WhatsFresh.iconImage = '/images/red.png';
 					// Setting the animation to null
 					WhatsFresh.animation = null;
-					// Set the opacity of the pin
-					// WhatsFresh.opnum = 0.5;
 					// remake the red marker
 					this.addAMapMarker(WhatsFresh.lastNodeSet[h], WhatsFresh.animation, WhatsFresh.opnum);
-					// console.log('added');
 					// reset t so that the new set of nodes for a product are populated
 					t = 0;
 				}
 				WhatsFresh.lent = 0;
 	        }
-	     //    if(WhatsFresh.lastI != null){
-						// // get rid of last blue marker
-						// console.log('get rid of last blue marker');
-						// WhatsFresh.marker[WhatsFresh.lastI].setMap(null);
-						// // reset marker to red
-						// WhatsFresh.iconImage = '/images/red.png';
-						// WhatsFresh.animation = null;
-						// // Set the opacity of the pin
-						// // WhatsFresh.opnum = 0.5;
-						// // remake the red marker
-						// this.addAMapMarker(WhatsFresh.lastI, WhatsFresh.animation, WhatsFresh.opnum);
-			   //      }
-
 			if((view._items.items[2]._store._storeId === 'ProductList') && (WhatsFresh.infowindowFlag !== 1)){
 				// Use this for loop to find all the vendors that sell this product
 				for(j = 0; j < index.data.vendors.length; j++){
@@ -557,20 +481,7 @@ Ext.define('WhatsFresh.controller.List', {
 						// also checks that we only reset the nodes once when we search for and change
 						// the new nodes for the new product to blue
 						this.blueMapMarkers(t, i);
-				        // get rid of red marker for selected list item
-				  //       WhatsFresh.marker[i].setMap(null);
-				  //       // reset marker to blue
-						// WhatsFresh.iconImage = '/images/blue.png';
-						// // Setting the animation to drop
-						// WhatsFresh.animation = google.maps.Animation.DROP;
-						// // Set the opacity of the pin
-						// // WhatsFresh.opnum = 1.0;
-						// // make the blue marker
-						// this.addAMapMarker(i, WhatsFresh.animation, WhatsFresh.opnum);
-						// WhatsFresh.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
-						// WhatsFresh.lastNodeSet[t] = i;
 			   			t = t+1;
-			   			// WhatsFresh.lent = t;
 					}
 				}
 			}
@@ -578,25 +489,10 @@ Ext.define('WhatsFresh.controller.List', {
 				if(WhatsFresh.marker[i].info.data.id === index.data.id){
 					// This is setting the pin of the selected list item to be blue and popping open its infowindow
 					this.blueMapMarkers(t, i);
-			        // get rid of red marker for selected list item
-			  //       WhatsFresh.marker[i].setMap(null);
-			  //       // reset marker to blue
-					// WhatsFresh.iconImage = '/images/blue.png';
-					// WhatsFresh.animation = google.maps.Animation.DROP;
-					// // Set the opacity of the pin
-					// // WhatsFresh.opnum = 1.0;
-					// // make the blue marker
-					// this.addAMapMarker(i, WhatsFresh.animation, WhatsFresh.opnum);
-					// WhatsFresh.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
 					// add data to blue marker info window and open it
 					WhatsFresh.infowindow.setContent(WhatsFresh.marker[i].info.content); // sets the infowindow that coresponds to the selected list
 			        WhatsFresh.infowindow.open(WhatsFresh.gMap, WhatsFresh.marker[i]); // this opens the infowindow defined above
-
-			        // WhatsFresh.lastNodeSet[t] = i;
 		   			t = t+1;
-		   // 			WhatsFresh.lent = t;
-
-					// WhatsFresh.lastI = i;
 			    }
 			}
 		}
@@ -608,8 +504,6 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.iconImage = '/images/blue.png';
 		// Setting the animation to drop
 		WhatsFresh.animation = google.maps.Animation.DROP;
-		// Set the opacity of the pin
-		// WhatsFresh.opnum = 1.0;
 		// make the blue marker
 		this.addAMapMarker(i, WhatsFresh.animation, WhatsFresh.opnum);
 		WhatsFresh.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
@@ -618,49 +512,24 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.lent = t;
 	},
 	onViewLpageListItemCommand: function(record, list, index){
-		console.log('In controller(list): Select list item');
-		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
-
-
 		var detailView = this.getDetailView();
 		var productdetailView = this.getProductdetailView();
 
 		detailView.getAt(1).setData(index.data);
 		productdetailView.getAt(1).setData(index.data);
-		// console.log('data that we need');
-		// console.log(productdetailView.getAt(1)._data);
-		// console.log(this);
-		// console.log(productdetailView._items.items[1]._data);
-		// console.log(detailView._items.items[1]._data);
-		// Trying to pass product data from selected vendor to new store, so that we
+		// Pass product data from selected vendor to new store, so that we
 		// can use the new store to correctly use tpl print to make selectable list
 		// items of each unique product.
 
-		// Trying to find store so that we can add data to the new store.
+		// Find store so that we can add data to the new store.
 		var storeInventory = Ext.data.StoreManager.lookup('VendorInventory');
 		var productstore = Ext.data.StoreManager.lookup('Product');
-		// console.log(stuff);
-		// console.log('storeStuff Items: ');
-		// console.log(storeStuff.data.items[0]);
 		storeInventory.removeAll();
-		// console.log(storeStuff.data.items);
 		var view = this.getListView();
-		// console.log('list view');
-		// console.log(view);
-
-		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELECTED LIST ITEM
-		// for(i = 0; i < WhatsFresh.marker.length; i++){
-		// 	if(WhatsFresh.marker[i].info.data.id === index.id){
-		// 		WhatsFresh.infowindow.setContent(WhatsFresh.marker[i].info.content); // sets the infowindow that coresponds to the selected list
-		//         WhatsFresh.infowindow.open(WhatsFresh.gMap, WhatsFresh.marker[i]); // this opens the infowindow defined above
-		//     }
-		// }
 		this.onViewLpageListHighlightCommand(record, list, index);
 
-		// console.log(index);
 		if((view._items.items[2]._store._storeId === 'Vendor') | (WhatsFresh.infowindowFlag === 1)){
 			// Store is populated with items from selected vendor
-			// console.log(index.data.products.length);
 			for(i = 0; i < index.data.products.length; i++){
 				var newpro = {
 					name: index.data.products[i].name,
@@ -677,8 +546,6 @@ Ext.define('WhatsFresh.controller.List', {
         	Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
 		}
 		if((view._items.items[2]._store._storeId === 'ProductList') && (WhatsFresh.infowindowFlag !== 1)){
-			console.log('going to productdetailView');
-			// console.log(index);
 			for(i = 0; i < index.data.vendors.length; i++){
 				var newpro = {
 					name: index.data.vendors[i]
@@ -686,15 +553,9 @@ Ext.define('WhatsFresh.controller.List', {
 				storeInventory.add(newpro);
 			}
 			for(k = 0; k <  productstore.data.all.length; k++){
-				// console.log('in k loop'+ k);
-				// console.log(productstore.data.items[k]);
 				if(productstore.data.all[k].data.name === index.data.name){
-					// console.log(productstore.data.all[k].data.name);
-					// console.log(index.data.name);
 					// Sets data for the info block on productdetail page
 					productdetailView.getAt(1).setData(productstore.data.all[k].data);
-					// console.log('NEEDED DISPLAY DATA');
-					// console.log(productdetailView.getAt(1)._data);
 				}
 			}
 			// for stack that tracks navigaion
@@ -704,52 +565,29 @@ Ext.define('WhatsFresh.controller.List', {
         	WhatsFresh.pcount = ++WhatsFresh.pcount;
 			Ext.Viewport.animateActiveItem(productdetailView, this.slideLeftTransition);
 		}
-		console.log(index);
-		//
 		WhatsFresh.infowindowFlag = 0;
 	},
 	// Functions dealing with
 	// DETAIL
 	// stuff	######################################################################################	DETAIL
 	onViewBackListCommand: function(record, index){
-		console.log('In controller(detail): Back to List Page Button');
 		var a, b;
 		WhatsFresh.previousListItem = null;
-		// console.log("this is our path item **************************");
-
-		// console.log('WhatsFresh.pcount - 2');
-		// console.log(WhatsFresh.pcount - 2);
-		// console.log('WhatsFresh.path[WhatsFresh.pcount - 2]');
-		// console.log(WhatsFresh.path[WhatsFresh.pcount - 2]);
-		// console.log('WhatsFresh.pvalue[WhatsFresh.pcount- 2]');
-		// console.log(WhatsFresh.pvalue[WhatsFresh.pcount-2]);
 		if(WhatsFresh.path[WhatsFresh.pcount - 2] === 'list'){
 			WhatsFresh.pcount = --WhatsFresh.pcount;
 			Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
 		}
 		if((WhatsFresh.path[WhatsFresh.pcount - 2] === 'detail') | (WhatsFresh.path[WhatsFresh.pcount - 2] === 'productdetail')){
-			// WhatsFresh.pcount = WhatsFresh.pcount-1;
 			WhatsFresh.backFlag = 1;
-			// console.log('PCOUNT');
-			// console.log(WhatsFresh.pcount);
 			this.onViewDpageListItemCommand(a, b, WhatsFresh.pvalue[WhatsFresh.pcount-2]);
 		}
 	},
 	onViewInfoCommand: function(index){
-		console.log('In controller(detail): View Info Page Button');
-		console.log(index);
-		console.log(WhatsFresh.pcount);
-		// need to then get the index data item from the product store, so that I can populate the story store correctly
-		console.log(WhatsFresh.ProductStore);
-		console.log(WhatsFresh.pname);
+		// need to then get the index data item from the product store, so that we can populate the story store correctly
 		for(i = 0; i < WhatsFresh.ProductStore.data.items.length; i++){
 			if(WhatsFresh.pname === WhatsFresh.ProductStore.data.items[i].data.name){
 				WhatsFresh.pnameData = WhatsFresh.ProductStore.data.items[i].data;
-				console.log(WhatsFresh.StoryStore);
-				console.log("the story id");
-				console.log(WhatsFresh.ProductStore.data.items[i].data.story);
 				if(WhatsFresh.ProductStore.data.items[i].data.story === null){
-					console.log("No story id");
 					var histr = {
 						hist: "Sorry, no educational data exists for this product at this time"
 					};
@@ -765,13 +603,10 @@ Ext.define('WhatsFresh.controller.List', {
 				}else{
 					WhatsFresh.INimage.show();
 					WhatsFresh.INlist.show();
-					// this store load doesn't seem to be working, it is probably because we have not reloaded the store yet
 					WhatsFresh.StoryStore._proxy._url = 'http://seagrant-staging-api.osuosl.org/1/stories/'+WhatsFresh.ProductStore.data.items[i].data.story;
 					WhatsFresh.StoryStore.load();
 					WhatsFresh.StoryStore.on('load', function(){
-						console.log("story loaded");
-
-					   if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
+						if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
 							WhatsFresh.INimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
 							var caption = {
 								cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
@@ -788,7 +623,6 @@ Ext.define('WhatsFresh.controller.List', {
 					    	hist: WhatsFresh.StoryStore.data.items[0].data.history
 					    };
 					    WhatsFresh.INhistory.setData(histr);
-
 						Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
 					})
 				}
@@ -802,10 +636,8 @@ Ext.define('WhatsFresh.controller.List', {
 	    }
 	    WhatsFresh.pvalue[WhatsFresh.pcount] = "info";
 	    WhatsFresh.pcount = ++WhatsFresh.pcount;
-
 	},
 	onViewDpageListItemCommand: function(record, list, index){
-		console.log('In controller(detail): Select list item');
 		var num2;
 	    var w;
 		var view = this.getListView();
@@ -819,7 +651,6 @@ Ext.define('WhatsFresh.controller.List', {
 		// with our data selection
 		if(WhatsFresh.path[WhatsFresh.pcount - 1] === 'detail'){
 			// Store is populated with items from selected vendor
-			console.log('we are going from the detail page to the productsdetail page');
 			var productstore = Ext.data.StoreManager.lookup('Product');
 			// search through the vendors to find the vendors who carry the product we are selecting,
 			// so that we can display the vendors that carry that product
@@ -836,24 +667,16 @@ Ext.define('WhatsFresh.controller.List', {
 				}
 			}
 			for(k = 0; k <  productstore.data.all.length; k++){
-				// console.log('in k loop'+ k);
-				// console.log(productstore.data.items[k]);
 				if(productstore.data.all[k].data.name === index.data.name){
-					// console.log(productstore.data.all[k].data.name);
-					// console.log(index.data.name);
 					// Sets data for the info block on productdetail page
 					productdetailView.getAt(1).setData(productstore.data.all[k].data);
 					var num = k;
-					// console.log('NEEDED DISPLAY DATA');
-					// console.log(productdetailView.getAt(1)._data);
 				}
 			}
 			if(WhatsFresh.backFlag === 0){
 				WhatsFresh.path[WhatsFresh.pcount] = 'productdetail';
 				WhatsFresh.pvalue[WhatsFresh.pcount] = index;
 				WhatsFresh.pname = index.data.name;
-				console.log("Here is the index");
-				console.log(index);
 	        	WhatsFresh.pcount = ++WhatsFresh.pcount;
 	        	Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideLeftTransition);
 	        }
@@ -863,22 +686,15 @@ Ext.define('WhatsFresh.controller.List', {
 	        	if(WhatsFresh.pvalue[WhatsFresh.pcount] !== 'info'){
 	        	   	for(w = 0; w < storeInventory.data.all.length; w++){
 		        		// check to see if list item name is equal to the list item that was previously selected
-		        		console.log(storeInventory.data.all[w].data.name);
-		        		console.log(WhatsFresh.pvalue[WhatsFresh.pcount].data.name);
 		        		if(storeInventory.data.all[w].data.name === WhatsFresh.pvalue[WhatsFresh.pcount].data.name){
 		        			num2 = w;
 		        		}
 		        	}
 		        	productdetailView.items.items[3].select(storeInventory.data.all[num2]);
 		        }
-		        console .log("returning to the products detail page from the "+ WhatsFresh.path[WhatsFresh.pcount] +" page");
 	        	Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideRightTransition);
 	        }
 		}else if(WhatsFresh.path[WhatsFresh.pcount - 1] === 'productdetail'){
-			console.log('Leaving the productdetail page to see the detail page');
-
-			// WE ALSO HAVE A PROBLEM WHERE THE TITLE OF THE INFO BLOCK IS NOT INCLUDING THE PROPER PREPARATION.
-
 			// search through the vendors that carry the item and find the one we are selecting,
 			// so that we can use the data from the selected vendor
 			for(i = 0; i < vendorstore.data.all.length; i++){
@@ -898,7 +714,6 @@ Ext.define('WhatsFresh.controller.List', {
 			// Sets the title of the header on detail page
 			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.items.items[1]._data) );
 			if(WhatsFresh.backFlag === 0){
-
 				// adding a log item to the "stack"
 				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 				WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -915,7 +730,6 @@ Ext.define('WhatsFresh.controller.List', {
 		        			num2 = w;
 		        		}
 		        	}
-		        	console.log(detailView.items);
 		       		detailView.items.items[3].select(storeInventory.data.all[num2]);
 		        }
 	        	Ext.Viewport.animateActiveItem(detailView, this.slideRightTransition);
@@ -938,25 +752,16 @@ Ext.define('WhatsFresh.controller.List', {
 	// INFO
 	// stuff	######################################################################################	INFO
 	onViewBackDetailCommand: function(){
-		console.log('In controller(info): Back to Detail Page Button');
 		var a, b;
 		if((WhatsFresh.path[WhatsFresh.pcount - 2] === 'detail') | (WhatsFresh.path[WhatsFresh.pcount - 2] === 'productdetail')){
 			// WhatsFresh.pcount = WhatsFresh.pcount-1;
 			WhatsFresh.backFlag = 1;
-			console.log("path variable");
-			console.log(WhatsFresh.path[WhatsFresh.pcount - 2]);
-			// console.log('PCOUNT');
-			// console.log(WhatsFresh.pcount);
 			this.onViewDpageListItemCommand(a, b, WhatsFresh.pvalue[WhatsFresh.pcount-2]);
 		}
-		// Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideRightTransition);
 	},
 	onViewIpageListItemCommand: function(record, list, index){
-		console.log('In controller(info): Selected');
-		// Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
 		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
 
-		// console.log(WhatsFresh.StoryStore.data.items[0].data);
 		if(WhatsFresh.pnameData.story === null){
 			// Do nothing, because we have already set all data to null
 		}else{
@@ -978,23 +783,16 @@ Ext.define('WhatsFresh.controller.List', {
 					break;
 				case "History":
 					if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
-						// Then we show the image
-						console.log("Now you see the image");
 						// Here we set the image source
 						WhatsFresh.SVimage.show();
-						console.log(WhatsFresh.SVimage);
 						// OSL will send us a full string, so we won't have to apend part of the url
 						WhatsFresh.SVimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
-						// WhatsFresh.SVimage.setSrc('http://michellesread.com/files/2013/04/smile.jpg');
-						// SVimage.setSrc(image);
-						// Finally we print the caption under the image
-						console.log("Caption is included");
 						// Set caption
 						var caption = {
 							cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
 						};
 						// We can later deal with multiple images, by using a for loop to set all of the images
-						// to show and to populate thier specific image and caption. In the back command, we will
+						// to show and to populate their specific image and caption. In the back command, we will
 						// just use a for loop to set their images to hide and their captions to null.
 					}else{
 						// Set caption
@@ -1013,10 +811,6 @@ Ext.define('WhatsFresh.controller.List', {
 				case "Videos":
 					if(WhatsFresh.StoryStore.data.items[0].data.videos.length > 0){
 						WhatsFresh.SVvideo.show();
-						console.log('set the video');
-						console.log(WhatsFresh.SVvideo);
-						// WhatsFresh.SVvideo._url[0] = WhatsFresh.StoryStore.data.items[0].data.videos[0].link;
-
 						var caption = {
 							cap: WhatsFresh.StoryStore.data.items[0].data.videos[0].caption
 						};
@@ -1027,7 +821,6 @@ Ext.define('WhatsFresh.controller.List', {
 						};
 					}
 					break;
-
 			}
 			WhatsFresh.SVcaption.setData(caption);
 		}
@@ -1038,14 +831,7 @@ Ext.define('WhatsFresh.controller.List', {
 	// SPECIFIC
 	// stuff	######################################################################################	SPECIFIC
 	onViewBackInfoCommand: function(){
-		console.log('In controller(specific): Back to Info Page Button');
-
 		switch(WhatsFresh.IListItem){
-			// case "History":
-			// 	// Remove the image source
-			// 	WhatsFresh.SVimage.hide();
-			// 	WhatsFresh.SVimage.setSrc('');
-			// 	break;
 			case "Videos":
 				WhatsFresh.SVvideo._url[0] = null;
 				WhatsFresh.SVvideo.hide();
@@ -1103,7 +889,6 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.SVimage.hide();
 			WhatsFresh.SVvideo.hide();
 
-		// console.log("launch");
 		// Get store vars
 		Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
         Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
@@ -1124,11 +909,9 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.dist = Ext.getStore('Distance').getData().all[0].data;
 	},
     onLocationStoreRefresh: function(){
-        console.log("Location store data has changed, selectfield should be updated.");
         this.getHomeView().down('[itemId=selectlocation]').reset();
     },
     onProductStoreRefresh: function (){
-        console.log("Product store data has changed, selectfield should be updated.");
         this.getHomeView().down('[itemId=selectproduct]').reset();
     },
     onVendorStoreLoad: function(){
