@@ -7,16 +7,6 @@ describe('WhatsFresh.util.ProductSearch', function () {
         expect(WhatsFresh.util.ProductSearch).toBeDefined();
     });
 
-    it('has options that are null by default', function() {
-        expect(WhatsFresh.util.ProductSearch.options).toBeDefined();
-        expect(WhatsFresh.util.ProductSearch.options.product).toBeNull();
-    });
-
-    it('has filter-by logic functions', function() {
-        var Search = WhatsFresh.util.ProductSearch;
-        expect(Search.canFilterByProduct).toBeDefined();
-    });
-
     it('can create a store-filtering function', function() {
         var Search = WhatsFresh.util.ProductSearch;
         expect(Search.buildFilterFunction).toBeDefined();
@@ -27,40 +17,29 @@ describe('WhatsFresh.util.ProductSearch', function () {
     describe('buildFilterFunction()', function () {
 
         var Search = WhatsFresh.util.ProductSearch;
+        var firstSearch = WhatsFresh.util.Search;
 
-        beforeEach(function () {
-            // Reset the properties on the singleton.
-            // Prevents cross-test pollution.
-            Search.options.product  = null;
-            // These may be overridden by testcase beforeEach
+        var filter;
+
+        beforeEach( function (){
+            firstSearch.options.product= TestData.ProductArray[0];
+            filter= Search.buildFilterFunction();
         });
 
-        describe('when product is not set', function () {
-
-            it('cannot filter-by product', function() {
-                expect(Search.canFilterByProduct()).toBe(false);
-            });
+        afterEach( function (){
+            filter= null;
         });
 
-        
-        describe('when only product is set', function () {
-            
-            var filter;
-
-            beforeEach( function (){
-                Search.options.product= TestData.ProductArray[0];
-                filter= Search.buildFilterFunction();
-            });
-
-            afterEach( function (){
-                filter= null;
-            });
-
-            it('can filter-by product', function() {
-                expect(Search.canFilterByProduct()).toBe(true);
-            });
+        it('includes a vendor with the given product', function () {
+            var model= TestData.modelify(TestData.ProductArray[0]);
+            console.log(model);
+            expect(filter(model)).toBe(true);
         });
 
+        it('excludes a vendor not carrying the given product', function () {
+            var model= TestData.modelify(TestData.ProductArray[1]);
+            expect(filter(model)).toBe(false);
+        });
     });
 
 });

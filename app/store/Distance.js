@@ -4,51 +4,63 @@ Ext.define('WhatsFresh.store.Distance', {
 		data: [
 			{
 				distance: '200 miles',
-				val: 200
+				value: 200,
+				unit: 'miles'
 			},
 			{
 				distance: '175 miles',
-				val: 175
+				value: 175,
+				unit: 'miles'
 			},
 			{
 				distance: '150 miles',
-				val: 150
+				value: 150,
+				unit: 'miles'
 			},
 			{
 				distance: '125 miles',
-				val: 125
+				value: 125,
+				unit: 'miles'
 			},
 			{
 				distance: '100 miles',
-				val: 100
+				value: 100,
+				unit: 'miles'
 			},
 			{
 				distance: '75 miles',
-				val: 75
+				value: 75,
+				unit: 'miles'
 			},
 			{
 				distance: '50 miles',
-				val: 50
+				value: 50,
+				unit: 'miles'
 			},
 			{
 				distance: '25 miles',
-				val: 25
+				value: 25,
+				unit: 'miles'
 			},
 			{
 				distance: '20 miles',
-				val: 20
+				value: 20,
+				unit: 'miles'
 			},
 			{
 				distance: '15 miles',
-				val: 15
+				value: 15,
+				unit: 'miles'
 			},
 			{
 				distance: '10 miles',
-				val: 10
+				value: 10,
+				unit: 'miles'
 			},
 			{
 				distance: '5 miles',
-				val: 5
+				value: 5,
+				unit: 'miles'
 			}
 		]
 	}

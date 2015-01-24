@@ -27,7 +27,7 @@ Ext.define('WhatsFresh.util.Search', {
             var dist= singleton.options.distance;
             var loc= singleton.options.location;
             var prod= singleton.options.product;
-           
+
             // Composable filters
             var hasProduct, isNear, isInCity;
 
@@ -76,7 +76,7 @@ Ext.define('WhatsFresh.util.Search', {
 
     /*
      * This function assembles and applies the Search util's filter
-     * to a store. 
+     * to a store.
      *
      * Because Sencha stores persist applied filters, we only need to
      * call this function once on startup. Once the filter is applied,
@@ -111,7 +111,7 @@ Ext.define('WhatsFresh.util.Search', {
         var isValidLocation = !!opt.location && !opt.location.is_not_filterable;
         return !this.canFilterByDistance() && isValidLocation;
     },
-    
+
     canFilterByProduct: function () {
         var opt = this.options;
         return !!opt.product && !opt.product.is_not_filterable;
