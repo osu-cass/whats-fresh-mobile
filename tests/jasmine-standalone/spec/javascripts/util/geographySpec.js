@@ -5,7 +5,7 @@ describe('WhatsFresh.util.Geography', function () {
 
     it('exists as a global singleton', function() {
         expect(WhatsFresh.util.Geography).toBeDefined();
-        });
+    });
 
     describe('getDistance()', function () {
 
@@ -16,8 +16,6 @@ describe('WhatsFresh.util.Geography', function () {
             var λ2= 121.0;
             var d = WhatsFresh.util.Geography.getDistance(φ1,λ1,φ2,λ2);
             expect(Math.abs(79990 - d)).toBeLessThan(100);
-            });
-
         });
-
+    });
 });

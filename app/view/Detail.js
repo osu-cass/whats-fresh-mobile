@@ -10,7 +10,6 @@ Ext.define('WhatsFresh.view.Detail', {
 		items: [
 			{
 				xtype: 'toolbar',
-				// title: 'Detail Page',
 				itemId: 'detailPageToolbar',
 				docked: 'top',
 				items: [
@@ -37,8 +36,7 @@ Ext.define('WhatsFresh.view.Detail', {
 			{
 				xtype: 'image',
 				id: 'StaticMap',
-				itemId: 'staticmap',
-				// src: 'http://maps.googleapis.com/maps/api/staticmap?center=44.632442,-124.057761&zoom=14&size=200x200'
+				itemId: 'staticmap'
 			},					
 			{
 				config: {
@@ -47,9 +45,6 @@ Ext.define('WhatsFresh.view.Detail', {
 						directionLock: true
 					}
 				},
-				// We want this list to have only products of the vendor selected in
-				// the list screen. Perhaps we will have to deal with the products root
-				// of the vendor selected, and link the vendors products to the product store.
 				xtype: 'list',
 				id: 'DetailList',
 				store: 'VendorInventory',
@@ -83,18 +78,15 @@ Ext.define('WhatsFresh.view.Detail', {
 		]
 	},
 	onBackButtonTap: function(){
-		console.log('onBackButtonTap');
 		this.fireEvent('viewBackListCommand', this);
 	},
 	onBackHomeButtonTap: function(){
-		console.log('onBackButtonTap');
 		this.fireEvent('viewBackHomeCommand', this);
 	},
 	onNavigationTap: function(index){
 		this.fireEvent('navigationFunction', index.coords);
 	},
 	onDpagelistDisclose: function(list, record, target, index, evt, options){
-		console.log('viewDpageListItemCommand');
 		this.fireEvent('viewDpageListItemCommand', this, record, index);
 	}
 });
