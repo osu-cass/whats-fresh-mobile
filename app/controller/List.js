@@ -387,8 +387,17 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.marker.length = 0;
 		var listItems = this.getListView();
 		listItems._items.items[2].deselect(listItems._items.items[2].selected.items[0]);
+		// Hide video on specific page
+		if(WhatsFresh.IListItem === "Videos"){
+				WhatsFresh.SVvideo.hide();
+		};
+		// remove caption
+		var caption = {
+			cap: null
+		};
+		WhatsFresh.SVcaption.setData(caption);
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
-	},	
+	},
 	// declareMap markers and infowindows as well as functions for the listview map
 	addMapMarkers: function(){
 		var self = this; // important to get the correct data to the viewport
@@ -954,7 +963,7 @@ Ext.define('WhatsFresh.controller.List', {
 	},
 	onViewSpecificCommand: function(){
 		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
-	},	
+	},
 	onVideoTapFunction: function(link){
 		WhatsFresh.util.Link.openVideo(link);
 	},
@@ -1024,7 +1033,6 @@ Ext.define('WhatsFresh.controller.List', {
 						//will use for most other stuff.
 						var link = WhatsFresh.util.Link.formatVideoLink(WhatsFresh.StoryStore.data.items[0].data.videos[0].link);
 
-
 						//Grab the link created so the view can use it
 						WhatsFresh.SVvideo.link = link;
 						WhatsFresh.SVvideo.setSrc('http://img.youtube.com/vi/'+ link +'/0.jpg');
@@ -1055,17 +1063,9 @@ Ext.define('WhatsFresh.controller.List', {
 	onViewBackInfoCommand: function(){
 		console.log('In controller(specific): Back to Info Page Button');
 
-		switch(WhatsFresh.IListItem){
-			// case "History":
-			// 	// Remove the image source
-			// 	WhatsFresh.SVimage.hide();
-			// 	WhatsFresh.SVimage.setSrc('');
-			// 	break;
-			case "Videos":
-				WhatsFresh.SVvideo._url[0] = null;
+		if(WhatsFresh.IListItem === "Videos"){
 				WhatsFresh.SVvideo.hide();
-				break;
-		}
+		};
 		// remove caption
 		var caption = {
 			cap: null
@@ -1077,7 +1077,7 @@ Ext.define('WhatsFresh.controller.List', {
 	launch: function(){
 		this.callParent(arguments);
 		this.getDistanceSelect().disable();
-		
+
 		// Transitions
 		WhatsFresh.slideLeft = this.slideLeftTransition;
 		WhatsFresh.slideRight = this.slideRightTransition;
@@ -1122,7 +1122,7 @@ Ext.define('WhatsFresh.controller.List', {
 		Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
         Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
         Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
-		
+
 		// Variables
 			// FOR: back button functionality
 			WhatsFresh.pvalue = [];
