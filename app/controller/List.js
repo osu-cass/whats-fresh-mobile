@@ -60,6 +60,7 @@ Ext.define('WhatsFresh.controller.List', {
 				viewIpageListItemCommand: 'onViewIpageListItemCommand'
 			},
 			specificView: {
+				videoTapFunction: 'onVideoTapFunction',
 				viewBackInfoCommand: 'onViewBackInfoCommand',
 				viewBackHomeCommand: 'onViewBackHomeCommand'
 			}
@@ -951,6 +952,12 @@ Ext.define('WhatsFresh.controller.List', {
 		}
 		// Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideRightTransition);
 	},
+	onViewSpecificCommand: function(){
+		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
+	},	
+	onVideoTapFunction: function(link){
+		WhatsFresh.util.Link.openVideo(link);
+	},
 	onViewIpageListItemCommand: function(record, list, index){
 		console.log('In controller(info): Selected');
 		// Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
@@ -1012,10 +1019,18 @@ Ext.define('WhatsFresh.controller.List', {
 					break;
 				case "Videos":
 					if(WhatsFresh.StoryStore.data.items[0].data.videos.length > 0){
+						//Pull out the video id ie www.youtube.com/v?=blablabla
+						//this pulls out the "blablabla" bit which is what we
+						//will use for most other stuff.
+						var link = WhatsFresh.util.Link.formatVideoLink(WhatsFresh.StoryStore.data.items[0].data.videos[0].link);
+
+
+						//Grab the link created so the view can use it
+						WhatsFresh.SVvideo.link = link;
+						WhatsFresh.SVvideo.setSrc('http://img.youtube.com/vi/'+ link +'/0.jpg');
 						WhatsFresh.SVvideo.show();
 						console.log('set the video');
 						console.log(WhatsFresh.SVvideo);
-						// WhatsFresh.SVvideo._url[0] = WhatsFresh.StoryStore.data.items[0].data.videos[0].link;
 
 						var caption = {
 							cap: WhatsFresh.StoryStore.data.items[0].data.videos[0].caption
@@ -1090,7 +1105,6 @@ Ext.define('WhatsFresh.controller.List', {
 			// ON: List page
 			WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
 			console.log(WhatsFresh.statmap);
-
 			// ON: Info page
 			WhatsFresh.INimage = WhatsFresh.infoView.getComponent('infoimage');
 			WhatsFresh.INlist = WhatsFresh.infoView.getComponent('Ipagelist');

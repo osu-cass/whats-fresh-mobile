@@ -13,6 +13,43 @@ TestData.modelify = function (obj) {
     return obj;
 };
 
+TestData.StoryArray = [
+	{
+	name: "Starfish Enterblub", 
+	videos: [
+		{caption: "A Starship", 
+		link: "http://www.youtube.com/watch?v=efgDdSWDg0g", 
+		name: "Starship!"}
+	],
+	created: "2014-08-08T23:27:05.568Z",
+   	season: "All of them", 
+	modified: "2014-12-04T18:31:27.319Z", 
+	facts: "The Starfish Enterblub is a spaceship", 
+	ext: {}, 
+	products: "This is a product", 
+	preparing: "Spaceships are usually well prepared for you", 
+	error: {
+		status: false, 
+		text: null, 
+		name: null, 
+		debug: null, 
+		level: null}, 
+	images: [
+		{
+			caption: "Meow!", 
+			link: "/media/images/163.gif", 
+			name: "Not a cat"
+		}, 
+		{
+			caption: "Put a smile on!", 
+			link: "/media/images/smile.jpg", 
+			name: "Happy"
+		}], 
+		id: 1, 
+		buying: "Buying a spaceship is an expensive proposition.", 
+		history: "These are the voyages of the Starfish Enterblub; her five year mission -- to seek out new fish and new fishilizations..."}
+]
+
 TestData.VendorArray = [
     {
         city: 'Newport',
