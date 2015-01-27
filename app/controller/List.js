@@ -855,7 +855,6 @@ Ext.define('WhatsFresh.controller.List', {
 	// SPECIFIC
 	// stuff	######################################################################################	SPECIFIC
 	onViewBackInfoCommand: function(){
-		console.log('In controller(specific): Back to Info Page Button');
 
 		if(WhatsFresh.IListItem === "Videos"){
 				WhatsFresh.SVvideo.hide();

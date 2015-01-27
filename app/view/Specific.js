@@ -59,8 +59,6 @@ Ext.define('WhatsFresh.view.Specific', {
 		]
 	},
 	onVideoTap: function(){
-		console.log('videoTap');
-		console.log(WhatsFresh.SVvideo.link);
 		this.fireEvent('videoTapFunction', WhatsFresh.SVvideo.link);
 	},
 	onBackButtonTap: function(){
