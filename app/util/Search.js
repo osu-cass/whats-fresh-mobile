@@ -83,7 +83,6 @@ Ext.define('WhatsFresh.util.Search', {
      * we can call the store's filter function to update the filtered set.
      */
     applyFilterToStore: function (store) {
-        console.log('$ filtering Vendors');
         var singleton= WhatsFresh.util.Search;
         var filterFunction = singleton.buildFilterFunction();
         var criteria = new Ext.util.Filter({
