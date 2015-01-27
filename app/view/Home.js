@@ -136,27 +136,21 @@ Ext.define('WhatsFresh.view.Home', {
 	this.fireEvent('setUseLocation', newVal);
     },
     onDistance: function(record){
-	console.log('setDistance');
 	this.fireEvent('setDistance', this, record);
     },
     onSelectLocation: function(record, index){
-	console.log('chosenLocation');
 	this.fireEvent('chosenLocation', this, record);
     },
     onSelectProduct: function(record){
-	console.log('chosenProduct');
 	this.fireEvent('chosenProduct', this, record);
     },
     onVendorSelect: function(record){
-	console.log('sortByVendorCommand');
 	this.fireEvent('sortByVendorCommand', this, record);
     },
     onProductSelect: function(record){
-	console.log('sortByProductCommand');
 	this.fireEvent('sortByProductCommand', this, record);
     },
     onGoButtonTap: function(list, record, target, index, evt, options){
-	console.log('viewGoCommand');
 	this.fireEvent('viewGoCommand');
     }
 });

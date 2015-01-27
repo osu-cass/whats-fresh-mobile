@@ -875,7 +875,6 @@ Ext.define('WhatsFresh.controller.List', {
 		// Components
 			// ON: List page
 			WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
-			console.log(WhatsFresh.statmap);
 
 			// ON: Info page
 			WhatsFresh.INimage = WhatsFresh.infoView.getComponent('infoimage');
