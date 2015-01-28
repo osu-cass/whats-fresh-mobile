@@ -588,7 +588,7 @@ Ext.define('WhatsFresh.controller.List', {
 				storeInventory.add(newpro);
 			}
 			// set src for static map
-			WhatsFresh.statmap.setSrc( this.buildStaticMap( index.data ) );
+			// WhatsFresh.statmap.setSrc( this.buildStaticMap( index.data ) );
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
