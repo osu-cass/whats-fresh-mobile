@@ -24,16 +24,28 @@ div.vendnum{
 
 //DETAIL PAGE ELEMENTS ^^^^^^^^^^^
 
-#DetailList{
-	height: 50%;
-	top: 50%;
+#Details{
+	height: 47%;
+}
+
+#InfoBlock{
+	margin-top: 6px;
+	margin-left: 6px;
 }
 
 #StaticMap{
-	left: 50%;
-	top: 2.5%;
-	height: 45%;
-	width: 45%;
+//	left: 50%;
+//	top: 2.5%;
+//	height: 45%;
+//	width: 45%;
+	height: 200px;
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
+#DetailList{
+	height: 50%;
+	top: 50%;
 }
 
 //PRODUCTDETAIL PAGE ELEMENTS ^^^^

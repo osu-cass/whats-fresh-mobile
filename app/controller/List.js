@@ -565,7 +565,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var detailView = this.getDetailView();
 		var productdetailView = this.getProductdetailView();
 
-		detailView.getAt(1).setData(index.data);
+		detailView.getAt(1).items.items[0].setData(index.data);
 		productdetailView.getAt(1).setData(index.data);
 		// Pass product data from selected vendor to new store, so that we
 		// can use the new store to correctly use tpl print to make selectable list
@@ -588,7 +588,8 @@ Ext.define('WhatsFresh.controller.List', {
 				storeInventory.add(newpro);
 			}
 			// set src for static map
-			// WhatsFresh.statmap.setSrc( this.buildStaticMap( index.data ) );
+			console.log(index.data);
+			WhatsFresh.statmap.setSrc( this.buildStaticMap( index.data ) );
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -758,11 +759,11 @@ Ext.define('WhatsFresh.controller.List', {
 						storeInventory.add(newpro);
 					}
 					// Sets data for the info block on detail page
-					detailView.getAt(1).setData(vendorstore.data.all[i].data);
+					detailView.getAt(1).items.items[0].setData(vendorstore.data.all[i].data);
 				}
 			}
-			// Sets the title of the header on detail page
-			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.items.items[1]._data) );
+			console.log(detailView);
+			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.getAt(1).items.items[0]._data) );
 			if(WhatsFresh.backFlag === 0){
 				// adding a log item to the "stack"
 				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
@@ -780,7 +781,7 @@ Ext.define('WhatsFresh.controller.List', {
 		        			num2 = w;
 		        		}
 		        	}
-		       		detailView.items.items[3].select(storeInventory.data.all[num2]);
+		       		detailView.items.items[2].select(storeInventory.data.all[num2]);
 		        }
 	        	Ext.Viewport.animateActiveItem(detailView, this.slideRightTransition);
 	        }
@@ -936,7 +937,8 @@ Ext.define('WhatsFresh.controller.List', {
 
 		// Components
 			// ON: List page
-			WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
+			WhatsFresh.statmap = WhatsFresh.detailView.getAt(1).getComponent('staticmap');
+			
 			// ON: Info page
 			WhatsFresh.INimage = WhatsFresh.infoView.getComponent('infoimage');
 			WhatsFresh.INlist = WhatsFresh.infoView.getComponent('Ipagelist');
