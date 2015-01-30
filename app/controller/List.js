@@ -588,7 +588,6 @@ Ext.define('WhatsFresh.controller.List', {
 				storeInventory.add(newpro);
 			}
 			// set src for static map
-			console.log(index.data);
 			WhatsFresh.statmap.setSrc( this.buildStaticMap( index.data ) );
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
@@ -761,9 +760,7 @@ Ext.define('WhatsFresh.controller.List', {
 					// Sets data for the info block on detail page
 					detailView.getAt(1).items.items[0].setData(vendorstore.data.all[i].data);
 				}
-			}
-			console.log(detailView);
-			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.getAt(1).items.items[0]._data) );
+			}			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.getAt(1).items.items[0]._data) );
 			if(WhatsFresh.backFlag === 0){
 				// adding a log item to the "stack"
 				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
@@ -840,10 +837,6 @@ Ext.define('WhatsFresh.controller.List', {
 					break;
 				case "History":
 					if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
-						// Here we set the image source
-						WhatsFresh.SVimage.show();
-						// OSL will send us a full string, so we won't have to apend part of the url
-						WhatsFresh.SVimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
 						// Set caption
 						var caption = {
 							cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
@@ -945,10 +938,8 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.INhistory = WhatsFresh.infoView.getAt(1).getComponent('history');
 
 			// ON: Specific page
-			WhatsFresh.SVcaption = WhatsFresh.specificView.getComponent('caption');
-			WhatsFresh.SVimage = WhatsFresh.specificView.getComponent('specimage');
-			WhatsFresh.SVvideo = WhatsFresh.specificView.getComponent('video1');
-			WhatsFresh.SVimage.hide();
+			WhatsFresh.SVcaption = WhatsFresh.specificView.getAt(1).items.items[1];
+			WhatsFresh.SVvideo = WhatsFresh.specificView.getAt(1).items.items[0];
 			WhatsFresh.SVvideo.hide();
 
 		// Get store vars
