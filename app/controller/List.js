@@ -606,7 +606,7 @@ Ext.define('WhatsFresh.controller.List', {
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
 					// Sets data for the info block on productdetail page
-					productdetailView.getAt(1).setData(productstore.data.all[k].data);
+					productdetailView.getAt(1).items.items[0].setData(productstore.data.all[k].data);
 				}
 			}
 			// for stack that tracks navigaion
@@ -720,7 +720,7 @@ Ext.define('WhatsFresh.controller.List', {
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
 					// Sets data for the info block on productdetail page
-					productdetailView.getAt(1).setData(productstore.data.all[k].data);
+					productdetailView.getAt(1).items.items[0].setData(productstore.data.all[k].data);
 					var num = k;
 				}
 			}
@@ -741,7 +741,7 @@ Ext.define('WhatsFresh.controller.List', {
 		        			num2 = w;
 		        		}
 		        	}
-		        	productdetailView.items.items[3].select(storeInventory.data.all[num2]);
+		        	productdetailView.items.items[2].select(storeInventory.data.all[num2]);
 		        }
 	        	Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideRightTransition);
 	        }

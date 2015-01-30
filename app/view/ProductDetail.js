@@ -29,17 +29,25 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 				]
 			},
 			{
-				xtype: 'panel',
-				itemId: 'infoBlock',
-				tpl: '</pre><div class="list-item-title">{preparation} {name}</div><div class="list-item-description">description:  {description}</div><pre>'
-			},
-			{
-				xtype: 'button',
-				ui: 'action',
-				iconCls: 'info',
-				id: 'InfoButton',
-				itemId: 'infoButton'
-			},			
+				xtype: 'fieldset',
+				id: 'ProductDetails',
+				scrollable: true,
+				items: [
+					{
+						xtype: 'panel',
+						id: 'ProductInfoBlock',
+						itemId: 'infoBlock',
+						tpl: '</pre><div class="list-item-title">{preparation} {name}</div><div class="list-item-description">description:  {description}</div><pre>'
+					},
+					{
+						xtype: 'button',
+						ui: 'action',
+						iconCls: 'info',
+						id: 'InfoButton',
+						itemId: 'infoButton'
+					}
+				]	
+			},		
 			{
 				config: {
 					scrollable: {
