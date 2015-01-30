@@ -940,9 +940,9 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.statmap = WhatsFresh.detailView.getAt(1).getComponent('staticmap');
 			
 			// ON: Info page
-			WhatsFresh.INimage = WhatsFresh.infoView.getComponent('infoimage');
+			WhatsFresh.INimage = WhatsFresh.infoView.getAt(1).getComponent('infoimage');
 			WhatsFresh.INlist = WhatsFresh.infoView.getComponent('Ipagelist');
-			WhatsFresh.INhistory = WhatsFresh.infoView.getComponent('history');
+			WhatsFresh.INhistory = WhatsFresh.infoView.getAt(1).getComponent('history');
 
 			// ON: Specific page
 			WhatsFresh.SVcaption = WhatsFresh.specificView.getComponent('caption');

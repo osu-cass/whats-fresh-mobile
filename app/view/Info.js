@@ -29,16 +29,24 @@ Ext.define('WhatsFresh.view.Info', {
 					}
 				]
 			},
-			{	
-				xtype: 'image',
-				id: 'InfoImage',
-				itemId: 'infoimage'
-			},
 			{
-				xtype: 'panel',
-	        	itemId: 'history',
-	        	tpl: '</pre><div class="history">{hist}</div><pre>'
-			},		
+				xtype: 'fieldset',
+				id: 'InfoField',
+				scrollable: true,
+				items: [
+					{	
+						xtype: 'image',
+						id: 'InfoImage',
+						itemId: 'infoimage'
+					},
+					{
+						xtype: 'panel',
+			        	itemId: 'history',
+			        	id: 'history',
+			        	tpl: '</pre><div class="history">{hist}</div><pre>'
+					}
+				]		
+			},
 			{
 				config: {
 					scrollable: {
