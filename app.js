@@ -28,6 +28,11 @@ Ext.application({
 
 
     launch: function() {
+
+        // Destroy the #appLoadingIndicator element
+        Ext.fly('appLoadingIndicator').destroy();
+
+        // Initialize the main view
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Home'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Map'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.ListView'));
@@ -35,5 +40,19 @@ Ext.application({
         Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail')); 
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Info'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
+
+    },
+
+    onUpdated: function() {
+        Ext.Msg.confirm(
+            "Application Update",
+            "This application has just successfully been updated to the latest version. Reload now?",
+            function(buttonId) {
+                if (buttonId === 'yes') {
+                    window.location.reload();
+                }
+            }
+        );
     }
+
 });
