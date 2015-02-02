@@ -233,7 +233,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
 		var homeView = this.getHomeView();
-		WhatsFresh.iconImage = '/resources/images/red.png';
+		WhatsFresh.iconImage = 'resources/images/red.png';
 		this.addMapMarkers();
 
 	    setTimeout(function() {
@@ -472,7 +472,7 @@ Ext.define('WhatsFresh.controller.List', {
 					// get rid of last blue marker
 					WhatsFresh.marker[WhatsFresh.lastNodeSet[h]].setMap(null);
 					// reset marker to red
-					WhatsFresh.iconImage = '/resources/images/red.png';
+					WhatsFresh.iconImage = 'resources/images/red.png';
 					// Setting the animation to null
 					WhatsFresh.animation = null;
 					// remake the red marker
@@ -511,7 +511,7 @@ Ext.define('WhatsFresh.controller.List', {
 		// get rid of red marker for selected list item
         WhatsFresh.marker[i].setMap(null);
         // reset marker to blue
-		WhatsFresh.iconImage = '/resources/images/blue.png';
+		WhatsFresh.iconImage = 'resources/images/blue.png';
 		// Setting the animation to drop
 		WhatsFresh.animation = google.maps.Animation.DROP;
 		// make the blue marker

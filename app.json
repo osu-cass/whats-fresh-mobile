@@ -13,7 +13,7 @@
                     // phonegap.remote.username=myname@domain.com
                     // phonegap.remote.password=mys3cr3tp@ssw0rd
                     //"remote":false,
-                    "id": "com.domain.WhatsFresh",
+                    "id": "edu.oregonstate.cass.WhatsFresh",
                     "name": "WhatsFresh"
                 }
             }
@@ -61,10 +61,10 @@
      *      }
      */
     "js": [
-		{
-			"path": "phonegap.js",
-			"remote": true
-		},
+	{
+	    "path": "phonegap.js",
+	    "remote": true
+	},
         {
             "path": "touch/sencha-touch.js",
             "x-bootstrap": true
@@ -128,8 +128,8 @@
     /**
      * Extra resources to be copied along when build
      */
+    
     "resources": [
-		"config.xml",
         "resources/images",
         "resources/icons",
         "resources/startup"
