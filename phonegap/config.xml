@@ -1,12 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.domain.WhatsFresh" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Oregon's Catch</name>
+<widget id="edu.oregonstate.cass.WhatsFresh" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Oregon\'s Catch</name>
     <description>
       A catalog of fresh sea food available on the Oregon coast.
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         Oregon State University: Center for Applied Systems and Software
     </author>
+
+    <access origin="*" />
+
+    <feature name="Geolocation">
+      <param name="id" value="org.apache.cordova.geolocation" />
+    </feature>
+
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.5.0" />
     <preference name="orientation" value="default" />
@@ -66,5 +73,5 @@
     <gap:splash gap:platform="ios" height="1024" src="www/res/screen/ios/screen-ipad-portrait.png" width="768" />
     <gap:splash gap:platform="ios" height="768" src="www/res/screen/ios/screen-ipad-landscape.png" width="1024" />
     <gap:splash gap:platform="winphone" src="www/res/screen/windows-phone/screen-portrait.jpg" />
-    <access origin="*" />
+
 </widget>
