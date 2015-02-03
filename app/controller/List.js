@@ -80,21 +80,26 @@ Ext.define('WhatsFresh.controller.List', {
     onSetUseLocation: function(newToggleValue){
         var ctrl = this;
         var Search = WhatsFresh.util.Search;
+        var ProductSearch = WhatsFresh.util.ProductSearch;
 
 	if(newToggleValue){
+
+            // Update UI elements
 	    ctrl.getDistanceSelect().enable();
 	    ctrl.getLocationSelect().disable();
-	    WhatsFresh.userLoc = 1;
+
+            // Ensure distance is not null or out-of-date during filtering
+            Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
 
 	    // This updates the user's location and how far from their location they would like to search for vendors/products
 	    Ext.device.Geolocation.watchPosition({
-		frequency : 3000, // Update every 3 seconds
+		frequency : 10000, // Update every 10 seconds
 		callback: function(position) {
-                    WhatsFresh.util.Search.options.position = position;
-                    WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
-                    WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+                    Search.options.position = position;
+                    Search.applyFilterToStore(WhatsFresh.VendorStore);
+                    ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
                     ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
-                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
+                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
                 },
 		failure: function() {
                     WhatsFresh.util.Messages.showLocationError();
@@ -106,9 +111,10 @@ Ext.define('WhatsFresh.controller.List', {
 	    ctrl.getDistanceSelect().disable();
 	    ctrl.getLocationSelect().enable();
 	    Ext.device.Geolocation.clearWatch();
-	    WhatsFresh.util.Search.options.position = null;
-            WhatsFresh.util.Search.options.distance = null;
-	    WhatsFresh.userLoc = 0;
+	    Search.options.position = null;
+            WhatsFresh.VendorStore.filter();
+            WhatsFresh.ProductListStore.filter();
+            WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	}
     },
     onSetDistance: function(index, record){
@@ -118,7 +124,7 @@ Ext.define('WhatsFresh.controller.List', {
         Search.options.distance = record._value.data;
         WhatsFresh.VendorStore.filter();
         WhatsFresh.ProductListStore.filter();
-        WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
+        WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
     },
 	onChooseLocation: function(index, record){
 		WhatsFresh.location = record._value.data.name;
@@ -131,7 +137,7 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
         this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
 
-        WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
+        WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	},
 	onChooseProduct: function(index, record){
 		WhatsFresh.product = record._value.data.name;
@@ -149,7 +155,7 @@ Ext.define('WhatsFresh.controller.List', {
         this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
 
 	    var homeView = this.getHomeView();
-        homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
+        homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	    Ext.Viewport.setActiveItem(homeView);
 	},
 	numberOfVendors: function(store){
@@ -311,7 +317,9 @@ Ext.define('WhatsFresh.controller.List', {
         }
     },
     buildInventorySummary: function(locationString, productString, userLoc){
+        var ctrl = this;
         var vendors = Ext.data.StoreManager.lookup('Vendor');
+        var isUsingGeolocation = ctrl.getUseLocationToggle().getValue();
         var summary = {
             th: "There are ",
             numItems: vendors.getCount(),
@@ -323,7 +331,7 @@ Ext.define('WhatsFresh.controller.List', {
 
         // User Location specified:
         // "There are <number> vendors near you."
-        if(userLoc === 1){
+        if(isUsingGeolocation){
         	summary.i = "near ";
         	summary.loc = "you";
         }else{
@@ -924,8 +932,6 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.use = 1;
 			WhatsFresh.use2 = 1;
 			WhatsFresh.infowindowFlag = 0;
-			// FOR: user location printout
-			WhatsFresh.userLoc = 0;
 	},
     onLocationStoreRefresh: function(){
         this.getHomeView().down('[itemId=selectlocation]').reset();
