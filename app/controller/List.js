@@ -79,48 +79,48 @@ Ext.define('WhatsFresh.controller.List', {
 	// stuff	######################################################################################	HOME
     onSetUseLocation: function(newToggleValue){
         var ctrl = this;
-		if(newToggleValue){
-			ctrl.getDistanceSelect().enable();
-			ctrl.getLocationSelect().disable();
-			WhatsFresh.userLoc = 1;
-		    // This updates the user's location and how far from their location they would like to search for vendors/products
-		    Ext.device.Geolocation.watchPosition({
-	            scope : ctrl,
-				frequency : 10000, // Update every 10 seconds
-				callback: ctrl.devicePositionCallback,
-				failure: ctrl.devicePositionFailure
-		    });
-		}else{
-			ctrl.getDistanceSelect().disable();
-			ctrl.getLocationSelect().enable();
-		    Ext.device.Geolocation.clearWatch();
-		    WhatsFresh.util.Search.options.position = null;
-		    WhatsFresh.position = null;
-		    WhatsFresh.userLoc = 0;
-		    this.onChooseLocation(WhatsFresh.locInd, WhatsFresh.locRec);
-		}
+        var Search = WhatsFresh.util.Search;
+
+	if(newToggleValue){
+	    ctrl.getDistanceSelect().enable();
+	    ctrl.getLocationSelect().disable();
+	    WhatsFresh.userLoc = 1;
+
+	    // This updates the user's location and how far from their location they would like to search for vendors/products
+	    Ext.device.Geolocation.watchPosition({
+		frequency : 3000, // Update every 3 seconds
+		callback: function(position) {
+                    WhatsFresh.util.Search.options.position = position;
+                    WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
+                    WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
+                },
+		failure: function() {
+                    WhatsFresh.util.Messages.showLocationError();
+                    ctrl.getUseLocationToggle().setValue(0);
+                }
+	    });
+
+	}else{
+	    ctrl.getDistanceSelect().disable();
+	    ctrl.getLocationSelect().enable();
+	    Ext.device.Geolocation.clearWatch();
+	    WhatsFresh.util.Search.options.position = null;
+            WhatsFresh.util.Search.options.distance = null;
+	    WhatsFresh.userLoc = 0;
+	}
     },
-    devicePositionCallback: function(position) {
-        WhatsFresh.position = position;
-        WhatsFresh.util.Search.options.position = position;
-        WhatsFresh.util.Search.options.distance = WhatsFresh.dist;
-        WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
-        WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-        this.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
-        WhatsFresh.homeView.getComponent('vendnum').setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
-    },
-    devicePositionFailure: function() {
+    onSetDistance: function(index, record){
         var ctrl = this;
-        WhatsFresh.util.Messages.showLocationError();
-        ctrl.getUseLocationToggle().setValue(0);
+	var Search = WhatsFresh.util.Search;
+
+        Search.options.distance = record._value.data;
+        WhatsFresh.VendorStore.filter();
+        WhatsFresh.ProductListStore.filter();
+        WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product, WhatsFresh.userLoc));
     },
-	onSetDistance: function(index, record){
-		WhatsFresh.dist = record._value.data;
-		this.devicePositionCallback(WhatsFresh.position);
-	},
 	onChooseLocation: function(index, record){
-		WhatsFresh.locInd = index;
-		WhatsFresh.locRec = record;
 		WhatsFresh.location = record._value.data.name;
 
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
@@ -926,7 +926,6 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.infowindowFlag = 0;
 			// FOR: user location printout
 			WhatsFresh.userLoc = 0;
-			WhatsFresh.dist = Ext.getStore('Distance').getData().all[0].data;
 	},
     onLocationStoreRefresh: function(){
         this.getHomeView().down('[itemId=selectlocation]').reset();
