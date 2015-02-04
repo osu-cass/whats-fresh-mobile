@@ -47,18 +47,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     ".sencha/app/development.properties": {
@@ -67,18 +67,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     ".sencha/app/native.properties": {
@@ -87,18 +87,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     ".sencha/app/package.properties": {
@@ -107,18 +107,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     ".sencha/app/production.properties": {
@@ -127,18 +127,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     ".sencha/app/sencha.cfg": {
@@ -147,18 +147,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     ".sencha/app/testing.properties": {
@@ -167,18 +167,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     "app.js": {
@@ -187,18 +187,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     "app.json": {
@@ -207,18 +207,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     "index.html": {
@@ -227,18 +227,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     "packager.json": {
@@ -267,18 +267,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     },
     "resources/sass/config.rb": {
@@ -287,18 +287,18 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "SeaGrant_Proto",
+        "appName": "WhatsFresh",
         "appStores": "",
         "appViews": "",
-        "controllerNamespace": "SeaGrant_Proto.controller",
+        "controllerNamespace": "WhatsFresh.controller",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
-        "modelNamespace": "SeaGrant_Proto.model",
-        "name": "SeaGrant_Proto",
+        "modelNamespace": "WhatsFresh.model",
+        "name": "WhatsFresh",
         "senchadir": ".sencha",
         "uniqueId": "3b3e9719-1a91-4856-96c5-a469f46b243f",
-        "viewNamespace": "SeaGrant_Proto.view"
+        "viewNamespace": "WhatsFresh.view"
       }
     }
   }
