@@ -81,6 +81,7 @@ Ext.define('WhatsFresh.controller.List', {
         var ctrl = this;
         var Search = WhatsFresh.util.Search;
         var ProductSearch = WhatsFresh.util.ProductSearch;
+        var validGeolocationTimeout = 2000; // 2 seconds
 
 	if(newToggleValue){
 
@@ -106,6 +107,15 @@ Ext.define('WhatsFresh.controller.List', {
                     ctrl.getUseLocationToggle().setValue(0);
                 }
 	    });
+
+            // Check position field for valid data. If invalid,
+            // assume geolocation is turned off.
+            Ext.Function.defer(function() {
+                if (!Search.options.position) {
+                    WhatsFresh.util.Messages.showLocationError();
+                    ctrl.getUseLocationToggle().setValue(0);
+                }
+            }, validGeolocationTimeout);
 
 	}else{
 	    ctrl.getDistanceSelect().disable();
