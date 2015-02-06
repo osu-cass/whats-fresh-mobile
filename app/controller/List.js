@@ -604,8 +604,23 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
-					// Sets data for the info block on productdetail page
-					productdetailView.getAt(1).items.items[0].setData(productstore.data.all[k].data);
+					// Sets data for the info block on productdetail page					
+					WhatsFresh.productDetailView.getAt(1).getComponent("productNameBlock").setData(productstore.data.all[k].data);
+					WhatsFresh.PDimage.setData(productstore.data.all[k].data);
+					WhatsFresh.productDetailView.getAt(1).getComponent("productInfoBlock").setData(productstore.data.all[k].data);
+					if(WhatsFresh.ProductStore.data.all[k].data.image !== null){
+						WhatsFresh.PDimage.show();
+						WhatsFresh.PDimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.ProductStore.data.all[k].data.image.link);
+						var caption = {
+							cap: WhatsFresh.ProductStore.data.all[k].data.image.caption
+						};
+					}else{
+						// Set caption
+						var cap = {
+							cap: "No image avalible"
+						};
+						WhatsFresh.PDimage.hide();
+					}
 				}
 			}
 			// for stack that tracks navigaion
@@ -624,6 +639,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var a, b;
 		WhatsFresh.previousListItem = null;
 		if(WhatsFresh.path[WhatsFresh.pcount - 2] === 'list'){
+			WhatsFresh.PDimage.hide();
 			WhatsFresh.pcount = --WhatsFresh.pcount;
 			Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
 		}
@@ -650,7 +666,7 @@ Ext.define('WhatsFresh.controller.List', {
 					WhatsFresh.INimage.hide();
 					WhatsFresh.INlist.hide();
 					Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
-				}else{
+				}else{					
 					WhatsFresh.INimage.show();
 					WhatsFresh.INlist.show();
 					WhatsFresh.StoryStore._proxy._url = 'http://seagrant-staging-api.osuosl.org/1/stories/'+WhatsFresh.ProductStore.data.items[i].data.story;
@@ -672,6 +688,7 @@ Ext.define('WhatsFresh.controller.List', {
 					    var histr = {
 					    	hist: WhatsFresh.StoryStore.data.items[0].data.history
 					    };
+					    WhatsFresh.infoView.getAt(1).getComponent("infoNameBlock").setData(WhatsFresh.StoryStore.data.items[0].data);
 					    WhatsFresh.INhistory.setData(histr);
 						Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
 					})
@@ -719,7 +736,23 @@ Ext.define('WhatsFresh.controller.List', {
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
 					// Sets data for the info block on productdetail page
-					productdetailView.getAt(1).items.items[0].setData(productstore.data.all[k].data);
+					WhatsFresh.productDetailView.getAt(1).getComponent("productNameBlock").setData(productstore.data.all[k].data);
+					WhatsFresh.PDimage.setData(productstore.data.all[k].data);
+					WhatsFresh.productDetailView.getAt(1).getComponent("productInfoBlock").setData(productstore.data.all[k].data);
+					if(WhatsFresh.ProductStore.data.all[k].data.image !== null){
+						WhatsFresh.PDimage.show();
+						WhatsFresh.PDimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.ProductStore.data.all[k].data.image.link);
+						var caption = {
+							cap: WhatsFresh.ProductStore.data.all[k].data.image.caption
+						};
+					}else{
+						// Set caption
+						var cap = {
+							cap: "No image avalible"
+						};
+						WhatsFresh.PDimage.hide();
+					}
+					// productdetailView.getAt(1).items.items[0].setData(productstore.data.all[k].data);
 					var num = k;
 				}
 			}
@@ -825,12 +858,12 @@ Ext.define('WhatsFresh.controller.List', {
 						cap: WhatsFresh.StoryStore.data.items[0].data.season
 					};
 					break;
-				case "Products":
+				case "Product Packaging":
 					var caption = {
 						cap: WhatsFresh.StoryStore.data.items[0].data.products
 					};
 					break;
-				case "Buying":
+				case "Buying Tips":
 					var caption = {
 						cap: WhatsFresh.StoryStore.data.items[0].data.buying
 					};
@@ -931,6 +964,9 @@ Ext.define('WhatsFresh.controller.List', {
 		// Components
 			// ON: List page
 			WhatsFresh.statmap = WhatsFresh.detailView.getAt(1).getComponent('staticmap');
+
+			// ON: ProductDetail page
+			WhatsFresh.PDimage = WhatsFresh.productDetailView.getAt(1).getComponent('productDetailImage');
 			
 			// ON: Info page
 			WhatsFresh.INimage = WhatsFresh.infoView.getAt(1).getComponent('infoimage');

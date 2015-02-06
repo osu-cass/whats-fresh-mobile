@@ -35,9 +35,20 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 				items: [
 					{
 						xtype: 'panel',
+						id: 'ProductNameBlock',
+						itemId: 'productNameBlock',
+						tpl: '</pre><div class="list-item-title">{preparation} {name}</div>'
+					},
+					{	
+						xtype: 'image',
+						id: 'ProductDetailImage',
+						itemId: 'productDetailImage'
+					},
+					{
+						xtype: 'panel',
 						id: 'ProductInfoBlock',
-						itemId: 'infoBlock',
-						tpl: '</pre><div class="list-item-title">{preparation} {name}</div><div class="list-item-description">description:  {description}</div><pre>'
+						itemId: 'productInfoBlock',
+						tpl: '</pre><div class="list-item-description">Description:  {description}</div><div class="list-item-varity">Variety: {variety}</div><div class="list-item-season">Season: {season}</div><pre>'
 					},
 					{
 						xtype: 'button',

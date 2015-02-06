@@ -36,7 +36,7 @@ Ext.define('WhatsFresh.view.Detail', {
 					{
 						itemId: 'infoBlock',
 						id: 'InfoBlock',
-						tpl: '</pre><div class="list-item-title">{name}</div><div class="list-item-description">{description}</div><div class="list-item-phone">Phone #: {phone}</div><div class="list-item-description">Representative: {contact_name}</div><div class="list-item-email">E-mail: {email}</div><div class="list-item-website">Website: {website}</div><pre>'
+						tpl: '</pre><div class="list-item-title">{name}</div><div class="list-item-description">{description}</div><div class="list-item-phone">Phone #: {phone}</div><div class="list-item-description">Representative: {contact_name}</div><div class="list-item-email">E-mail: {email}</div><div class="list-item-website">Website: {website}</div><div class="list-item-address">Address: {street} {city} {state} {zip}</div><div class="list-item-location_description">{location_description}</div><pre>'
 					},
 					{
 						xtype: 'image',
