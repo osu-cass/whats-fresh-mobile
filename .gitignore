@@ -7,8 +7,11 @@ build/*
 docs/build/*
 resources/sass/.sass-cache/*
 resources/css/*
+
+# Preserve phonegap's config.xml file
 phonegap/*
-native/*
+!phonegap/config.xml
+
 
 ### temp and log Files ###
 **/*.temp*
