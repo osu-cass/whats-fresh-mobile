@@ -8,5 +8,5 @@ Home Page Documentation
 *	The products field is used to specify what type of product you are looking for.
 *	The vendors and products checkboxes specify what kind of data your search will return.
 *	The go button sends you to view your results.
-..	note :: NOTE: Only user location or location field can be used at one time.
+..	note :: Only user location or location field can be used at one time.
 .. image:: images/home.PNG

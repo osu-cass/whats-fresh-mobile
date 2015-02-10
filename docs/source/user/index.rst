@@ -6,12 +6,14 @@
 Welcome to Oregon's Catch user documentation!
 =============================================
 
+
 Contents:
++++++++++
 
 .. toctree::
     :maxdepth: 3
 
-    navflow    
+    navflow
     searchinfo
 
 
