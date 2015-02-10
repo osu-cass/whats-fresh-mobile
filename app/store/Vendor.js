@@ -5,7 +5,7 @@ Ext.define('WhatsFresh.store.Vendor', {
 		autoLoad: true,
 		proxy: {
 		    type: 'ajax',
-		    url: 'http://seagrant-staging.osuosl.org/1/vendors',
+		    url: 'http://seagrant-staging-api.osuosl.org/1/vendors',
 		    noCache: false,
 	        pageParam: false,
 	        limitParam: false,
