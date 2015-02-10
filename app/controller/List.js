@@ -99,7 +99,7 @@ Ext.define('WhatsFresh.controller.List', {
                     Search.options.position = position;
                     Search.applyFilterToStore(WhatsFresh.VendorStore);
                     ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore, WhatsFresh.use);
                     WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
                 },
 		failure: function() {
@@ -176,45 +176,69 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.Litem[j] = store.data.items[j].data;
 		}
 	},
-	populatePstore: function(store, pstore, usekey){
-		// pstore is populated with items from selected vendors
-		var countLen = 0;
-		var flag = 0;
-		var addVendor;
-		var newNum = 0;
-		// n is used to set PLpos or ProductList position when adding new products
-		// to the productlist, PLpos is used to select a list item
-		var n = 0;
-		pstore.removeAll();
-		for(i = 0; i < store.data.items.length; i++){
-			for(j = 0; j < store.data.items[i].data.products.length; j++){
-				flag = 0;
-				for(k = 0; k < pstore.data.length; k++){
-					// check to see if product and prep already exist
-					if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
-						addVendor = store.data.items[i].data.name;
-						newNum = k;
-						flag = 1;
-					}
-				}
-				// if prod/prep exist, add a new vendor to the vendors list
-				if(flag === 1){
-					pstore.data.items[newNum].data.vendors.push(addVendor);
-				}
-				// if the prod/prep DNE, then creat a new product from the current vendor as long as its name is same as chosen product name
-				if(((flag === 0) && (store.data.items[i].data.products[j].name === WhatsFresh.product)) | ((flag === 0) && (usekey === 1))){
-					var newpro = {
-						name: store.data.items[i].data.products[j].name,
-						preparation: store.data.items[i].data.products[j].preparation,
-						vendors:[store.data.items[i].data.name],
-						PLpos: n
-					};
-					pstore.add(newpro);
-					n = n+1;
-				}
-			}
+
+    // populatePstore
+    // store: vendor store
+    // pstore: the "ProductList" store
+    // usekey: indicates whether or not function should take sorting
+    // into account.
+    //
+    // This function groups vendors by product, displaying the product
+    // to the user. To do this, it needs to iterate through every
+    // vendor's inventory and create new ProductList entries capturing
+    // (preparation, name) combinations. Every unique preparation +
+    // name combination becomes a group of vendors to be rendered on
+    // the map. 
+    populatePstore: function(store, pstore, usekey){
+        var Search = WhatsFresh.util.Search;
+	var addVendor;
+	// n is used to set PLpos ("ProductList position") when adding new products
+	// to the productlist, PLpos is used to select a list item
+	var n = 0;
+
+	pstore.removeAll();
+
+	for(i = 0; i < store.data.items.length; i++){ // For all vendors...
+	    for(j = 0; j < store.data.items[i].data.products.length; j++){ // For every item in the vendor's inventory...
+
+
+                // Check to see whether or not the (product, name)
+                // pair exists in the ProductList store...
+                var alreadyAdded = false;
+		for(k = 0; k < pstore.data.length; k++){
+		    if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && 
+                       (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
+
+                        // if prod/prep exist, add a new vendor to
+                        // the ProductList store
+			addVendor = store.data.items[i].data.name;
+			pstore.data.items[k].data.vendors.push(addVendor);
+                        alreadyAdded = true;
+                        break;
+		    }
 		}
-	},
+
+		// if the prod/prep DNE,
+                if (!alreadyAdded){
+                    if ((store.data.items[i].data.products[j].name === WhatsFresh.product) || usekey){
+                        // TODO: Fix this filter to avoid "usekey" global.
+                        //if (!Search.options.product || (store.data.items[i].data.products[j].name === Search.options.product.name)){
+
+                        // then create a new product/group and
+                        // include the current vendor inside it.
+			var newpro = {
+			    name: store.data.items[i].data.products[j].name,
+			    preparation: store.data.items[i].data.products[j].preparation,
+			    vendors:[store.data.items[i].data.name],
+			    PLpos: n
+			};
+			pstore.add(newpro);
+			n = n+1;
+                    }
+                }
+	    }
+	}
+    },
 	// Need to reset the store when the check is clicked again, so store is set back to original store
 	onSortByVendorCommand: function(){
 		var view = this.getListView();
