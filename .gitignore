@@ -12,6 +12,7 @@ resources/css/*
 # Preserve phonegap's config.xml file
 phonegap/*
 !phonegap/config.xml
+!phonegap/hooks
 
 
 ### temp and log Files ###
