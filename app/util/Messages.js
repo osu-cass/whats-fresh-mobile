@@ -2,6 +2,8 @@ Ext.define('WhatsFresh.util.Messages', {
 
 	singleton: true,
 
+    requires : ['Ext.MessageBox'],
+
 	showLocationError: function (cb) {
 		Ext.Msg.alert(
 			'Location Error', [
