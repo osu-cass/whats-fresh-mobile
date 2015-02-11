@@ -37,12 +37,12 @@ Ext.define('WhatsFresh.util.Search', {
             // If position and distance are set, filter on those. If
             // not, include everything.
             if (singleton.canFilterByDistance()) {
-                var φ1= pos.coords.latitude;
-                var λ1= pos.coords.longitude;
-                var φ2= vendorStoreRecord.get('lat');
-                var λ2= vendorStoreRecord.get('lng');
+                var device_lat= pos.coords.latitude;
+                var device_lng= pos.coords.longitude;
+                var vendor_lat= vendorStoreRecord.get('lat');
+                var vendor_lng= vendorStoreRecord.get('lng');
                 var dMax= Geo.standardizeDistance(dist);
-                var dCurr= Geo.getDistance(φ1,λ1,φ2,λ2);
+                var dCurr= Geo.getDistance(device_lat,device_lng,vendor_lat,vendor_lng);
                 isNear= dMax - dCurr >= 0;
             } else {
                 isNear= true;
