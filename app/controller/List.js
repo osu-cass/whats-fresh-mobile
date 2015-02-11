@@ -99,7 +99,7 @@ Ext.define('WhatsFresh.controller.List', {
                     Search.options.position = position;
                     Search.applyFilterToStore(WhatsFresh.VendorStore);
                     ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore, WhatsFresh.use);
+                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
                     WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
                 },
 		failure: function() {
@@ -180,16 +180,14 @@ Ext.define('WhatsFresh.controller.List', {
     // populatePstore
     // store: vendor store
     // pstore: the "ProductList" store
-    // usekey: indicates whether or not function should take sorting
-    // into account.
     //
     // This function groups vendors by product, displaying the product
     // to the user. To do this, it needs to iterate through every
     // vendor's inventory and create new ProductList entries capturing
-    // (preparation, name) combinations. Every unique preparation +
-    // name combination becomes a group of vendors to be rendered on
+    // (preparation, name) combinations. Every unique (preparation, name)
+    //  combination becomes a group of vendors to be rendered on
     // the map. 
-    populatePstore: function(store, pstore, usekey){
+    populatePstore: function(store, pstore){
         var Search = WhatsFresh.util.Search;
 	var addVendor;
 	// n is used to set PLpos ("ProductList position") when adding new products
@@ -218,11 +216,11 @@ Ext.define('WhatsFresh.controller.List', {
 		    }
 		}
 
-		// if the prod/prep DNE,
+		// if the prod/prep DNE...
                 if (!alreadyAdded){
-                    if ((store.data.items[i].data.products[j].name === WhatsFresh.product) || usekey){
-                        // TODO: Fix this filter to avoid "usekey" global.
-                        //if (!Search.options.product || (store.data.items[i].data.products[j].name === Search.options.product.name)){
+                    // if the product is in the filtered set...
+                    if ((Search.options.product.is_not_filterable) || 
+                        (store.data.items[i].data.products[j].name === Search.options.product.name)){
 
                         // then create a new product/group and
                         // include the current vendor inside it.
@@ -293,7 +291,7 @@ Ext.define('WhatsFresh.controller.List', {
 			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Vendors");
 		}
 		if(homeView.items.items[5].items.items[1]._checked === true){
-			this.populatePstore(store, pstore, WhatsFresh.use);
+			this.populatePstore(store, pstore);
 			view.down('list').setStore(pstore);
 			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Products");
 		}
@@ -963,7 +961,6 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.pcount = 0;
 			WhatsFresh.backFlag = 0;
 			// FOR: checkboxes
-			WhatsFresh.use = 1;
 			WhatsFresh.use2 = 1;
 			WhatsFresh.infowindowFlag = 0;
 	},
