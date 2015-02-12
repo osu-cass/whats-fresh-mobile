@@ -11,7 +11,8 @@ Ext.define('WhatsFresh.controller.List', {
             'WhatsFresh.util.Messages',
             'WhatsFresh.util.Geography',
             'WhatsFresh.util.Search',
-            'WhatsFresh.util.ProductSearch'],
+            'WhatsFresh.util.ProductSearch',
+            'WhatsFresh.util.SetProductDetail'],
 	alias: 'cont',
 	config: {
 		refs: {
@@ -605,22 +606,7 @@ Ext.define('WhatsFresh.controller.List', {
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
 					// Sets data for the info block on productdetail page					
-					WhatsFresh.productDetailView.getAt(1).getComponent("productNameBlock").setData(productstore.data.all[k].data);
-					WhatsFresh.PDimage.setData(productstore.data.all[k].data);
-					WhatsFresh.productDetailView.getAt(1).getComponent("productInfoBlock").setData(productstore.data.all[k].data);
-					if(WhatsFresh.ProductStore.data.all[k].data.image !== null){
-						WhatsFresh.PDimage.show();
-						WhatsFresh.PDimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.ProductStore.data.all[k].data.image.link);
-						var caption = {
-							cap: WhatsFresh.ProductStore.data.all[k].data.image.caption
-						};
-					}else{
-						// Set caption
-						var cap = {
-							cap: "No image avalible"
-						};
-						WhatsFresh.PDimage.hide();
-					}
+					WhatsFresh.util.SetProductDetail.setProductDetailDataAndImage(k);
 				}
 			}
 			// for stack that tracks navigaion
@@ -673,7 +659,7 @@ Ext.define('WhatsFresh.controller.List', {
 					WhatsFresh.StoryStore.load();
 					WhatsFresh.StoryStore.on('load', function(){
 						if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
-							WhatsFresh.INimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
+							WhatsFresh.INimage.setSrc('http://seagrant-staging-api.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
 							var caption = {
 								cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
 							};
@@ -736,22 +722,7 @@ Ext.define('WhatsFresh.controller.List', {
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
 					// Sets data for the info block on productdetail page
-					WhatsFresh.productDetailView.getAt(1).getComponent("productNameBlock").setData(productstore.data.all[k].data);
-					WhatsFresh.PDimage.setData(productstore.data.all[k].data);
-					WhatsFresh.productDetailView.getAt(1).getComponent("productInfoBlock").setData(productstore.data.all[k].data);
-					if(WhatsFresh.ProductStore.data.all[k].data.image !== null){
-						WhatsFresh.PDimage.show();
-						WhatsFresh.PDimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.ProductStore.data.all[k].data.image.link);
-						var caption = {
-							cap: WhatsFresh.ProductStore.data.all[k].data.image.caption
-						};
-					}else{
-						// Set caption
-						var cap = {
-							cap: "No image avalible"
-						};
-						WhatsFresh.PDimage.hide();
-					}
+					WhatsFresh.util.SetProductDetail.setProductDetailDataAndImage(k);
 					// productdetailView.getAt(1).items.items[0].setData(productstore.data.all[k].data);
 					var num = k;
 				}
