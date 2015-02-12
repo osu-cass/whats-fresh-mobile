@@ -1,6 +1,6 @@
 Ext.define('WhatsFresh.view.Specific', {
 	extend: 'Ext.Panel',
-    fullscreen: true,
+    fullscreen: true, 
     xtype: 'Specific',
 	alias: 'widget.specific',
 	config: {
@@ -30,12 +30,11 @@ Ext.define('WhatsFresh.view.Specific', {
 				scrollable: true,
 				items: [					
 					{
-						xtype: 'video',
+						xtype: 'image',
 						id: 'Specvideo',
 						width: 400,
 						height: 300,
-						itemId: 'video1',
-						posterUrl: 'http://msevents.microsoft.com/cui/resources/images/playbutton.png' 
+						itemId: 'video1' 
 					},
 					{
 						xtype: 'panel',
