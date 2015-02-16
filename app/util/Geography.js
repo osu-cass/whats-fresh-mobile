@@ -34,13 +34,13 @@ Ext.define('WhatsFresh.util.Geography', {
 	getDistance: function (lat1, lng1, lat2, lng2) {
 		var geo	= WhatsFresh.util.Geography;
 		var R	= geo.Reference.Earth['average radius'];
-		var φ1	= geo.degreesToRadians(lat1);
-		var φ2	= geo.degreesToRadians(lat2);
-		var Δφ	= geo.degreesToRadians(lat2-lat1); // φ is latitude
-		var Δλ	= geo.degreesToRadians(lng2-lng1); // λ is longitude
-		var a	= Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-					Math.cos(φ1) * Math.cos(φ2) *
-					Math.sin(Δλ/2) * Math.sin(Δλ/2);
+		var lat1_radians = geo.degreesToRadians(lat1);
+		var lat2_radians = geo.degreesToRadians(lat2);
+		var difference_lat_radians = geo.degreesToRadians(lat2-lat1); // φ is latitude
+		var difference_lng_radians = geo.degreesToRadians(lng2-lng1); // λ is longitude
+		var a	= Math.sin(difference_lat_radians/2) * Math.sin(difference_lat_radians/2) +
+					Math.cos(lat1_radians) * Math.cos(lat2_radians) *
+					Math.sin(difference_lng_radians/2) * Math.sin(difference_lng_radians/2);
 		var c	= 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		var d	= R * c;
 		return d;
