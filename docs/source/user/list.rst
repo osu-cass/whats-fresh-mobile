@@ -4,6 +4,5 @@ This page displays your search results in two different ways. First there is a m
 
 .. image:: images/list.PNG
 
-You can click on the selected item again, or click on the link above the blue
-node to go to a page that describes the product or vendor you have selected.
+You can click on the selected item again, or click on the link above the blue node to go to a page that describes the product or vendor you have selected.
 
