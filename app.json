@@ -1,7 +1,7 @@
 {
     "builds": {
         "web": {"default": true},
-        "native": {
+        "android": {
             "packager": "phonegap",
             "phonegap" : {
                 "config": {
@@ -17,7 +17,22 @@
                     "name": "WhatsFresh"
                 }
             }
+        },
+
+        "ios": {
+            "packager": "phonegap",
+            "phonegap" : {
+                "config": {
+                    // Uncomment the line below and add the platform you wish to build for
+                    "platform": "ios",
+
+                    //"remote":false,
+                    "id": "edu.oregonstate.cass.WhatsFresh",
+                    "name": "WhatsFresh"
+                }
+            }
         }
+
     },
 
                 
