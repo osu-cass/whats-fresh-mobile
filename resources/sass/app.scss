@@ -24,20 +24,66 @@ div.vendnum{
 
 //DETAIL PAGE ELEMENTS ^^^^^^^^^^^
 
+#Details{
+	height: 47%;
+}
+
+#InfoBlock{
+	margin-top: 6px;
+	margin-left: 6px;
+}
+
+#StaticMap{
+//	left: 50%;
+//	top: 2.5%;
+//	height: 45%;
+//	width: 45%;
+	height: 200px;
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
 #DetailList{
 	height: 50%;
 	top: 50%;
 }
 
-#StaticMap{
-	left: 50%;
-	top: 2.5%;
-	height: 45%;
-	width: 45%;
+//PRODUCTDETAIL PAGE ELEMENTS ^^^^
+
+#ProductDetails{
+	height: 47%;
 }
 
-//PRODUCTDETAIL PAGE ELEMENTS ^^^^
-	
+#ProductNameBlock{
+	margin-top: 6px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 6px;
+	text-align: center;
+	width: 200px;
+}
+
+#ProductDetailImage{
+	height: 200px;
+	margin-top: 6px;
+	margin-left: 6px;
+	margin-bottom: 6px;
+}
+
+#ProductInfoBlock{
+	margin-top: 6px;
+	margin-left: 6px;
+}
+
+#InfoButton{
+	top: 40%;
+	width: 50px;
+	height: 10%;
+	margin-top: 6px;
+	margin-left: 6px;
+	margin-bottom: 6px;
+}
+
 #ProductDetailList{
 	height: 50%;
 	top: 50%;
@@ -45,10 +91,29 @@ div.vendnum{
 
 //INFO PAGE ELEMENTS ^^^^^^^^^^^^^
 
+#InfoField{
+	height: 47%;
+}
+
+#InfoNameBlock{
+	margin-top: 6px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 6px;
+	text-align: center;
+	width: 200px;
+}
+
+
 #InfoImage{
-	height: 20%;
-	width: 100%;
-	min-width: 320px;
+	height: 200px;
+	margin-top: 6px;
+}
+
+#history{
+	margin-top: 6px;
+	margin-left: 6px;
+	margin-bottom: 6px;
 }
 
 #InfoList{
@@ -56,15 +121,25 @@ div.vendnum{
 	top: 50%;
 }	
 
-#InfoButton{
-	top: 40%;
-	width: 50px;
-	height: 10%;
+//SPECIFIC PAGE ELEMENTS ^^^^^^^^^
+
+#SpecificField{
+	height: 96%;
 }
 
-div.history{
-	margin-top: 20%;
+#Specvideo{
+	height: 400px;
+	width: 300px;
+	margin-top: 6px;
+	margin-left: 6px;
 }
+
+#Speccaption{
+	margin-top: 6px;
+	margin-left: 6px;
+	margin-bottom: 6px;
+}
+
 
 // Text styling ^^^^^^^^^^^^^^^^^^
 

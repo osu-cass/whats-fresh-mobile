@@ -11,7 +11,8 @@ Ext.define('WhatsFresh.controller.List', {
             'WhatsFresh.util.Messages',
             'WhatsFresh.util.Geography',
             'WhatsFresh.util.Search',
-            'WhatsFresh.util.ProductSearch'],
+            'WhatsFresh.util.ProductSearch',
+            'WhatsFresh.util.SetProductDetail'],
 	alias: 'cont',
 	config: {
 		refs: {
@@ -565,7 +566,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var detailView = this.getDetailView();
 		var productdetailView = this.getProductdetailView();
 
-		detailView.getAt(1).setData(index.data);
+		detailView.getAt(1).items.items[0].setData(index.data);
 		productdetailView.getAt(1).setData(index.data);
 		// Pass product data from selected vendor to new store, so that we
 		// can use the new store to correctly use tpl print to make selectable list
@@ -604,8 +605,8 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
-					// Sets data for the info block on productdetail page
-					productdetailView.getAt(1).setData(productstore.data.all[k].data);
+					// Sets data for the info block on productdetail page					
+					WhatsFresh.util.SetProductDetail.setProductDetailDataAndImage(k);
 				}
 			}
 			// for stack that tracks navigaion
@@ -624,6 +625,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var a, b;
 		WhatsFresh.previousListItem = null;
 		if(WhatsFresh.path[WhatsFresh.pcount - 2] === 'list'){
+			WhatsFresh.PDimage.hide();
 			WhatsFresh.pcount = --WhatsFresh.pcount;
 			Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
 		}
@@ -650,14 +652,14 @@ Ext.define('WhatsFresh.controller.List', {
 					WhatsFresh.INimage.hide();
 					WhatsFresh.INlist.hide();
 					Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
-				}else{
+				}else{					
 					WhatsFresh.INimage.show();
 					WhatsFresh.INlist.show();
 					WhatsFresh.StoryStore._proxy._url = 'http://seagrant-staging-api.osuosl.org/1/stories/'+WhatsFresh.ProductStore.data.items[i].data.story;
 					WhatsFresh.StoryStore.load();
 					WhatsFresh.StoryStore.on('load', function(){
 						if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
-							WhatsFresh.INimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
+							WhatsFresh.INimage.setSrc('http://seagrant-staging-api.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
 							var caption = {
 								cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
 							};
@@ -672,6 +674,7 @@ Ext.define('WhatsFresh.controller.List', {
 					    var histr = {
 					    	hist: WhatsFresh.StoryStore.data.items[0].data.history
 					    };
+					    WhatsFresh.infoView.getAt(1).getComponent("infoNameBlock").setData(WhatsFresh.StoryStore.data.items[0].data);
 					    WhatsFresh.INhistory.setData(histr);
 						Ext.Viewport.animateActiveItem(WhatsFresh.infoView, WhatsFresh.slideLeft);
 					})
@@ -719,7 +722,8 @@ Ext.define('WhatsFresh.controller.List', {
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
 					// Sets data for the info block on productdetail page
-					productdetailView.getAt(1).setData(productstore.data.all[k].data);
+					WhatsFresh.util.SetProductDetail.setProductDetailDataAndImage(k);
+					// productdetailView.getAt(1).items.items[0].setData(productstore.data.all[k].data);
 					var num = k;
 				}
 			}
@@ -740,7 +744,7 @@ Ext.define('WhatsFresh.controller.List', {
 		        			num2 = w;
 		        		}
 		        	}
-		        	productdetailView.items.items[3].select(storeInventory.data.all[num2]);
+		        	productdetailView.items.items[2].select(storeInventory.data.all[num2]);
 		        }
 	        	Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideRightTransition);
 	        }
@@ -758,11 +762,9 @@ Ext.define('WhatsFresh.controller.List', {
 						storeInventory.add(newpro);
 					}
 					// Sets data for the info block on detail page
-					detailView.getAt(1).setData(vendorstore.data.all[i].data);
+					detailView.getAt(1).items.items[0].setData(vendorstore.data.all[i].data);
 				}
-			}
-			// Sets the title of the header on detail page
-			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.items.items[1]._data) );
+			}			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.getAt(1).items.items[0]._data) );
 			if(WhatsFresh.backFlag === 0){
 				// adding a log item to the "stack"
 				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
@@ -780,7 +782,7 @@ Ext.define('WhatsFresh.controller.List', {
 		        			num2 = w;
 		        		}
 		        	}
-		       		detailView.items.items[3].select(storeInventory.data.all[num2]);
+		       		detailView.items.items[2].select(storeInventory.data.all[num2]);
 		        }
 	        	Ext.Viewport.animateActiveItem(detailView, this.slideRightTransition);
 	        }
@@ -827,22 +829,18 @@ Ext.define('WhatsFresh.controller.List', {
 						cap: WhatsFresh.StoryStore.data.items[0].data.season
 					};
 					break;
-				case "Products":
+				case "Product Packaging":
 					var caption = {
 						cap: WhatsFresh.StoryStore.data.items[0].data.products
 					};
 					break;
-				case "Buying":
+				case "Buying Tips":
 					var caption = {
 						cap: WhatsFresh.StoryStore.data.items[0].data.buying
 					};
 					break;
 				case "History":
 					if(WhatsFresh.StoryStore.data.items[0].data.images.length > 0){
-						// Here we set the image source
-						WhatsFresh.SVimage.show();
-						// OSL will send us a full string, so we won't have to apend part of the url
-						WhatsFresh.SVimage.setSrc('http://seagrant-staging.osuosl.org'+ WhatsFresh.StoryStore.data.items[0].data.images[0].link);
 						// Set caption
 						var caption = {
 							cap: WhatsFresh.StoryStore.data.items[0].data.images[0].caption
@@ -936,17 +934,19 @@ Ext.define('WhatsFresh.controller.List', {
 
 		// Components
 			// ON: List page
-			WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
+			WhatsFresh.statmap = WhatsFresh.detailView.getAt(1).getComponent('staticmap');
+
+			// ON: ProductDetail page
+			WhatsFresh.PDimage = WhatsFresh.productDetailView.getAt(1).getComponent('productDetailImage');
+			
 			// ON: Info page
-			WhatsFresh.INimage = WhatsFresh.infoView.getComponent('infoimage');
+			WhatsFresh.INimage = WhatsFresh.infoView.getAt(1).getComponent('infoimage');
 			WhatsFresh.INlist = WhatsFresh.infoView.getComponent('Ipagelist');
-			WhatsFresh.INhistory = WhatsFresh.infoView.getComponent('history');
+			WhatsFresh.INhistory = WhatsFresh.infoView.getAt(1).getComponent('history');
 
 			// ON: Specific page
-			WhatsFresh.SVcaption = WhatsFresh.specificView.getComponent('caption');
-			WhatsFresh.SVimage = WhatsFresh.specificView.getComponent('specimage');
-			WhatsFresh.SVvideo = WhatsFresh.specificView.getComponent('video1');
-			WhatsFresh.SVimage.hide();
+			WhatsFresh.SVcaption = WhatsFresh.specificView.getAt(1).items.items[1];
+			WhatsFresh.SVvideo = WhatsFresh.specificView.getAt(1).items.items[0];
 			WhatsFresh.SVvideo.hide();
 
 		// Get store vars

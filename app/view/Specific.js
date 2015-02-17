@@ -1,6 +1,6 @@
 Ext.define('WhatsFresh.view.Specific', {
-	extend: 'Ext.form.Panel',
-    fullscreen: true,
+	extend: 'Ext.Panel',
+    fullscreen: true, 
     xtype: 'Specific',
 	alias: 'widget.specific',
 	config: {
@@ -24,21 +24,26 @@ Ext.define('WhatsFresh.view.Specific', {
 					}
 				]
 			},
-			{	
-				xtype: 'image',
-				itemId: 'specimage'
-			},
 			{
-				xtype: 'image',
-				width: 400,
-				height: 300,
-				itemId: 'video1',
-			},
-			{
-				xtype: 'panel',
-	        	itemId: 'caption',
-	        	tpl: '</pre><div class="caption">{cap}</div><pre>'
-			}			
+				xtype: 'fieldset',
+				id: 'SpecificField',
+				scrollable: true,
+				items: [					
+					{
+						xtype: 'image',
+						id: 'Specvideo',
+						width: 400,
+						height: 300,
+						itemId: 'video1' 
+					},
+					{
+						xtype: 'panel',
+						id: 'Speccaption',
+			        	itemId: 'caption',
+			        	tpl: '</pre><div class="caption">{cap}</div><pre>'
+					}
+				]			
+			}	
 		],
 		listeners: [
 			{

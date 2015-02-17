@@ -11,7 +11,7 @@ Ext.define('WhatsFresh.view.Info', {
 		items: [
 			{
 				xtype: 'toolbar',
-				title: 'Info',
+				// title: 'Info',
 				itemId: 'infoPageToolbar',
 				docked: 'top',
 				items: [
@@ -29,16 +29,30 @@ Ext.define('WhatsFresh.view.Info', {
 					}
 				]
 			},
-			{	
-				xtype: 'image',
-				id: 'InfoImage',
-				itemId: 'infoimage'
-			},
 			{
-				xtype: 'panel',
-	        	itemId: 'history',
-	        	tpl: '</pre><div class="history">{hist}</div><pre>'
-			},		
+				xtype: 'fieldset',
+				id: 'InfoField',
+				scrollable: true,
+				items: [
+					{
+						xtype: 'panel',
+						id: 'InfoNameBlock',
+						itemId: 'infoNameBlock',
+						tpl: '</pre><div class="list-item-title">{name}</div>'
+					},
+					{	
+						xtype: 'image',
+						id: 'InfoImage',
+						itemId: 'infoimage'
+					},
+					{
+						xtype: 'panel',			        	
+			        	id: 'history',
+			        	itemId: 'history',
+			        	tpl: '</pre><div class="history">{hist}</div><pre>'
+					}
+				]		
+			},
 			{
 				config: {
 					scrollable: {

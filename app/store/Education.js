@@ -8,11 +8,11 @@ Ext.define('WhatsFresh.store.Education', {
 			},
 			{
 				text: 'Ed item 2',
-				listItem: 'Products'
+				listItem: 'Product Packaging'
 			},
 			{
 				text: 'Ed item 3',
-				listItem: 'Buying'
+				listItem: 'Buying Tips'
 			},
 			{
 				text: 'Ed item 4',
