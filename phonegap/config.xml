@@ -35,6 +35,9 @@
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
 
+    <hook type="after_platform_add" src="hooks/install_plugins.js" />
+	<hook type="after_build" src="hooks/overwrite_ios_view.js" />
+
     <platform name="ios">
         <!-- iOS 7.0+ -->
         <!-- iPhone / iPod Touch  -->
@@ -87,54 +90,31 @@
 
     <!-- Android settings are untested and broken. -->
     <platform name="android">
-
-        <!--<icon src="../resources/icons/29.png" width="29" height="29" />
-        
-        <icon src="../resources/icons/48.png" width="40" height="40" />
-        
-        <icon src="../resources/icons/57.png" width="50" height="50" />
-        <icon src="../resources/icons/57.png" width="57" height="57" />
-        
-        <icon src="../resources/icons/58.png" width="58" height="58" />
-        
-        <icon src="../resources/icons/64.png" width="60" height="60" />
-        
-        <icon src="../resources/icons/72.png" width="72" height="72" />
-        
-        <icon src="../resources/icons/96.png" width="76" height="76" />        
-        <icon src="../resources/icons/96.png" width="80" height="80" />
-        
-        <icon src="../resources/icons/114.png" width="114" height="114" />
-        <icon src="../resources/icons/114.png" width="100" height="100" />
-        
-        <icon src="../resources/icons/144.png" width="144" height="144" />
-        <icon src="../resources/icons/144.png" width="120" height="120" />
-        
-        <icon src="../resources/icons/192.png" width="180" height="180" />        
-        <icon src="../resources/icons/192.png" width="152" height="152" />-->
-        
-
-        <icon gap:qualifier="ldpi" src="../resources/icons/36.png" width="36" height="36"/>
+    	<icon gap:qualifier="ldpi" src="../resources/icons/36.png" width="36" height="36"/>
         <icon gap:qualifier="mdpi" src="../resources/icons/48.png" width="48" height="48"/>
         <icon gap:qualifier="hdpi" src="../resources/icons/72.png" width="72" height="72"/>
-        <icon gap:qualifier="xhdpi" src="../resources/icons/96.png" width="69" height="69"/>
+        <icon gap:qualifier="xhdpi" src="../resources/icons/96.png" width="96" height="96"/>
         <icon gap:qualifier="xxhdpi" src="../resources/icons/144.png" width="144" height="144"/>
         <icon gap:qualifier="xxxhdpi" src="../resources/icons/192.png" width="192" height="192"/>
 
-        <gap:splash gap:qualifier="port-ldpi" src="../resources/startup/android/LDPI_por.9.png" width="200" height="320"/>
-        <gap:splash gap:qualifier="land-ldpi" src="../resources/startup/android/LDPI_lan.9.png" width="320" height="200"/>
+        <splash density="port-ldpi" src="../resources/startup/android/LDPI_por.9.png" />
+        <splash density="land-ldpi" src="../resources/startup/android/LDPI_lan.9.png" />
 
-        <gap:splash gap:qualifier="port-mdpi" src="../resources/startup/android/MDPI_por.9.png" width="320" height="480"/>
-        <gap:splash gap:qualifier="land-mdpi" src="../resources/startup/android/MDPI_lan.9.png" width="480" height="320"/>
+        <splash density="port-mdpi" src="../resources/startup/android/MDPI_por.9.png" />
+        <splash density="land-mdpi" src="../resources/startup/android/MDPI_lan.9.png" />
 
-        <gap:splash gap:qualifier="port-hdpi" src="../resources/startup/android/HDPI_por.9.png" width="480" height="800"/>
-        <gap:splash gap:qualifier="land-hdpi" src="../resources/startup/android/HDPI_lan.9.png" width="800" height="480"/>
+        <splash density="port-hdpi" src="../resources/startup/android/HDPI_por.9.png" />
+        <splash density="land-hdpi" src="../resources/startup/android/HDPI_lan.9.png" />
 
-        <gap:splash gap:qualifier="port-xhdpi" src="../resources/startup/android/XHDPIpor.9.png" width="720" height="1280"/>
-        <gap:splash gap:qualifier="land-xhdpi" src="../resources/startup/android/XHDPIlan.9.png" width="1280" height="720"/>
+        <splash density="port-xhdpi" src="../resources/startup/android/XHDPIpor.9.png" />
+        <splash density="land-xhdpi" src="../resources/startup/android/XHDPIlan.9.png" />
+        
     </platform>
 
-    <gap:plugin name="org.apache.cordova.battery-status" />
+    <!-- <preference name="SplashScreen" value="splash" /> -->
+	<preference name="SplashScreenDelay" value="10000" />
+
+    <!-- <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
     <gap:plugin name="org.apache.cordova.console" />
@@ -151,6 +131,6 @@
     <gap:plugin name="org.apache.cordova.media" />
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
-    <gap:plugin name="org.apache.cordova.vibration" />
+    <gap:plugin name="org.apache.cordova.vibration" /> -->
     
 </widget>
