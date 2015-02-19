@@ -10,13 +10,14 @@
 
     <access origin="*" />
 
+    <content src="index.html"/>
+
     <feature name="Geolocation">
       <param name="id" value="org.apache.cordova.geolocation" />
     </feature>
 
     <hook type="after_platform_add" src="hooks/install_plugins.js" />
-	<hook type="after_build" src="hooks/overwrite_ios_view.js" />
-
+    <hook type="after_build" src="hooks/overwrite_ios_view.js" />
 
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.5.0" />
@@ -34,9 +35,6 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
-
-    <hook type="after_platform_add" src="hooks/install_plugins.js" />
-	<hook type="after_build" src="hooks/overwrite_ios_view.js" />
 
     <platform name="ios">
         <!-- iOS 7.0+ -->
@@ -64,73 +62,53 @@
         <icon src="../resources/icons/57.png" width="50" height="50" />
         <icon src="../resources/icons/114.png" width="100" height="100" />
 
-        <gap:splash height="480" width="320"   src="resources/splash/ios/Default~iphone.png" />
+        <gap:splash height="480" width="320"   src="resources/startup/ios/Default~iphone.png" />
 
-        <gap:splash height="480" width="320"   src="../resources/splash/ios/non_retina_por.png" />
-        <gap:splash height="320" width="480"   src="../resources/splash/ios/non_retina_lan.png"  />
+        <gap:splash height="480" width="320"   src="../resources/startup/ios/non_retina_por.png" />
+        <gap:splash height="320" width="480"   src="../resources/startup/ios/non_retina_lan.png"  />
 
-        <gap:splash height="960" width="640"   src="../resources/splash/ios/retina_por.png" />
-        <gap:splash height="640" width="960"   src="../resources/splash/ios/retina_lan.png" />
+        <gap:splash height="960" width="640"   src="../resources/startup/ios/retina_por.png" />
+        <gap:splash height="640" width="960"   src="../resources/startup/ios/retina_lan.png" />
 
-        <gap:splash height="1136" width="640"  src="../resources/splash/ios/retina5_por.png" />
-        <gap:splash height="640" width="1136"  src="../resources/splash/ios/retina5_lan.png" />
+        <gap:splash height="1136" width="640"  src="../resources/startup/ios/retina5_por.png" />
+        <gap:splash height="640" width="1136"  src="../resources/startup/ios/retina5_lan.png" />
 
-        <gap:splash height="1024" width="768"  src="../resources/splash/ios/ipad_non_retina_por.png" />
-        <gap:splash height="768" width="1024"  src="../resources/splash/ios/ipad_non_retina_lan.png" />
+        <gap:splash height="1024" width="768"  src="../resources/startup/ios/ipad_non_retina_por.png" />
+        <gap:splash height="768" width="1024"  src="../resources/startup/ios/ipad_non_retina_lan.png" />
 
-        <gap:splash height="1334" width="750"  src="../resources/splash/ios/iphone6_por.png" />
-        <gap:splash height="750" width="1334"  src="../resources/splash/ios/iphone6_lan.png" />
+        <gap:splash height="1334" width="750"  src="../resources/startup/ios/iphone6_por.png" />
+        <gap:splash height="750" width="1334"  src="../resources/startup/ios/iphone6_lan.png" />
 
-        <gap:splash height="2048" width="1536" src="../resources/splash/ios/ipad_retina_por.png" />
-        <gap:splash height="1536" width="2048" src="../resources/splash/ios/ipad_retina_lan.png" />
+        <gap:splash height="2048" width="1536" src="../resources/startup/ios/ipad_retina_por.png" />
+        <gap:splash height="1536" width="2048" src="../resources/startup/ios/ipad_retina_lan.png" />
 
-        <gap:splash height="2208" width="1242" src="../resources/splash/ios/iphone6plus_por.png" />
-        <gap:splash height="1242" width="2208" src="../resources/splash/ios/iphone6plus_lan.png" />
+        <gap:splash height="2208" width="1242" src="../resources/startup/ios/iphone6plus_por.png" />
+        <gap:splash height="1242" width="2208" src="../resources/startup/ios/iphone6plus_lan.png" />
     </platform>
 
-    <!-- Android settings are untested and broken. -->
     <platform name="android">
-    	<icon gap:qualifier="ldpi" src="../resources/icons/36.png" width="36" height="36"/>
-        <icon gap:qualifier="mdpi" src="../resources/icons/48.png" width="48" height="48"/>
-        <icon gap:qualifier="hdpi" src="../resources/icons/72.png" width="72" height="72"/>
-        <icon gap:qualifier="xhdpi" src="../resources/icons/96.png" width="96" height="96"/>
-        <icon gap:qualifier="xxhdpi" src="../resources/icons/144.png" width="144" height="144"/>
-        <icon gap:qualifier="xxxhdpi" src="../resources/icons/192.png" width="192" height="192"/>
+      <icon gap:qualifier="ldpi" src="../resources/icons/36.png" width="36" height="36"/>
+      <icon gap:qualifier="mdpi" src="../resources/icons/48.png" width="48" height="48"/>
+      <icon gap:qualifier="hdpi" src="../resources/icons/72.png" width="72" height="72"/>
+      <icon gap:qualifier="xhdpi" src="../resources/icons/96.png" width="96" height="96"/>
+      <icon gap:qualifier="xxhdpi" src="../resources/icons/144.png" width="144" height="144"/>
+      <icon gap:qualifier="xxxhdpi" src="../resources/icons/192.png" width="192" height="192"/>
 
-        <splash density="port-ldpi" src="../resources/startup/android/LDPI_por.9.png" />
-        <splash density="land-ldpi" src="../resources/startup/android/LDPI_lan.9.png" />
+      <splash density="port-ldpi" src="../resources/startup/android/LDPI_por.9.png" />
+      <splash density="land-ldpi" src="../resources/startup/android/LDPI_lan.9.png" />
 
-        <splash density="port-mdpi" src="../resources/startup/android/MDPI_por.9.png" />
-        <splash density="land-mdpi" src="../resources/startup/android/MDPI_lan.9.png" />
+      <splash density="port-mdpi" src="../resources/startup/android/MDPI_por.9.png" />
+      <splash density="land-mdpi" src="../resources/startup/android/MDPI_lan.9.png" />
 
-        <splash density="port-hdpi" src="../resources/startup/android/HDPI_por.9.png" />
-        <splash density="land-hdpi" src="../resources/startup/android/HDPI_lan.9.png" />
+      <splash density="port-hdpi" src="../resources/startup/android/HDPI_por.9.png" />
+      <splash density="land-hdpi" src="../resources/startup/android/HDPI_lan.9.png" />
 
-        <splash density="port-xhdpi" src="../resources/startup/android/XHDPIpor.9.png" />
-        <splash density="land-xhdpi" src="../resources/startup/android/XHDPIlan.9.png" />
-        
+      <splash density="port-xhdpi" src="../resources/startup/android/XHDPIpor.9.png" />
+      <splash density="land-xhdpi" src="../resources/startup/android/XHDPIlan.9.png" />
+
     </platform>
 
-    <!-- <preference name="SplashScreen" value="splash" /> -->
-	<preference name="SplashScreenDelay" value="10000" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
 
-    <!-- <gap:plugin name="org.apache.cordova.battery-status" />
-    <gap:plugin name="org.apache.cordova.camera" />
-    <gap:plugin name="org.apache.cordova.media-capture" />
-    <gap:plugin name="org.apache.cordova.console" />
-    <gap:plugin name="org.apache.cordova.contacts" />
-    <gap:plugin name="org.apache.cordova.device" />
-    <gap:plugin name="org.apache.cordova.device-motion" />
-    <gap:plugin name="org.apache.cordova.device-orientation" />
-    <gap:plugin name="org.apache.cordova.dialogs" />
-    <gap:plugin name="org.apache.cordova.file" />
-    <gap:plugin name="org.apache.cordova.file-transfer" />
-    <gap:plugin name="org.apache.cordova.geolocation" />
-    <gap:plugin name="org.apache.cordova.globalization" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
-    <gap:plugin name="org.apache.cordova.media" />
-    <gap:plugin name="org.apache.cordova.network-information" />
-    <gap:plugin name="org.apache.cordova.splashscreen" />
-    <gap:plugin name="org.apache.cordova.vibration" /> -->
-    
 </widget>
