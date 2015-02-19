@@ -5,7 +5,7 @@
 
 var filestocopy = [{
 	'hooks/MainViewController.m':
-		'platforms/ios/Waterfronts/Classes/MainViewController.m'
+		'platforms/ios/OregonsCatch/Classes/MainViewController.m'
 }];
 
 var fs = require('fs');

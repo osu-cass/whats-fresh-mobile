@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="edu.oregonstate.cass.WhatsFresh" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Oregon\'s Catch</name>
+    <name>OregonsCatch</name>
     <description>
       A catalog of fresh sea food available on the Oregon coast.
     </description>
@@ -62,28 +62,26 @@
         <icon src="../resources/icons/57.png" width="50" height="50" />
         <icon src="../resources/icons/114.png" width="100" height="100" />
 
-        <gap:splash height="480" width="320"   src="resources/startup/ios/Default~iphone.png" />
+        <splash height="480" width="320"   src="../resources/startup/ios/non_retina_por.png" />
+        <splash height="320" width="480"   src="../resources/startup/ios/non_retina_lan.png"  />
 
-        <gap:splash height="480" width="320"   src="../resources/startup/ios/non_retina_por.png" />
-        <gap:splash height="320" width="480"   src="../resources/startup/ios/non_retina_lan.png"  />
+        <splash height="960" width="640"   src="../resources/startup/ios/retina_por.png" />
+        <splash height="640" width="960"   src="../resources/startup/ios/retina_lan.png" />
 
-        <gap:splash height="960" width="640"   src="../resources/startup/ios/retina_por.png" />
-        <gap:splash height="640" width="960"   src="../resources/startup/ios/retina_lan.png" />
+        <splash height="1136" width="640"  src="../resources/startup/ios/retina5_por.png" />
+        <splash height="640" width="1136"  src="../resources/startup/ios/retina5_lan.png" />
 
-        <gap:splash height="1136" width="640"  src="../resources/startup/ios/retina5_por.png" />
-        <gap:splash height="640" width="1136"  src="../resources/startup/ios/retina5_lan.png" />
+        <splash height="1024" width="768"  src="../resources/startup/ios/ipad_non_retina_por.png" />
+        <splash height="768" width="1024"  src="../resources/startup/ios/ipad_non_retina_lan.png" />
 
-        <gap:splash height="1024" width="768"  src="../resources/startup/ios/ipad_non_retina_por.png" />
-        <gap:splash height="768" width="1024"  src="../resources/startup/ios/ipad_non_retina_lan.png" />
+        <splash height="1334" width="750"  src="../resources/startup/ios/iphone6_por.png" />
+        <splash height="750" width="1334"  src="../resources/startup/ios/iphone6_lan.png" />
 
-        <gap:splash height="1334" width="750"  src="../resources/startup/ios/iphone6_por.png" />
-        <gap:splash height="750" width="1334"  src="../resources/startup/ios/iphone6_lan.png" />
+        <splash height="2048" width="1536" src="../resources/startup/ios/ipad_retina_por.png" />
+        <splash height="1536" width="2048" src="../resources/startup/ios/ipad_retina_lan.png" />
 
-        <gap:splash height="2048" width="1536" src="../resources/startup/ios/ipad_retina_por.png" />
-        <gap:splash height="1536" width="2048" src="../resources/startup/ios/ipad_retina_lan.png" />
-
-        <gap:splash height="2208" width="1242" src="../resources/startup/ios/iphone6plus_por.png" />
-        <gap:splash height="1242" width="2208" src="../resources/startup/ios/iphone6plus_lan.png" />
+        <splash height="2208" width="1242" src="../resources/startup/ios/iphone6plus_por.png" />
+        <splash height="1242" width="2208" src="../resources/startup/ios/iphone6plus_lan.png" />
     </platform>
 
     <platform name="android">
