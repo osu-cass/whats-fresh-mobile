@@ -1,6 +1,8 @@
 Home Page Documentation
 =======================
-	The home screen contains all the tools you need to specify where and what you are looking for.
+.. image:: images/home.png
+
+*    The home screen contains all the tools you need to specify where and what you are looking for.
 *	The search results lets you know imediately how many results your query has netted you.
 *	The userlocation field is used to find products and vendors near your location depending on the proximity settings.
 *	The distance field sets how far away from your location you want to search for vendors or products.
@@ -9,4 +11,3 @@ Home Page Documentation
 *	The vendors and products checkboxes specify what kind of data your search will return.
 *	The go button sends you to view your results.
 ..	note :: Only user location or location field can be used at one time.
-.. image:: images/home.PNG
