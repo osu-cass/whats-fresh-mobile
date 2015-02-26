@@ -76,10 +76,6 @@
      *      }
      */
     "js": [
-	{
-	    "path": "phonegap.js",
-	    "remote": true
-	},
         {
             "path": "touch/sencha-touch.js",
             "x-bootstrap": true
@@ -87,6 +83,10 @@
         {
             "path": "bootstrap.js",
             "x-bootstrap": true
+        },
+        {
+            "path": "https://maps.google.com/maps/api/js?sensor=true",
+            "remote": true
         },
         {
             "path": "app.js",
