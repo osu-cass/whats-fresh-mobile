@@ -18,6 +18,16 @@ Ext.define('WhatsFresh.util.Messages', {
 		'We couldn\'t find you!',
 		'<br />',
 		'Please check your location settings and try again.'
-	].join('')
+	].join(''),
+	
+	showApiError: function (cb) {
+		Ext.Msg.alert(
+			'Data Error', [
+				'Unable to fetch data!<br><br>',
+				'Check your device\'s internet settings ',
+				'and restart the app.'
+			].join(''),
+			cb || Ext.emptyFn);
+	}
 
 });

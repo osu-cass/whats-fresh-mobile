@@ -26,7 +26,14 @@ Ext.define('WhatsFresh.store.Location', {
     	    reader: {
         		type: 'json',
         		rootProperty: 'locations'
-    	    }
+    	    },
+            timeout: 3000,
+            listeners:{
+                exception: function(proxy, response){
+                    console.log("No internet access, we can't load the data");
+                    WhatsFresh.util.Messages.showApiError();
+                }
+            }
     	}
     }
 });
