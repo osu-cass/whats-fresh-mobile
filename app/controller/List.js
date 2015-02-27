@@ -84,30 +84,40 @@ Ext.define('WhatsFresh.controller.List', {
         var ProductSearch = WhatsFresh.util.ProductSearch;
         var validGeolocationTimeout = 2000; // 2 seconds
 
-	if(newToggleValue){
+		if(newToggleValue){
 
-            // Update UI elements
-	    ctrl.getDistanceSelect().enable();
-	    ctrl.getLocationSelect().disable();
+	            // Update UI elements
+		    ctrl.getDistanceSelect().enable();
+		    ctrl.getLocationSelect().disable();
 
             // Ensure distance is not null or out-of-date during filtering
             Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
 
-	    // This updates the user's location and how far from their location they would like to search for vendors/products
-	    Ext.device.Geolocation.watchPosition({
-		frequency : 10000, // Update every 10 seconds
-		callback: function(position) {
-                    Search.options.position = position;
-                    Search.applyFilterToStore(WhatsFresh.VendorStore);
-                    ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
-                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-                },
-		failure: function() {
-                    WhatsFresh.util.Messages.showLocationError();
-                    ctrl.getUseLocationToggle().setValue(0);
-                }
-	    });
+		    // This updates the user's location and how far from their location they would like to search for vendors/products
+		    navigator.geolocation.watchPosition(
+				function(position){
+	               if(position == null){
+						WhatsFresh.util.Messages.showLocationError();
+	                	ctrl.getUseLocationToggle().setValue(0);
+					}
+					if(position != null){
+						Search.options.position = position;
+	                    Search.applyFilterToStore(WhatsFresh.VendorStore);
+	                    ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+	                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+	                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+					}
+				},
+				function(positionerror){
+	                WhatsFresh.util.Messages.showLocationError();
+	                ctrl.getUseLocationToggle().setValue(0);
+	            },
+	            {
+			    	timeout: 10000,
+			    	frequency: 10000,
+			    	enableHighAccuracy: true
+			    }
+		    );
 
             // Check position field for valid data. If invalid,
             // assume geolocation is turned off.
@@ -118,15 +128,15 @@ Ext.define('WhatsFresh.controller.List', {
                 }
             }, validGeolocationTimeout);
 
-	}else{
-	    ctrl.getDistanceSelect().disable();
-	    ctrl.getLocationSelect().enable();
-	    Ext.device.Geolocation.clearWatch();
-	    Search.options.position = null;
+		}else{
+		    ctrl.getDistanceSelect().disable();
+		    ctrl.getLocationSelect().enable();
+		    Ext.device.Geolocation.clearWatch();
+		    Search.options.position = null;
             WhatsFresh.VendorStore.filter();
             WhatsFresh.ProductListStore.filter();
             WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-	}
+		}
     },
     onSetDistance: function(index, record){
         var ctrl = this;
