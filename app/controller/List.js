@@ -96,43 +96,53 @@ Ext.define('WhatsFresh.controller.List', {
 		    ctrl.getDistanceSelect().enable();
 		    ctrl.getLocationSelect().disable();
 
-	            // Ensure distance is not null or out-of-date during filtering
-	            Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
+            // Ensure distance is not null or out-of-date during filtering
+            Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
 
 		    // This updates the user's location and how far from their location they would like to search for vendors/products
-		    Ext.device.Geolocation.watchPosition({
-			frequency : 10000, // Update every 10 seconds
-			callback: function(position) {
-	                    Search.options.position = position;
+		    navigator.geolocation.watchPosition(
+				function(position){
+	               if(position == null){
+						WhatsFresh.util.Messages.showLocationError();
+	                	ctrl.getUseLocationToggle().setValue(0);
+					}
+					if(position != null){
+						Search.options.position = position;
 	                    Search.applyFilterToStore(WhatsFresh.VendorStore);
 	                    ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
 	                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
 	                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-	                },
-			failure: function() {
-	                    WhatsFresh.util.Messages.showLocationError();
-	                    ctrl.getUseLocationToggle().setValue(0);
-	                }
-		    });
+					}
+				},
+				function(positionerror){
+	                WhatsFresh.util.Messages.showLocationError();
+	                ctrl.getUseLocationToggle().setValue(0);
+	            },
+	            {
+			    	timeout: 10000,
+			    	frequency: 10000,
+			    	enableHighAccuracy: true
+			    }
+		    );
 
-	            // Check position field for valid data. If invalid,
-	            // assume geolocation is turned off.
-	            Ext.Function.defer(function() {
-	                if (!Search.options.position) {
-	                    WhatsFresh.util.Messages.showLocationError();
-	                    ctrl.getUseLocationToggle().setValue(0);
-	                }
-	            }, validGeolocationTimeout);
+            // Check position field for valid data. If invalid,
+            // assume geolocation is turned off.
+            Ext.Function.defer(function() {
+                if (!Search.options.position) {
+                    WhatsFresh.util.Messages.showLocationError();
+                    ctrl.getUseLocationToggle().setValue(0);
+                }
+            }, validGeolocationTimeout);
 
 		}else{
 		    ctrl.getDistanceSelect().disable();
 		    ctrl.getLocationSelect().enable();
 		    Ext.device.Geolocation.clearWatch();
 		    Search.options.position = null;
-	            WhatsFresh.VendorStore.filter();
-	            WhatsFresh.ProductListStore.filter();
-	            WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-	}
+            WhatsFresh.VendorStore.filter();
+            WhatsFresh.ProductListStore.filter();
+            WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+		}
     },
     onSetDistance: function(index, record){
         var ctrl = this;
