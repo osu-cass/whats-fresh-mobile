@@ -1,2 +1,2 @@
-Specific Page Documentation
-===========================
+Education Page Documentation
+============================

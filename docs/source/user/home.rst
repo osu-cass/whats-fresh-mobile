@@ -2,12 +2,9 @@ Home Page Documentation
 =======================
 .. image:: images/home.png
 
-*    The home screen contains all the tools you need to specify where and what you are looking for.
-*	The search results lets you know imediately how many results your query has netted you.
-*	The userlocation field is used to find products and vendors near your location depending on the proximity settings.
-*	The distance field sets how far away from your location you want to search for vendors or products.
-*	The location field specifys a city you want to look for products or vendors in.
-*	The products field is used to specify what type of product you are looking for.
-*	The vendors and products checkboxes specify what kind of data your search will return.
-*	The go button sends you to view your results.
-..	note :: Only user location or location field can be used at one time.
+1. Tap this button to use your device's geographic location and search within the selected distance.
+2. Select a location by tapping the drop down menu. Once a location is selected, only vendors and products in that area will appear. This can't be used if current location is on.
+3. Select a product by tapping the drop down menu. Once a product is selected, only vendors that offer that product will appear.
+4. Tap vendor to sort by vendors. Tap product to sort by products.
+5. Tap this button once the desired search parameters are chosen. This will bring you to a page of results.
+

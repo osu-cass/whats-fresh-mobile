@@ -1,8 +1,10 @@
 List Page Documentation
 =======================
-This page displays your search results in two different ways. First there is a map that shows where the vendors associated with your search results are located. Then there is a list of your search results below the map. If you cick on a list item, the item you selected will be highlighted as well as the map nodes that correspond with the list item. If you click on a map node an info window will appear above the marker. Then you can click on the corresponding button to lead to a page with more detailed information about the vendor or product.
+.. image:: images/list.png
 
-.. image:: images/list.PNG
+1. Tap this to go to the home page.
+2. Tap this to go back to the previous page you were on.
+3. Map nodes represent vendor locations. Tap on a node to select that vendor.
+4. Tap on an item to select it. Tap on it again to go to it's information page.
 
-You can click on the selected item again, or click on the link above the blue node to go to a page that describes the product or vendor you have selected.
 

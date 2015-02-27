@@ -14,5 +14,5 @@ Contents:
     home
     list
     detail
-    specific
+    education
 
