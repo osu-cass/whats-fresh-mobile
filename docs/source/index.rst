@@ -3,29 +3,34 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Oregon's Catch documentation!
-========================================
+Oregon's Catch Documentation
+============================
 
 What is Oregon's Catch?
 -----------------------
 
-	Oregon's Catch is an app that will help you find local vendors with fresh seafood for sale on the Oregon Coast. On the home page you can specify where and what type of seafood you want to search for, as well as specify whether the results will be displayed as a list of vendors or products. After you have entered your search parameters and hit the go button, you will be navigated to a page that shows you a list and map of your search results. You can then explore more details about each search result by selecting a product or vendor from the map or list.
+	Oregon's Catch is an app designed to help users find local
+        vendors with fresh seafood for sale on the Oregon Coast. 
+
+        This app was built by the students and staff of `Oregon State
+        University's Center for Applied Systems and Software. <http://cass.oregonstate.edu/>`_
+
+        Funding for this project and the data that drives it is
+        provided by `Sea Grant Oregon. <http://seagrant.oregonstate.edu/>`_
 
 
-Contents:
-+++++++++
+Documentation for Users
++++++++++++++++++++++++
 
 .. toctree::
    :maxdepth: 4
 
    user/index
-   dev/index
+.. dev/index  TODO: Populate developer documentation pages.
 
 
-Indices and tables
-==================
+Search Tools
+============
 
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
