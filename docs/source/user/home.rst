@@ -1,5 +1,5 @@
-Home Page Documentation
-=======================
+Home Page
+=========
 .. image:: images/home.png
 
 1. Tap this button to use your device's geographic location and search within the selected distance.

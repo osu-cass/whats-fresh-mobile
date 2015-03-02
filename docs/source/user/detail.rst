@@ -1,5 +1,5 @@
-Detail Page Documentation
-=========================
+Detail Page
+===========
 This page displays details about the product or vendor that was selected on the list page. 
 
 Vendor Details

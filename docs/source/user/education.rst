@@ -1,5 +1,5 @@
-Education Page Documentation
-============================
+Education Page
+==============
 
 .. image:: images/education.png
 

@@ -1,5 +1,5 @@
-List Page Documentation
-=======================
+List Page
+=========
 .. image:: images/list.png
 
 1. Tap this to go to the home page.
