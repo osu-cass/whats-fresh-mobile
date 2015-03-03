@@ -5,6 +5,9 @@ Ext.define('WhatsFresh.view.Home', {
     xtype: 'Home',
     alias: 'widget.home',
     config: {
+	scrollable:{ 
+		direction: 'vertical',
+	},
 	items: [
 	    {
 		xtype: 'toolbar',

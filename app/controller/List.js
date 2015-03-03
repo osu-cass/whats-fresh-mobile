@@ -1,7 +1,3 @@
-var isPresent;
-isPresent = true;
-
-
 Ext.define('WhatsFresh.controller.List', {
 	extend: 'Ext.app.Controller',
 	requires: [
