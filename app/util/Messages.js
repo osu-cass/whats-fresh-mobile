@@ -5,13 +5,19 @@ Ext.define('WhatsFresh.util.Messages', {
     requires : ['Ext.MessageBox'],
 
 	showLocationError: function (cb) {
+
+		var util = this;
+
 		Ext.Msg.alert(
-			'Location Error', [
-				'Unable to get location!<br><br>',
-				'Check your device\'s privacy settings to see if ',
-				'location services are enabled and restart the app.'
-			].join(''),
+			'Location Error',
+			util.locationErrorText,
 			cb || Ext.emptyFn);
-	}
+	},
+
+	locationErrorText : [
+		'We couldn\'t find you!',
+		'<br />',
+		'Please check your location settings and try again.'
+	].join('')
 
 });
