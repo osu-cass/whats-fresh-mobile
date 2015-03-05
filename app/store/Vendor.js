@@ -10,10 +10,21 @@ Ext.define('WhatsFresh.store.Vendor', {
 	        pageParam: false,
 	        limitParam: false,
 	        startParam: false,
+
 		    reader: {
 				type: 'json',
 				rootProperty: 'vendors'
-		    }
+		    },
+		    timeout: 3000,
+            listeners:{
+            	error: 	function(jqXHR, textStatus, errorthrown){
+            		alert(textStatus, '\n' + errorthrown);
+            	},
+                exception: function(proxy, response){
+                    console.log("No internet access, we can't load the data");
+                    WhatsFresh.util.Messages.showApiError();
+                }
+            }            
 		}
     }
 });

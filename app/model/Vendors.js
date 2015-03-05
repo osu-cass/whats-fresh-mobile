@@ -20,7 +20,8 @@ Ext.define('WhatsFresh.model.Vendors', {
             'contact_name',
             'story',
             'name',
-            'id'
+            'id',
+            'error'
         ]
     }
 });

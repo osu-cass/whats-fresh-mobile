@@ -24,7 +24,14 @@ Ext.define('WhatsFresh.store.Product', {
     	    reader: {
         		type: 'json',
         		rootProperty: 'products'
-    	    }
+    	    },
+            timeout: 3000,
+            listeners:{
+                exception: function(proxy, response){
+                    console.log("No internet access, we can't load the data");
+                    WhatsFresh.util.Messages.showApiError();
+                }
+            }
     	}
     }
 });
