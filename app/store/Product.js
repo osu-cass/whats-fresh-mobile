@@ -5,9 +5,11 @@ Ext.define('WhatsFresh.store.Product', {
     	autoLoad: {
             callback: function(records, operation, success) {
                 var productStore = Ext.getStore('Product');
+                var productIndex = productStore.data.length;
                 productStore.insert( 0, [
                     {
                         name: "Please choose a product",
+                        id: productIndex,
                         is_not_filterable: true
                     }
                 ]);

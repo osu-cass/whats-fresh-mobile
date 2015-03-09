@@ -10,10 +10,11 @@ Ext.define('WhatsFresh.store.Vendor', {
 	        pageParam: false,
 	        limitParam: false,
 	        startParam: false,
+
 		    reader: {
 				type: 'json',
 				rootProperty: 'vendors'
-		    }
+		    }   
 		}
     }
 });

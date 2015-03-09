@@ -19,5 +19,4 @@ Ext.define('WhatsFresh.util.Messages', {
 		'<br />',
 		'Please check your location settings and try again.'
 	].join('')
-
 });
