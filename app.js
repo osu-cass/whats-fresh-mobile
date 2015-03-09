@@ -17,7 +17,7 @@ Ext.Loader.setConfig({
         "Ext": 'touch/src'
     }
 });
- 
+
 Ext.application({
     name: 'WhatsFresh',
 
@@ -25,6 +25,8 @@ Ext.application({
     models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists", "Stories"],
     stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList", "Story"],
     views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail"],
+
+    requires: ['WhatsFresh.util.StoreLoadTracking'],
 
 
     launch: function() {
@@ -36,10 +38,19 @@ Ext.application({
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Home'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Map'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.ListView'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.Detail')); 
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail')); 
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.Detail'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Info'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
+
+        var SLT = WhatsFresh.util.StoreLoadTracking;
+        SLT.registerStore('Location');
+    	SLT.registerStore('Product');
+    	SLT.registerStore('Vendor');
+
+    	// To override the error throwing behavior,
+    	// Redefine function in singleton:
+    	//SLT.StoreLoadError = function () {}
 
         // This is used to iplement android back button
         if(Ext.os.is('Android')){
@@ -52,7 +63,7 @@ Ext.application({
                 }
                 // Action is like a fired event from a view page, routes are assigned
                 // for the url sent back in the controller routes section. The routes
-                // section in the controller defines which function to call when an 
+                // section in the controller defines which function to call when an
                 // action is sent to the controller from the device back button
                 if(Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.ListView.xtype){
                     this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
