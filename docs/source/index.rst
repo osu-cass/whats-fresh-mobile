@@ -23,7 +23,7 @@ Documentation for Users
 +++++++++++++++++++++++
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 3
 
    user/index
 .. dev/index  TODO: Populate developer documentation pages.

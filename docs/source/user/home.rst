@@ -1,10 +1,46 @@
 Home Page
 =========
+
+Using Oregon's Catch to find local fish vendors or merchandise starts
+on the home page. The controls on the home page build a "search query"
+the app how to find and display only the vendors and merchandise the
+user is interested in.
+
+Home Page Controls
+++++++++++++++++++
+
 .. image:: images/home.png
 
-1. Tap this button to use your device's geographic location and search within the selected distance.
-2. Select a location by tapping the drop down menu. Once a location is selected, only vendors and products in that area will appear. This can't be used if current location is on.
-3. Select a product by tapping the drop down menu. Once a product is selected, only vendors that offer that product will appear.
-4. Tap vendor to sort by vendors. Tap product to sort by products.
-5. Tap this button once the desired search parameters are chosen. This will bring you to a page of results.
+1. **Geolocation toggle button** 
 
+   - Tap this button to search for vendors or merchandise near the
+     device's location.
+
+   - When this button is toggled on, tap the "Search within" field to
+     adjust how close to your device's location to search.
+
+2. **Location menu** 
+
+   - To search for vendors or merchandise by city instead of by the
+     device's location, select a city from this menu.
+
+   - This option is not available if the geolocation toggle button is
+     turned on.
+
+3. **Product menu** 
+
+   - To search for a specific product, select a product from this
+     menu.
+
+4. **Sorting options** 
+
+   - To sort and display search results by vendors, select the
+     "Vendors" checkbox.
+
+   - To sort and display search results by products, select the
+     "Products" checkbox.
+
+5. **"Go" button**
+
+   - Once the desired search parameters are chosen, tap this button to
+     view the results of the search.

@@ -2,22 +2,60 @@ Detail Page
 ===========
 This page displays details about the product or vendor that was selected on the list page. 
 
-Vendor Details
---------------
+Vendor Detail Page Controls
+---------------------------
+
 .. image:: images/detail2.PNG
 
-1. Tapping this sends you to the home page.
-2. Tapping this sends you to the previous page.
-3. Information about the vendor including phone number, website, and email.
-4. Tapping the map will open up navigation in an installed maps app, or web browser.
-5. This area shows the selected vendor's inventory.
+1. **Home button**
+ 
+   - Tap this button to go to the home page.
 
-Product Details
----------------
+2. **Back button**
+
+   - Tap this button to go the last page viewed.
+
+3. **Overview pane**
+
+   - This area displays information about the vendor including phone
+     number, website, and email.
+
+4. **Area map**
+
+   - Tap the map to open navigation instructions in a navigation app,
+     or web browser.
+
+5. **Vendor inventory**
+
+   - This list displays the vendor's inventory. 
+
+   - Tap a product in this list to view more information about that
+     product.
+
+Product Detail Page Controls
+----------------------------
+
 .. image:: images/product_detail.png
 
+1. **Home button** 
 
-1. Tapping this sends you to the home page.
-2. Tapping this sends you to the previous page.
-3. Description of the product you are looking at. If you tap the I it will open more educational data about the product.
-4. This area has a list of vendors that serve that specific product. 
+   - Tap this button to go to the home page.
+
+2. **Back button**
+
+   - Tap this button to go the last page viewed.
+
+3. **Overview pane** 
+
+   - This area displays a description of the product you are looking
+     at. 
+
+   - Tap the information icon (the button marked with the letter
+     "i") to view more in-depth information about the product.
+
+4. **Vendors list**
+
+   - This list displays every vendor that sells the product on this
+     page.
+
+   - Tap a vendor from this list to view more information about that vendor.

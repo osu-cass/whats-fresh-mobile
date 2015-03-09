@@ -20,7 +20,8 @@ will bring up more detailed information about that specific item
 results is displayed on a detail page.
 
 **Step 4.** Some products in the app\'s database contain educational
-information this information is available on the education pages.
+information. To see this information, navigate to the linked education
+pages.
 
 .. toctree::
     :maxdepth: 2
