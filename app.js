@@ -21,15 +21,17 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'WhatsFresh',
 
-    controllers: ["List"],
+    controllers: ["List","ErrorLoading"],
     models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists", "Stories"],
     stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList", "Story"],
-    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail"],
+    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail", "ErrorLoading"],
 
     requires: ['WhatsFresh.util.StoreLoadTracking'],
 
 
     launch: function() {
+
+    	var errorController = this.getController('ErrorLoading');
 
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
@@ -42,15 +44,15 @@ Ext.application({
         Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Info'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.ErrorLoading'));
 
         var SLT = WhatsFresh.util.StoreLoadTracking;
         SLT.registerStore('Location');
     	SLT.registerStore('Product');
     	SLT.registerStore('Vendor');
 
-    	// To override the error throwing behavior,
-    	// Redefine function in singleton:
-    	//SLT.StoreLoadError = function () {}
+    	SLT.StoreLoadError = function () { errorController.onError(); };
+    	SLT.StoreLoadSuccess = function () { errorController.onSuccess(); };
 
         // This is used to iplement android back button
         if(Ext.os.is('Android')){
