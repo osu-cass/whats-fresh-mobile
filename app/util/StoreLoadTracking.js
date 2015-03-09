@@ -4,6 +4,8 @@ Ext.define('WhatsFresh.util.StoreLoadTracking', {
 
 	StoreLoadStatus: {},
 
+    StoreLoadSuccess: function () { console.log('Unhandled store load success.'); },
+
     StoreLoadError: function () { console.error('Unhandled store load error.'); },
 
     // Returns true if stores all called back and at least one has an error.
@@ -15,6 +17,15 @@ Ext.define('WhatsFresh.util.StoreLoadTracking', {
 			if (!util.StoreLoadStatus[s].loaded) error = true;
 		}
 		return error;
+	},
+
+	// Returns true if stores all called back
+    areStoresDone: function () {
+    	var util = this;
+		for (var s in util.StoreLoadStatus) {
+			if (!util.StoreLoadStatus[s].called) return false;
+		}
+		return true;
 	},
 
 	// Call this during launch.
@@ -33,7 +44,10 @@ Ext.define('WhatsFresh.util.StoreLoadTracking', {
 			util.StoreLoadStatus[name].called = true;
     		if (success) util.StoreLoadStatus[name].loaded = true;
     		else util.StoreLoadStatus[name].loaded = false;
-    		if (util.hasStoreLoadError()) util.StoreLoadError();
+    		if (util.areStoresDone()) {
+    			if (util.hasStoreLoadError()) util.StoreLoadError();
+    			else util.StoreLoadSuccess();
+    		}
     	});
 	}
 
