@@ -21,13 +21,14 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'WhatsFresh',
 
-    controllers: ["List"],
+    controllers: ["List", "ErrorLoading"],
     models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists", "Stories"],
     stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList", "Story"],
-    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail"],
+    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail", "ErrorLoading"],
 
 
     launch: function() {
+        var errorCtrl = this.getController('ErrorLoading');
 
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
@@ -40,6 +41,12 @@ Ext.application({
         Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail')); 
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Info'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.ErrorLoading'));
+
+        // Add error handlers to stores.
+        Ext.getStore("Location").on('load', errorCtrl.onStoreLoad, errorCtrl);
+        // Ext.Loader.onReady(errorCtrl.onStoreLoad, errorCtrl, true);
+        // errorCtrl.onload();
 
         // This is used to iplement android back button
         if(Ext.os.is('Android')){

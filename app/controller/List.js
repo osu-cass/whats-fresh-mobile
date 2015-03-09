@@ -213,53 +213,53 @@ Ext.define('WhatsFresh.controller.List', {
     // the map.
     populatePstore: function(store, pstore){
         var Search = WhatsFresh.util.Search;
-	var addVendor;
-	// n is used to set PLpos ("ProductList position") when adding new products
-	// to the productlist, PLpos is used to select a list item
-	var n = 0;
+		var addVendor;
+		// n is used to set PLpos ("ProductList position") when adding new products
+		// to the productlist, PLpos is used to select a list item
+		var n = 0;
 
-	pstore.removeAll();
+		pstore.removeAll();
 
-	for(i = 0; i < store.data.items.length; i++){ // For all vendors...
-	    for(j = 0; j < store.data.items[i].data.products.length; j++){ // For every item in the vendor's inventory...
+		for(i = 0; i < store.data.items.length; i++){ // For all vendors...
+		    for(j = 0; j < store.data.items[i].data.products.length; j++){ // For every item in the vendor's inventory...
 
 
-                // Check to see whether or not the (product, name)
-                // pair exists in the ProductList store...
-                var alreadyAdded = false;
-		for(k = 0; k < pstore.data.length; k++){
-		    if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) &&
-                       (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
+	                // Check to see whether or not the (product, name)
+	                // pair exists in the ProductList store...
+	                var alreadyAdded = false;
+			for(k = 0; k < pstore.data.length; k++){
+			    if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) &&
+	                       (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
 
-                        // if prod/prep exist, add a new vendor to
-                        // the ProductList store
-			addVendor = store.data.items[i].data.name;
-			pstore.data.items[k].data.vendors.push(addVendor);
-                        alreadyAdded = true;
-                        break;
+	                        // if prod/prep exist, add a new vendor to
+	                        // the ProductList store
+				addVendor = store.data.items[i].data.name;
+				pstore.data.items[k].data.vendors.push(addVendor);
+	                        alreadyAdded = true;
+	                        break;
+			    }
+			}
+
+			// if the prod/prep DNE...
+	                if (!alreadyAdded){
+	                    // if the product is in the filtered set...
+	                    if ((Search.options.product.is_not_filterable) ||
+	                        (store.data.items[i].data.products[j].name === Search.options.product.name)){
+
+	                        // then create a new product/group and
+	                        // include the current vendor inside it.
+				var newpro = {
+				    name: store.data.items[i].data.products[j].name,
+				    preparation: store.data.items[i].data.products[j].preparation,
+				    vendors:[store.data.items[i].data.name],
+				    PLpos: n
+				};
+				pstore.add(newpro);
+				n = n+1;
+	                    }
+	                }
 		    }
 		}
-
-		// if the prod/prep DNE...
-                if (!alreadyAdded){
-                    // if the product is in the filtered set...
-                    if ((Search.options.product.is_not_filterable) ||
-                        (store.data.items[i].data.products[j].name === Search.options.product.name)){
-
-                        // then create a new product/group and
-                        // include the current vendor inside it.
-			var newpro = {
-			    name: store.data.items[i].data.products[j].name,
-			    preparation: store.data.items[i].data.products[j].preparation,
-			    vendors:[store.data.items[i].data.name],
-			    PLpos: n
-			};
-			pstore.add(newpro);
-			n = n+1;
-                    }
-                }
-	    }
-	}
     },
 	// Need to reset the store when the check is clicked again, so store is set back to original store
 	onSortByVendorCommand: function(){
