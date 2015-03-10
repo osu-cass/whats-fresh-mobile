@@ -51,8 +51,30 @@ Ext.application({
     	SLT.registerStore('Product');
     	SLT.registerStore('Vendor');
 
+        var locationStore = Ext.getStore('Location');
+        var productStore = Ext.getStore('Product');
+
     	SLT.StoreLoadError = function () { errorController.onError(); };
-    	SLT.StoreLoadSuccess = function () { errorController.onSuccess(); };
+    	SLT.StoreLoadSuccess = function () { 
+            
+            // inject placeholders
+            locationStore.insert( 0,
+                                  {
+                                      name: "Please choose a location",
+                                      location: locationStore.data.length,
+                                      is_not_filterable: true
+                                  }                
+                                );
+            productStore.insert( 0,
+                                 {
+                                     name: "Please choose a product",
+                                     is_not_filterable: true
+                                 }
+                               );
+            errorController.onSuccess(); };
+
+        locationStore.load();
+        productStore.load();
 
         // This is used to iplement android back button
         if(Ext.os.is('Android')){

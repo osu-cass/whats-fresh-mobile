@@ -243,7 +243,8 @@ Ext.define('WhatsFresh.controller.List', {
 		// if the prod/prep DNE...
                 if (!alreadyAdded){
                     // if the product is in the filtered set...
-                    if ((Search.options.product.is_not_filterable) ||
+                    if (!Search.options.product ||
+                        (Search.options.product.is_not_filterable) ||
                         (store.data.items[i].data.products[j].name === Search.options.product.name)){
 
                         // then create a new product/group and
