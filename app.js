@@ -61,7 +61,6 @@ Ext.application({
             locationStore.insert( 0,
                                   {
                                       name: "Please choose a location",
-                                      location: locationStore.data.length,
                                       is_not_filterable: true
                                   }                
                                 );
@@ -72,9 +71,6 @@ Ext.application({
                                  }
                                );
             errorController.onSuccess(); };
-
-        locationStore.load();
-        productStore.load();
 
         // This is used to iplement android back button
         if(Ext.os.is('Android')){

@@ -64,7 +64,7 @@ Ext.define('WhatsFresh.view.Home', {
 			displayField: 'name',
 			store: 'Location',
 												value: "Loading, please wait...",
-			valueField: 'location'
+			valueField: 'name'
 				}
 								]
 						},
@@ -79,7 +79,7 @@ Ext.define('WhatsFresh.view.Home', {
 			displayField: 'name',
 			store: 'Product',
 												value: "Loading, please wait...",
-			valueField: 'id'
+			valueField: 'name'
 				}
 					]
 			},
