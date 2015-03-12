@@ -3,8 +3,8 @@ Home Page
 
 Using Oregon's Catch to find local fish vendors or merchandise starts
 on the home page. The controls on the home page build a "search query"
-the app how to find and display only the vendors and merchandise the
-user is interested in.
+that tells the app how to find and display only the vendors and
+merchandise the user is interested in.
 
 Home Page Controls
 ++++++++++++++++++

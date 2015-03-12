@@ -2,7 +2,7 @@ List Page
 =========
 
 Once Oregon's Catch has finished searching for vendors or merchandise,
-the results are displayed the list page. This page displays the search
+the results are displayed on the list page. This page displays the search
 results in either one of two modes: vendors or products, depending on
 which sorting option was selected on the home page. 
 
@@ -15,7 +15,8 @@ If "Products" was selected on the home page, the page will display a
 list of products and a map with nodes indicating locations where those
 products can be purchased. Users may select a product from the list to
 see more information about that specific product item. Users may also
-select a map node to see more information about that specific vendor.
+select a map node to see more information about the vendor that
+carries the selected product at that map node's location.
 
 List Page Controls
 ++++++++++++++++++
