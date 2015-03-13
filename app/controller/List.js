@@ -22,6 +22,7 @@ Ext.define('WhatsFresh.controller.List', {
             useLocationToggle: '#userlocation',
             distanceSelect: '#distance',
             locationSelect: '#selectlocation',
+                    productSelect: '#selectproduct',
 			listView: 'listview',
 			detailView: 'detail',
 			productdetailView: 'productdetail',
@@ -243,7 +244,8 @@ Ext.define('WhatsFresh.controller.List', {
 		// if the prod/prep DNE...
                 if (!alreadyAdded){
                     // if the product is in the filtered set...
-                    if ((Search.options.product.is_not_filterable) ||
+                    if (!Search.options.product ||
+                        (Search.options.product.is_not_filterable) ||
                         (store.data.items[i].data.products[j].name === Search.options.product.name)){
 
                         // then create a new product/group and
@@ -939,6 +941,8 @@ Ext.define('WhatsFresh.controller.List', {
 	},
 	// Initialize functions
 	launch: function(){
+            var ctrl = this;
+
 		this.callParent(arguments);
 		this.getDistanceSelect().disable();
 
@@ -982,11 +986,6 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.SVvideo = WhatsFresh.specificView.getAt(1).items.items[0];
 			WhatsFresh.SVvideo.hide();
 
-		// Get store vars
-		Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
-        Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
-        Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
-
 		// Variables
 			// FOR: back button functionality
 			WhatsFresh.pvalue = [];
@@ -996,20 +995,22 @@ Ext.define('WhatsFresh.controller.List', {
 			// FOR: checkboxes
 			WhatsFresh.use2 = 1;
 			WhatsFresh.infowindowFlag = 0;
+
+            // Define UI refresh listeners on Location and Product
+            // stores
+            WhatsFresh.LocationStore.on('addrecords', function(){ 
+                ctrl.getLocationSelect().setValue('Please choose a location');
+            });
+
+            WhatsFresh.ProductStore.on('addrecords', function(){ 
+                ctrl.getProductSelect().setValue('Please choose a product');
+            });
+
+
+            // Manually load stores once listeners are defined
+            WhatsFresh.LocationStore.load();
+            WhatsFresh.ProductStore.load();
 	},
-    onLocationStoreRefresh: function(){
-        this.getHomeView().down('[itemId=selectlocation]').reset();
-    },
-    onProductStoreRefresh: function (){
-        this.getHomeView().down('[itemId=selectproduct]').reset();
-    },
-    onVendorStoreLoad: function(){
-			var ctrl = this;
-        WhatsFresh.location = "Please choose a location";
-        WhatsFresh.product = "Please choose a product";
-        this.filterVendorStore(WhatsFresh.location, WhatsFresh.product);
-        ctrl.getVendnumStatus().setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-    },
 	init: function(){
 		this.callParent(arguments);
 	}
