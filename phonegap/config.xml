@@ -7,18 +7,12 @@
     <author email="support@phonegap.com" href="http://phonegap.com">
         Oregon State University: Center for Applied Systems and Software
     </author>
-
-    <access origin="*" />
-
-    <content src="index.html"/>
-
-    <feature name="Geolocation">
-      <param name="id" value="org.apache.cordova.geolocation" />
-    </feature>
-
-    <hook type="after_platform_add" src="hooks/install_plugins.js" />
-    <hook type="after_build" src="hooks/overwrite_ios_view.js" />
-
+    <access origin="*.googleapis.com" />
+    <access origin="*.gstatic.com" />
+    <access origin="*.osuosl.org" />
+    <access origin="img.youtube.com" />
+    <content src="index.html" />
+    <hook src="hooks/overwrite_ios_view.js" type="after_build" />
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.5.0" />
     <preference name="orientation" value="default" />
@@ -33,80 +27,62 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-minSdkVersion" value="10" />
     <preference name="android-installLocation" value="auto" />
-
     <platform name="ios">
-        <!-- iOS 7.0+ -->
-        <!-- iPhone / iPod Touch  -->
-        <icon src="../resources/icons/64.png" width="60" height="60" />
-        <icon src="../resources/icons/144.png" width="120" height="120" />
-        <icon src="../resources/icons/192.png" width="180" height="180" />
-        <!-- iPad -->
-        <icon src="../resources/icons/96.png" width="76" height="76" />
-        <icon src="../resources/icons/192.png" width="152" height="152" />
-        <!-- iOS 6.1 -->
-        <!-- Spotlight Icon -->
-        <icon src="../resources/icons/48.png" width="40" height="40" />
-        <icon src="../resources/icons/96.png" width="80" height="80" />
-        <!-- iPhone / iPod Touch -->
-        <icon src="../resources/icons/57.png" width="57" height="57" />
-        <icon src="../resources/icons/114.png" width="114" height="114" />
-        <!-- iPad -->
-        <icon src="../resources/icons/72.png" width="72" height="72" />
-        <icon src="../resources/icons/144.png" width="144" height="144" />
-        <!-- iPhone Spotlight and Settings Icon -->
-        <icon src="../resources/icons/29.png" width="29" height="29" />
-        <icon src="../resources/icons/58.png" width="58" height="58" />
-        <!-- iPad Spotlight and Settings Icon -->
-        <icon src="../resources/icons/57.png" width="50" height="50" />
-        <icon src="../resources/icons/114.png" width="100" height="100" />
-
-        <splash height="480" width="320"   src="../resources/startup/ios/non_retina_por.png" />
-        <splash height="320" width="480"   src="../resources/startup/ios/non_retina_lan.png"  />
-
-        <splash height="960" width="640"   src="../resources/startup/ios/retina_por.png" />
-        <splash height="640" width="960"   src="../resources/startup/ios/retina_lan.png" />
-
-        <splash height="1136" width="640"  src="../resources/startup/ios/retina5_por.png" />
-        <splash height="640" width="1136"  src="../resources/startup/ios/retina5_lan.png" />
-
-        <splash height="1024" width="768"  src="../resources/startup/ios/ipad_non_retina_por.png" />
-        <splash height="768" width="1024"  src="../resources/startup/ios/ipad_non_retina_lan.png" />
-
-        <splash height="1334" width="750"  src="../resources/startup/ios/iphone6_por.png" />
-        <splash height="750" width="1334"  src="../resources/startup/ios/iphone6_lan.png" />
-
-        <splash height="2048" width="1536" src="../resources/startup/ios/ipad_retina_por.png" />
-        <splash height="1536" width="2048" src="../resources/startup/ios/ipad_retina_lan.png" />
-
-        <splash height="2208" width="1242" src="../resources/startup/ios/iphone6plus_por.png" />
-        <splash height="1242" width="2208" src="../resources/startup/ios/iphone6plus_lan.png" />
+        <icon height="60" src="../resources/icons/64.png" width="60" />
+        <icon height="120" src="../resources/icons/144.png" width="120" />
+        <icon height="180" src="../resources/icons/192.png" width="180" />
+        <icon height="76" src="../resources/icons/96.png" width="76" />
+        <icon height="152" src="../resources/icons/192.png" width="152" />
+        <icon height="40" src="../resources/icons/48.png" width="40" />
+        <icon height="80" src="../resources/icons/96.png" width="80" />
+        <icon height="57" src="../resources/icons/57.png" width="57" />
+        <icon height="114" src="../resources/icons/114.png" width="114" />
+        <icon height="72" src="../resources/icons/72.png" width="72" />
+        <icon height="144" src="../resources/icons/144.png" width="144" />
+        <icon height="29" src="../resources/icons/29.png" width="29" />
+        <icon height="58" src="../resources/icons/58.png" width="58" />
+        <icon height="50" src="../resources/icons/57.png" width="50" />
+        <icon height="100" src="../resources/icons/114.png" width="100" />
+        <splash height="480" src="../resources/startup/ios/non_retina_por.png" width="320" />
+        <splash height="320" src="../resources/startup/ios/non_retina_lan.png" width="480" />
+        <splash height="960" src="../resources/startup/ios/retina_por.png" width="640" />
+        <splash height="640" src="../resources/startup/ios/retina_lan.png" width="960" />
+        <splash height="1136" src="../resources/startup/ios/retina5_por.png" width="640" />
+        <splash height="640" src="../resources/startup/ios/retina5_lan.png" width="1136" />
+        <splash height="1024" src="../resources/startup/ios/ipad_non_retina_por.png" width="768" />
+        <splash height="768" src="../resources/startup/ios/ipad_non_retina_lan.png" width="1024" />
+        <splash height="1334" src="../resources/startup/ios/iphone6_por.png" width="750" />
+        <splash height="750" src="../resources/startup/ios/iphone6_lan.png" width="1334" />
+        <splash height="2048" src="../resources/startup/ios/ipad_retina_por.png" width="1536" />
+        <splash height="1536" src="../resources/startup/ios/ipad_retina_lan.png" width="2048" />
+        <splash height="2208" src="../resources/startup/ios/iphone6plus_por.png" width="1242" />
+        <splash height="1242" src="../resources/startup/ios/iphone6plus_lan.png" width="2208" />
     </platform>
-
     <platform name="android">
-      <icon gap:qualifier="ldpi" src="../resources/icons/36.png" width="36" height="36"/>
-      <icon gap:qualifier="mdpi" src="../resources/icons/48.png" width="48" height="48"/>
-      <icon gap:qualifier="hdpi" src="../resources/icons/72.png" width="72" height="72"/>
-      <icon gap:qualifier="xhdpi" src="../resources/icons/96.png" width="96" height="96"/>
-      <icon gap:qualifier="xxhdpi" src="../resources/icons/144.png" width="144" height="144"/>
-      <icon gap:qualifier="xxxhdpi" src="../resources/icons/192.png" width="192" height="192"/>
-
-      <splash density="port-ldpi" src="../resources/startup/android/LDPI_por.9.png" />
-      <splash density="land-ldpi" src="../resources/startup/android/LDPI_lan.9.png" />
-
-      <splash density="port-mdpi" src="../resources/startup/android/MDPI_por.9.png" />
-      <splash density="land-mdpi" src="../resources/startup/android/MDPI_lan.9.png" />
-
-      <splash density="port-hdpi" src="../resources/startup/android/HDPI_por.9.png" />
-      <splash density="land-hdpi" src="../resources/startup/android/HDPI_lan.9.png" />
-
-      <splash density="port-xhdpi" src="../resources/startup/android/XHDPIpor.9.png" />
-      <splash density="land-xhdpi" src="../resources/startup/android/XHDPIlan.9.png" />
-
+        <allow-navigation href="*" />
+        <icon gap:qualifier="ldpi" height="36" src="../resources/icons/36.png" width="36" />
+        <icon gap:qualifier="mdpi" height="48" src="../resources/icons/48.png" width="48" />
+        <icon gap:qualifier="hdpi" height="72" src="../resources/icons/72.png" width="72" />
+        <icon gap:qualifier="xhdpi" height="96" src="../resources/icons/96.png" width="96" />
+        <icon gap:qualifier="xxhdpi" height="144" src="../resources/icons/144.png" width="144" />
+        <icon gap:qualifier="xxxhdpi" height="192" src="../resources/icons/192.png" width="192" />
+        <splash density="port-ldpi" src="../resources/startup/android/LDPI_por.9.png" />
+        <splash density="land-ldpi" src="../resources/startup/android/LDPI_lan.9.png" />
+        <splash density="port-mdpi" src="../resources/startup/android/MDPI_por.9.png" />
+        <splash density="land-mdpi" src="../resources/startup/android/MDPI_lan.9.png" />
+        <splash density="port-hdpi" src="../resources/startup/android/HDPI_por.9.png" />
+        <splash density="land-hdpi" src="../resources/startup/android/HDPI_lan.9.png" />
+        <splash density="port-xhdpi" src="../resources/startup/android/XHDPIpor.9.png" />
+        <splash density="land-xhdpi" src="../resources/startup/android/XHDPIlan.9.png" />
     </platform>
-
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
-
+    <plugin name="cordova-plugin-geolocation" spec="^1.0.1" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^1.0.1" />
+    <plugin name="cordova-plugin-device" spec="^1.0.1" />
+    <engine name="android" spec="^4.0.0" />
+    <engine name="ios" spec="^3.8.0" />
 </widget>
