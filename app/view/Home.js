@@ -51,7 +51,7 @@ Ext.define('WhatsFresh.view.Home', {
 						displayField: 'distance',
 						store: 'Distance'
 						// valueField: 'id'
-							},
+							}
 								]},
 			{
 					xtype: 'fieldset',
