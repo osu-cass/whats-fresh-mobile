@@ -12,33 +12,38 @@ Ext.define('WhatsFresh.util.Link',{
 	singleton: true,
 
 	openNavigation: function(lat, lng){
-		link="daddr="+lat+","+lng;
-		if(navigator.userAgent.match(/(Android)/)){
-			navigator.app.loadUrl("https://maps.google.com/?"+link, {openExternal: true});
-		}else if(navigator.userAgent.match(/(ios)/)){
-			window.open("maps:"+link);
-		}else{
-			window.open("https://maps.google.com/?"+link);
+		var data = 'daddr=' + lat + ',' + lng;
+		if (window.device && window.device.platform === 'iOS') {
+			this.openLink('maps:' + data);
+		} else {
+			this.openLink('https://maps.google.com/?' + data);
 		}
 	},
 
-	openVideo: function(link){
-		var videoLink = 'https://www.youtube.com/watch?v=' + link;
-		if(navigator.userAgent.match(/(Android)/)){
-			navigator.app.loadUrl(videoLink, {openExternal: true});
-		}else if(navigator.userAgent.match(/(ios)/)){
-			window.open(videoLink);
-		}else{
-			window.open(videoLink);
-		}
+	openVideo: function (id) {
+		this.openLink('https://www.youtube.com/watch?v=' + id);
 	},
-	formatVideoLink: function(link){
-		link = link.split('v=')[1];
-		var ampersandPosition = link.indexOf('&');
-		if(ampersandPosition != -1){
-			link = link.substring(0, ampersandPosition);
+
+	openLink: function (link) {
+		// Requires inAppBrowser plugin to work correctly on mobile devices.
+		window.open(link, '_system');
+	},
+
+	getYoutubeIdFromLink: function (link) {
+		var id = '';
+		if (link.indexOf('youtu.be') > -1) {
+			id = link.split('/')[3];
+		} else {
+			id = link.split('v=')[1];
+			var ampersandPosition = id.indexOf('&');
+			if (ampersandPosition !== -1) {
+				id = id.substring(0, ampersandPosition);
+			}
 		}
-		return link;
-	}
+		return id;
+	},
+
+	// Legacy name is being forwarded.
+	formatVideoLink: function (link) { return this.getYoutubeIdFromLink(link); }
 
 });
