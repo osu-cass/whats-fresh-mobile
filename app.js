@@ -11,124 +11,143 @@
 */
 
 Ext.Loader.setConfig({
-    enabled:true,
-    disableCaching: false,
-    paths: {
-        "Ext": 'touch/src'
-    }
+	enabled: true,
+	disableCaching: false,
+	paths: {
+		"Ext": 'touch/src'
+	}
 });
 
+
 Ext.application({
-    name: 'WhatsFresh',
+	name: 'WhatsFresh',
 
-    controllers: ["List","ErrorLoading"],
-    models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists", "Stories"],
-    stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList", "Story"],
-    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail", "ErrorLoading"],
+	controllers: ["List", "ErrorLoading"],
+	models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists", "Stories"],
+	stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList", "Story"],
+	views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail", "ErrorLoading"],
 
-    requires: ['WhatsFresh.util.StoreLoadTracking'],
+	requires: ['WhatsFresh.util.StoreLoadTracking'],
 
+	launch: function () {
 
-    launch: function() {
+		var errorController = this.getController('ErrorLoading');
 
-    	var errorController = this.getController('ErrorLoading');
+		// Destroy the #appLoadingIndicator element
+		Ext.fly('appLoadingIndicator')
+			.destroy();
 
-        // Destroy the #appLoadingIndicator element
-        Ext.fly('appLoadingIndicator').destroy();
+		setTimeout(function () {
+			if (navigator.splashscreen) {
+				navigator.splashscreen.hide();
+			}
+		}, 1000);
 
-        // Initialize the main view
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.Home'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.Map'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.ListView'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.Detail'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.Info'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.ErrorLoading'));
+		// Initialize the main view
+		Ext.Viewport.add(Ext.create('WhatsFresh.view.Home'));
+		Ext.Viewport.add(Ext.create('WhatsFresh.view.Map'));
+		Ext.Viewport.add(Ext.create('WhatsFresh.view.ListView'));
+		Ext.Viewport.add(Ext.create('WhatsFresh.view.Detail'));
+		Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail'));
+		Ext.Viewport.add(Ext.create('WhatsFresh.view.Info'));
+		Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
+		Ext.Viewport.add(Ext.create('WhatsFresh.view.ErrorLoading'));
 
-        var SLT = WhatsFresh.util.StoreLoadTracking;
-        SLT.registerStore('Location');
-    	SLT.registerStore('Product');
-    	SLT.registerStore('Vendor');
+		var SLT = WhatsFresh.util.StoreLoadTracking;
+		SLT.registerStore('Location');
+		SLT.registerStore('Product');
+		SLT.registerStore('Vendor');
 
-        var locationStore = Ext.getStore('Location');
-        var productStore = Ext.getStore('Product');
+		var locationStore = Ext.getStore('Location');
+		var productStore = Ext.getStore('Product');
 
-    	SLT.StoreLoadError = function () { errorController.onError(); };
-    	SLT.StoreLoadSuccess = function () { 
-            
-            // inject placeholders
-            locationStore.insert( 0,
-                                  {
-                                      name: "Please choose a location",
-                                      is_not_filterable: true
-                                  }                
-                                );
-            productStore.insert( 0,
-                                 {
-                                     name: "Please choose a product",
-                                     is_not_filterable: true
-                                 }
-                               );
-            errorController.onSuccess(); };
+		SLT.StoreLoadError = function () {
+			errorController.onError();
+		};
+		SLT.StoreLoadSuccess = function () {
 
-        // This is used to iplement android back button
-        if(Ext.os.is('Android')){
-            document.addEventListener("backButton", Ext.bind(onBackKeyDown, this), false);
-            function onBackKeyDown(eve){
-                eve.preventDefault();
-                console.log("device back button was pressed");
-                if(Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Home.xtype){
-                    navigator.app.exitApp();
-                }
-                // Action is like a fired event from a view page, routes are assigned
-                // for the url sent back in the controller routes section. The routes
-                // section in the controller defines which function to call when an
-                // action is sent to the controller from the device back button
-                if(Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.ListView.xtype){
-                    this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-                        url: 'listback'
-                    }));
-                }
-                // Note after the device back button branch pull request is accepted and included
-                // in dev we will need to replace the detail view function with the commented
-                // out function below it in order to take into account navigation back from the
-                // productDetail page
-                if((Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Detail.xtype) | (Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.ProductDetail.xtype)){
-                    this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-                        url: 'detailback'
-                    }));
-                }
-                // if((Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Detail.xtype) | (Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Productdetail.xtype)){
-                //     this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-                //         url: 'detailback'
-                //     }));
-                // }
-                if(Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Info.xtype){
-                    this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-                        url: 'infoback'
-                    }));
-                }
-                if(Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Specific.xtype){
-                    this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-                        url: 'specificback'
-                    }));
-                }
-            }
-        }
+			// inject placeholders
+			locationStore.insert(0, {
+				name: "Please choose a location",
+				is_not_filterable: true
+			});
+			productStore.insert(0, {
+				name: "Please choose a product",
+				is_not_filterable: true
+			});
+			errorController.onSuccess();
+		};
 
-    },
+		// This is used to implement android back button
+		function onBackKeyDown(eve) {
+			eve.preventDefault();
+			console.log("device back button was pressed");
+			if (Ext.Viewport.getActiveItem()
+				.xtype == WhatsFresh.view.Home.xtype) {
+				navigator.app.exitApp();
+			}
+			// Action is like a fired event from a view page, routes are assigned
+			// for the url sent back in the controller routes section. The routes
+			// section in the controller defines which function to call when an
+			// action is sent to the controller from the device back button
+			if (Ext.Viewport.getActiveItem()
+				.xtype == WhatsFresh.view.ListView.xtype) {
+				this.getApplication()
+					.getHistory()
+					.add(Ext.create('Ext.app.Action', {
+						url: 'listback'
+					}));
+			}
+			// Note after the device back button branch pull request is accepted and included
+			// in dev we will need to replace the detail view function with the commented
+			// out function below it in order to take into account navigation back from the
+			// productDetail page
+			if ((Ext.Viewport.getActiveItem()
+					.xtype == WhatsFresh.view.Detail.xtype) | (Ext.Viewport.getActiveItem()
+					.xtype == WhatsFresh.view.ProductDetail.xtype)) {
+				this.getApplication()
+					.getHistory()
+					.add(Ext.create('Ext.app.Action', {
+						url: 'detailback'
+					}));
+			}
+			// if((Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Detail.xtype) | (Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Productdetail.xtype)){
+			//     this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
+			//         url: 'detailback'
+			//     }));
+			// }
+			if (Ext.Viewport.getActiveItem()
+				.xtype == WhatsFresh.view.Info.xtype) {
+				this.getApplication()
+					.getHistory()
+					.add(Ext.create('Ext.app.Action', {
+						url: 'infoback'
+					}));
+			}
+			if (Ext.Viewport.getActiveItem()
+				.xtype == WhatsFresh.view.Specific.xtype) {
+				this.getApplication()
+					.getHistory()
+					.add(Ext.create('Ext.app.Action', {
+						url: 'specificback'
+					}));
+			}
+		}
+		if (Ext.os.is('Android')) {
+			document.addEventListener("backButton", Ext.bind(onBackKeyDown, this), false);
+		}
+	},
 
-    onUpdated: function() {
-        Ext.Msg.confirm(
-            "Application Update",
-            "This application has just successfully been updated to the latest version. Reload now?",
-            function(buttonId) {
-                if (buttonId === 'yes') {
-                    window.location.reload();
-                }
-            }
-        );
-    }
+	onUpdated: function () {
+		Ext.Msg.confirm(
+			"Application Update",
+			"This application has just successfully been updated to the latest version. Reload now?",
+			function (buttonId) {
+				if (buttonId === 'yes') {
+					window.location.reload();
+				}
+			}
+		);
+	}
 
 });

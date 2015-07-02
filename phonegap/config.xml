@@ -24,12 +24,13 @@
     <preference name="ios-statusbarstyle" value="black-opaque" />
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
-    <preference name="show-splash-screen-spinner" value="true" />
-    <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="10" />
     <preference name="android-installLocation" value="auto" />
     <platform name="ios">
+        <preference name="FadeSplashScreenDuration" value="1" />
+        <preference name="ShowSplashScreenSpinner" value="false" />
+        <preference name="AutoHideSplashScreen" value="false" />
         <icon height="60" src="../resources/icons/64.png" width="60" />
         <icon height="120" src="../resources/icons/144.png" width="120" />
         <icon height="180" src="../resources/icons/192.png" width="180" />
@@ -61,6 +62,8 @@
         <splash height="1242" src="../resources/startup/ios/iphone6plus_lan.png" width="2208" />
     </platform>
     <platform name="android">
+        <preference name="SplashScreen" value="screen" />
+        <preference name="SplashScreenDelay" value="3000" />
         <allow-navigation href="*" />
         <icon gap:qualifier="ldpi" height="36" src="../resources/icons/36.png" width="36" />
         <icon gap:qualifier="mdpi" height="48" src="../resources/icons/48.png" width="48" />
@@ -77,12 +80,11 @@
         <splash density="port-xhdpi" src="../resources/startup/android/XHDPIpor.9.png" />
         <splash density="land-xhdpi" src="../resources/startup/android/XHDPIlan.9.png" />
     </platform>
-    <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
-    <plugin name="cordova-plugin-geolocation" spec="^1.0.1" />
-    <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^1.0.1" />
-    <plugin name="cordova-plugin-device" spec="^1.0.1" />
-    <engine name="android" spec="^4.0.0" />
     <engine name="ios" spec="^3.8.0" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
+    <plugin name="cordova-plugin-device" spec="^1.0.1" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^1.0.1" />
+    <plugin name="cordova-plugin-geolocation" spec="^1.0.1" />
+    <plugin name="cordova-plugin-splashscreen" spec="^2.1.0" />
+    <engine name="android" spec="^4.0.2" />
 </widget>
