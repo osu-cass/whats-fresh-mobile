@@ -304,6 +304,8 @@ Ext.define('WhatsFresh.controller.List', {
 		ctrl.getErrorStatus().setHidden(true);
 
 	    setTimeout(function() {
+	    	// Resize causes the map to redraw, fixing the "blank" map error.
+			google.maps.event.trigger(WhatsFresh.gMap, 'resize');
             WhatsFresh.gMap.panTo(WhatsFresh.cent[0]);
            	WhatsFresh.gMap.fitBounds(WhatsFresh.bounds);
            	// these statements make sure that our zoom is not to close or to far away from the marker
@@ -313,7 +315,7 @@ Ext.define('WhatsFresh.controller.List', {
 			if(WhatsFresh.gMap.getZoom() < 6){
 			    WhatsFresh.gMap.setZoom(6);
 			}
-        }, 1000);
+        }, 1);
 
 		if(homeView.items.items[5].items.items[0]._checked === true){
 			view.down('list').setStore(store);
@@ -998,11 +1000,11 @@ Ext.define('WhatsFresh.controller.List', {
 
             // Define UI refresh listeners on Location and Product
             // stores
-            WhatsFresh.LocationStore.on('addrecords', function(){ 
+            WhatsFresh.LocationStore.on('addrecords', function(){
                 ctrl.getLocationSelect().setValue('Please choose a location');
             });
 
-            WhatsFresh.ProductStore.on('addrecords', function(){ 
+            WhatsFresh.ProductStore.on('addrecords', function(){
                 ctrl.getProductSelect().setValue('Please choose a product');
             });
 
