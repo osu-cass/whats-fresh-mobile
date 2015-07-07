@@ -7,9 +7,8 @@
 // Custom code goes here..
 
 div.vendnum{
-        text-align: center;
-        min-height: 50px;      
-};  
+    text-align: center;
+};
 
 //LIST PAGE ELEMENTS ^^^^^^^^^^^^^
 
@@ -119,7 +118,7 @@ div.vendnum{
 #InfoList{
 	max-height: 50%;
 	top: 50%;
-}	
+}
 
 //SPECIFIC PAGE ELEMENTS ^^^^^^^^^
 
@@ -150,3 +149,19 @@ div.gm-style-iw{
 
 // Examples of using the icon mixin:
 // @include icon('user');
+
+@mixin border-top-radius($radius) {
+  -webkit-border-top-left-radius: $radius;
+     -moz-border-top-left-radius: $radius;
+      -ms-border-top-left-radius: $radius;
+          border-top-left-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+     -moz-border-top-right-radius: $radius;
+      -ms-border-top-right-radius: $radius;
+          border-top-right-radius: $radius;
+}
+
+#goButton {
+	height: 3em;
+	@include border-top-radius(0);
+}

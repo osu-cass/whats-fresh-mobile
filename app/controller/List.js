@@ -22,7 +22,8 @@ Ext.define('WhatsFresh.controller.List', {
             useLocationToggle: '#userlocation',
             distanceSelect: '#distance',
             locationSelect: '#selectlocation',
-                    productSelect: '#selectproduct',
+            buyModeRadio: '#buyModeRadio',
+            productSelect: '#selectproduct',
 			listView: 'listview',
 			detailView: 'detail',
 			productdetailView: 'productdetail',
@@ -179,7 +180,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
-		if(WhatsFresh.product !== 'Please choose a product'){
+		if(WhatsFresh.product !== 'All products...'){
 			WhatsFresh.use2 = 0;
 		}else{
 			WhatsFresh.use2 = 1;
@@ -317,26 +318,17 @@ Ext.define('WhatsFresh.controller.List', {
 			}
         }, 1);
 
-		if(homeView.items.items[5].items.items[0]._checked === true){
+	    var buymode = !!ctrl.getBuyModeRadio().getChecked();
+
+		if (buymode) {
 			view.down('list').setStore(store);
 			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Vendors");
-		}
-		if(homeView.items.items[5].items.items[1]._checked === true){
+		} else {
 			this.populatePstore(store, pstore);
 			view.down('list').setStore(pstore);
 			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Products");
 		}
-		// If the checkboxes are both unused again we need to make sure that we set the correct stores for the items being searched
-		if((homeView.items.items[5].items.items[0]._checked === false) && (homeView.items.items[5].items.items[1]._checked === false)){
-			if(WhatsFresh.use2 === 1){
-				view.down('list').setStore(store);
-				Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Vendors");
-			}
-			if(WhatsFresh.use2 === 0){
-				view.down('list').setStore(pstore);
-				Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Products");
-			}
-		}
+
         WhatsFresh.path[WhatsFresh.pcount] = 'list';
         WhatsFresh.pcount = ++WhatsFresh.pcount;
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
@@ -361,14 +353,14 @@ Ext.define('WhatsFresh.controller.List', {
         vendorStore.filter(criteria);
     },
     matchesLocation: function(storeItem, comparator){
-        if (comparator !== "Please choose a location"){
+        if (comparator !== "All products..."){
             return storeItem.get('city') === comparator;
         }else{
             return true;
         }
     },
     matchesProduct: function(storeItem, comparator){
-        if (comparator !== "Please choose a product"){
+        if (comparator !== "All products..."){
             for(b = 0; b < storeItem.data.products.length; b++){
 		if(storeItem.data.products[b].name === comparator){
 		    return true;
@@ -407,7 +399,7 @@ Ext.define('WhatsFresh.controller.List', {
         }else{
 	        // Location/City is specified:
 	        // "There are <number> vendors near <location>."
-	        if (locationString !== "Please choose a location"){
+	        if (locationString !== "All locations..."){
 	            summary.i = "near ";
 	            summary.loc = locationString;
 	        }
@@ -415,7 +407,7 @@ Ext.define('WhatsFresh.controller.List', {
 
         // Product is specified:
         // "There are <number> vendors ... with <product>."
-        if (productString !== "Please choose a product"){
+        if (productString !== "All products..."){
             summary.w = " with ";
             summary.prod = productString;
         }
@@ -1000,12 +992,13 @@ Ext.define('WhatsFresh.controller.List', {
 
             // Define UI refresh listeners on Location and Product
             // stores
+
             WhatsFresh.LocationStore.on('addrecords', function(){
-                ctrl.getLocationSelect().setValue('Please choose a location');
+                ctrl.getLocationSelect().setValue(Ext.getStore('Location').getAt(0));
             });
 
             WhatsFresh.ProductStore.on('addrecords', function(){
-                ctrl.getProductSelect().setValue('Please choose a product');
+                ctrl.getProductSelect().setValue(Ext.getStore('Product').getAt(0));
             });
 
 
@@ -1013,7 +1006,7 @@ Ext.define('WhatsFresh.controller.List', {
             WhatsFresh.LocationStore.load();
             WhatsFresh.ProductStore.load();
 	},
-	init: function(){
+	initialize: function(){
 		this.callParent(arguments);
 	}
 });

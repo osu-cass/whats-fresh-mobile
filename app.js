@@ -68,11 +68,11 @@ Ext.application({
 
 			// inject placeholders
 			locationStore.insert(0, {
-				name: "Please choose a location",
+				name: "All locations...",
 				is_not_filterable: true
 			});
 			productStore.insert(0, {
-				name: "Please choose a product",
+				name: "All products...",
 				is_not_filterable: true
 			});
 			errorController.onSuccess();

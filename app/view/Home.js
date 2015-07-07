@@ -15,28 +15,71 @@ Ext.define('WhatsFresh.view.Home', {
 			docked: 'top'
 		}, {
 			xtype: 'fieldset',
-			itemId: 'vendnum',
-			tpl: '<div class="vendnum">{th}{numItems}{v}{i}{loc}{w}{prod}{end}</div>',
 			items: [{
-				xtype: 'fieldset',
-				itemId: 'errorStatus',
-				data: {
-					error: 'The app has failed to populate this error message.'
+
+				xtype: 'label',
+				styleHtmlContent: true,
+				style: {
+					background: 'rgba(0,50,255,0.1)'
 				},
-				tpl: '<div class="vendnum">Oh no! {error}</div>',
-				hidden: true,
-				hideAnimation: {
-					type: 'slideOut',
-					direction: 'up'
+				html: 'Select a type of seafood, if any.'
+
+			}, {
+				xtype: 'selectfield',
+				itemId: 'selectproduct',
+				label: 'Product',
+				labelWrap: true,
+				displayField: 'name',
+				store: 'Product',
+				value: "Loading, please wait...",
+				valueField: 'name'
+			}]
+		}, {
+			xtype: 'fieldset',
+			defaults: {
+				labelWidth: '60%'
+			},
+			items: [{
+				xtype: 'label',
+				styleHtmlContent: true,
+				style: {
+					background: 'rgba(0,50,255,0.1)'
 				},
-				showAnimation: {
-					type: 'slide',
-					direction: 'down'
-				}
+				html: 'Select a purpose for your search.'
+
+			}, {
+				xtype: 'radiofield',
+				name: 'buymode',
+				value: 'learn',
+				label: 'Learn About It',
+				checked: true
+			}, {
+				xtype: 'radiofield',
+				name: 'buymode',
+				itemId: 'buyModeRadio',
+				value: 'buy',
+				label: 'Buy It'
 			}]
 		}, {
 			xtype: 'fieldset',
 			items: [{
+				xtype: 'label',
+				styleHtmlContent: true,
+				style: {
+					background: 'rgba(0,50,255,0.1)'
+				},
+				html: 'Select a location to limit your search.'
+
+			}, {
+				xtype: 'selectfield',
+				itemId: 'selectlocation',
+				label: 'Location',
+				labelWrap: true,
+				displayField: 'name',
+				store: 'Location',
+				value: "Loading, please wait...",
+				valueField: 'name'
+			}, {
 				xtype: 'togglefield',
 				name: 'userlocation',
 				label: 'Use current locaton',
@@ -54,48 +97,36 @@ Ext.define('WhatsFresh.view.Home', {
 		}, {
 			xtype: 'fieldset',
 			items: [{
-				xtype: 'selectfield',
-				itemId: 'selectlocation',
-				label: 'Location',
-				labelWrap: true,
-				displayField: 'name',
-				store: 'Location',
-				value: "Loading, please wait...",
-				valueField: 'name'
-			}]
-		}, {
-			xtype: 'fieldset',
-			items: [{
-				xtype: 'selectfield',
-				itemId: 'selectproduct',
-				label: 'Product',
-				labelWrap: true,
-				displayField: 'name',
-				store: 'Product',
-				value: "Loading, please wait...",
-				valueField: 'name'
-			}]
-		}, {
-			// Checkboxes for sorting data on list page
-			xtype: 'fieldset',
-			items: [{
-				xtype: 'checkboxfield',
-				label: 'Vendors',
-				name: 'vendors',
-				inputValue: '1',
-				itemId: 'vendor'
+				xtype: 'label',
+				itemId: 'vendnum',
+				styleHtmlContent: true,
+				style: {
+					background: 'rgba(0,50,255,0.1)'
+				},
+				tpl: '<div class="vendnum">{th}{numItems}{v}{i}{loc}{w}{prod}{end}</div>'
 			}, {
-				xtype: 'checkboxfield',
-				label: 'Products',
-				name: 'products',
-				inputValue: '2',
-				itemId: 'product'
+				xtype: 'fieldset',
+				itemId: 'errorStatus',
+				data: {
+					error: 'The app has failed to populate this error message.'
+				},
+				tpl: '<div class="vendnum">Oh no! {error}</div>',
+				hidden: true,
+				hideAnimation: {
+					type: 'slideOut',
+					direction: 'up'
+				},
+				showAnimation: {
+					type: 'slide',
+					direction: 'down'
+				}
+			}, {
+				xtype: 'button',
+				ui: 'action',
+				text: 'Search',
+				itemId: 'goButton',
+				id: 'goButton'
 			}]
-		}, {
-			xtype: 'button',
-			ui: 'action',
-			text: 'Go',
-			itemId: 'goButton'
 		}],
 		listeners: [{
 			delegate: '#userlocation',
