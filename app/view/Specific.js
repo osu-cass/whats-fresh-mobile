@@ -1,6 +1,6 @@
 Ext.define('WhatsFresh.view.Specific', {
 	extend: 'Ext.Panel',
-    fullscreen: true, 
+    fullscreen: true,
     xtype: 'Specific',
 	alias: 'widget.specific',
 	config: {
@@ -13,14 +13,17 @@ Ext.define('WhatsFresh.view.Specific', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						iconCls: 'home',
-						itemId: 'backHomeButton'
+						iconCls: 'arrow_left',
+						itemId: 'backInfoButton'
+					},
+					{
+						xtype: 'spacer'
 					},
 					{
 						xtype: 'button',
 						ui: 'action',
-						text: 'back',
-						itemId: 'backInfoButton'
+						iconCls: 'search',
+						itemId: 'backHomeButton'
 					}
 				]
 			},
@@ -28,13 +31,13 @@ Ext.define('WhatsFresh.view.Specific', {
 				xtype: 'fieldset',
 				id: 'SpecificField',
 				scrollable: true,
-				items: [					
+				items: [
 					{
 						xtype: 'image',
 						id: 'Specvideo',
 						width: 400,
 						height: 300,
-						itemId: 'video1' 
+						itemId: 'video1'
 					},
 					{
 						xtype: 'panel',
@@ -42,8 +45,8 @@ Ext.define('WhatsFresh.view.Specific', {
 			        	itemId: 'caption',
 			        	tpl: '</pre><div class="caption">{cap}</div><pre>'
 					}
-				]			
-			}	
+				]
+			}
 		],
 		listeners: [
 			{

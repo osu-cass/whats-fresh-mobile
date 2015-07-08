@@ -12,25 +12,32 @@ Ext.define('WhatsFresh.controller.List', {
 	alias: 'cont',
 	config: {
 		refs: {
-			listback: 'listback',
-			detailback: 'detailback',
-			infoback: 'infoback',
-			specificback: 'specificback',
-			homeView: 'home',
-			vendnumStatus: '#vendnum',
-			errorStatus: '#errorStatus',
-            useLocationToggle: '#userlocation',
-            distanceSelect: '#distance',
-            locationSelect: '#selectlocation',
-            buyModeRadio: '#buyModeRadio',
-            productSelect: '#selectproduct',
-			listView: 'listview',
-			detailView: 'detail',
-			productdetailView: 'productdetail',
-			infoView: 'info',
-			specificView: 'specific'
+			listback			: 'listback',
+			detailback			: 'detailback',
+			infoback			: 'infoback',
+			specificback		: 'specificback',
+			homeView			: 'home',
+			vendnumStatus		: 'home #vendnum',
+			errorStatus			: 'home #errorStatus',
+            useLocationToggle	: 'home #userlocation',
+            distanceSelect		: 'home #distance',
+            locationSelect		: 'home #selectlocation',
+            buyModeRadio		: 'home #buyModeRadio',
+            locationFieldSet	: 'home #locationFieldSet',
+            productSelect		: 'home #selectproduct',
+			listView			: 'listview',
+			detailView			: 'detail',
+			detailInfoBlock		: 'detail #infoBlock',
+			detailStatMap		: 'detail #staticmap',
+			detailList			: 'detail #Dpagelist',
+			productdetailView	: 'productdetail',
+			infoView			: 'info',
+			specificView		: 'specific'
 		},
 		control: {
+			buyModeRadio: {
+				change			: 'onBuyModeToggle'
+			},
 			homeView: {
 				setUseLocation: 'onSetUseLocation',
 				setDistance: 'onSetDistance',
@@ -95,71 +102,88 @@ Ext.define('WhatsFresh.controller.List', {
 				var Messages = WhatsFresh.util.Messages;
         var validGeolocationTimeout = 6000; // 6 seconds
 
-	if(newToggleValue){
+		if(newToggleValue){
 
-	    // Update UI elements
-	    ctrl.getDistanceSelect().enable();
-	    ctrl.getLocationSelect().disable();
+		    // Update UI elements
+		    ctrl.getDistanceSelect().enable();
+		    ctrl.getLocationSelect().disable();
 
-            // Ensure distance is not null or out-of-date during filtering
-            Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
+	            // Ensure distance is not null or out-of-date during filtering
+	            Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
 
-	    // Ensure we do not keep outdated position data
-	    Search.options.position = null;
+		    // Ensure we do not keep outdated position data
+		    Search.options.position = null;
 
-	    // This updates the user's location and how far from their location they would like to search for vendors/products
-	    navigator.geolocation.getCurrentPosition(
-		function(position){
-	            if(position === null){
-								ctrl.updateErrorStatus(Messages.locationErrorText);
-								ctrl.getErrorStatus().show();
+		    // This updates the user's location and how far from their location they would like to search for vendors/products
+		    navigator.geolocation.getCurrentPosition(
+			function (position) {
+	            if (position === null) {
+					ctrl.updateErrorStatus(Messages.locationErrorText);
+					ctrl.getErrorStatus().show();
 	                ctrl.getUseLocationToggle().setValue(0);
-		    } else {
-
+			    } else {
 					ctrl.getErrorStatus().hide();
+					Search.options.position = position;
+		                Search.applyFilterToStore(WhatsFresh.VendorStore);
+		                ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+		                ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+		                ctrl.getVendnumStatus().setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+			    	}
+				},
 
-			Search.options.position = position;
-	                Search.applyFilterToStore(WhatsFresh.VendorStore);
-	                ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-	                ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
-	                ctrl.getVendnumStatus().setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-		    }
-		},
-		function(positionerror){
-	            ctrl.updateErrorStatus(Messages.locationErrorText);
-							ctrl.getErrorStatus().show();
-	            ctrl.getUseLocationToggle().setValue(0);
-	        }
-	    );
+				function (positionerror) {
+		            ctrl.updateErrorStatus(Messages.locationErrorText);
+					ctrl.getErrorStatus().show();
+		            ctrl.getUseLocationToggle().setValue(0);
+		        }
+		    );
 
             // Check position field for valid data. If invalid,
             // assume geolocation is turned off.
-            Ext.Function.defer(function() {
+            Ext.Function.defer(function () {
                 if (!Search.options.position && ctrl.getUseLocationToggle().getValue()) {
-									ctrl.updateErrorStatus(Messages.locationErrorText);
-									ctrl.getErrorStatus().show();
+					ctrl.updateErrorStatus(Messages.locationErrorText);
+					ctrl.getErrorStatus().show();
                     ctrl.getUseLocationToggle().setValue(0);
                 }
             }, validGeolocationTimeout);
 
-	}else{
-	    ctrl.getDistanceSelect().disable();
-	    ctrl.getLocationSelect().enable();
-	    Search.options.position = null;
+		} else {
+		    ctrl.getDistanceSelect().disable();
+		    ctrl.getLocationSelect().enable();
+		    Search.options.position = null;
             WhatsFresh.VendorStore.filter();
             WhatsFresh.ProductListStore.filter();
             ctrl.getVendnumStatus().setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-	}
+		}
     },
+
+    // When a user selects "buy it", we need location information.
+    onBuyModeToggle: function () {
+    	var ctrl = this;
+    	var toggle = ctrl.getBuyModeRadio();
+    	var fields = ctrl.getLocationFieldSet();
+    	var locate = ctrl.getUseLocationToggle();
+    	var locity = ctrl.getLocationSelect();
+    	if (toggle.getChecked()) {
+    		fields.show();
+    	} else {
+    		fields.hide();
+    		locate.setValue(false);
+    		locity.setValue(Ext.getStore('Location').getAt(0));
+    	}
+    },
+
     onSetDistance: function(index, record){
         var ctrl = this;
-	var Search = WhatsFresh.util.Search;
+		var Search = WhatsFresh.util.Search;
 
         Search.options.distance = record._value.data;
         WhatsFresh.VendorStore.filter();
         WhatsFresh.ProductListStore.filter();
         ctrl.getVendnumStatus().setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
     },
+
 	onChooseLocation: function(index, record){
 		var ctrl = this;
 		WhatsFresh.location = record._value.data.name;
@@ -174,17 +198,13 @@ Ext.define('WhatsFresh.controller.List', {
 
 		ctrl.getVendnumStatus().setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	},
+
 	onChooseProduct: function(index, record){
 		var ctrl = this;
 		WhatsFresh.product = record._value.data.name;
 		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
-		if(WhatsFresh.product !== 'All products...'){
-			WhatsFresh.use2 = 0;
-		}else{
-			WhatsFresh.use2 = 1;
-		}
 		WhatsFresh.util.Search.options.product = record._value.data;
         WhatsFresh.util.Search.applyFilterToStore(WhatsFresh.VendorStore);
         WhatsFresh.util.ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
@@ -194,6 +214,7 @@ Ext.define('WhatsFresh.controller.List', {
 			ctrl.getVendnumStatus().setData(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 	    Ext.Viewport.setActiveItem(homeView);
 	},
+
 	numberOfVendors: function(store){
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
 		WhatsFresh.Litem = new Array();
@@ -323,10 +344,12 @@ Ext.define('WhatsFresh.controller.List', {
 		if (buymode) {
 			view.down('list').setStore(store);
 			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Vendors");
+			view.down('SeaGrantMap').setFlex(0.7);
 		} else {
 			this.populatePstore(store, pstore);
 			view.down('list').setStore(pstore);
 			Ext.ComponentQuery.query('toolbar[itemId=listPageToolbar]')[0].setTitle("Products");
+			view.down('SeaGrantMap').setFlex(0.2);
 		}
 
         WhatsFresh.path[WhatsFresh.pcount] = 'list';
@@ -386,8 +409,8 @@ Ext.define('WhatsFresh.controller.List', {
             th: "There are ",
             numItems: vendors.getCount(),
             v: " vendors ",
-            i: "in ",
-            loc: "the database",
+            i: "on ",
+            loc: "the Oregon coast",
             end: "."
         };
 
@@ -481,10 +504,13 @@ Ext.define('WhatsFresh.controller.List', {
 				clickable: true
 			});
 
+			var data = vendorStore.data.items[k].data;
+
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
         	WhatsFresh.marker[k].info = new google.maps.InfoWindow({
-        		content: '<button onclick=\"javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();\">'+ vendorStore.data.items[k].data.name + '</button>',
-        		data: vendorStore.data.items[k].data,
+        		content: '<h1>' + data.name + '</h1>' +
+        			'<p><a href="#" onclick="javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();">Open details...</a></p>',
+        		data: data,
         		Lpos: k // used to index and highlight the correct list item
         	});
 
@@ -592,11 +618,15 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.lent = t;
 	},
 	onViewLpageListItemCommand: function(record, list, index){
+		var ctrl = this;
 		var detailView = this.getDetailView();
 		var productdetailView = this.getProductdetailView();
 
-		detailView.getAt(1).items.items[0].setData(index.data);
-		productdetailView.getAt(1).setData(index.data);
+		var data = index.data;
+		var info = ctrl.getDetailInfoBlock();
+		console.log("[onViewLpageListItemCommand] Setting vendor info in detail view.");
+		info.setData(data);
+		productdetailView.getAt(1).setData(data);
 		// Pass product data from selected vendor to new store, so that we
 		// can use the new store to correctly use tpl print to make selectable list
 		// items of each unique product.
@@ -720,6 +750,7 @@ Ext.define('WhatsFresh.controller.List', {
 	    WhatsFresh.pcount = ++WhatsFresh.pcount;
 	},
 	onViewDpageListItemCommand: function(record, list, index){
+		var ctrl = this;
 		var num2;
 	    var w;
 		var view = this.getListView();
@@ -791,9 +822,13 @@ Ext.define('WhatsFresh.controller.List', {
 						storeInventory.add(newpro);
 					}
 					// Sets data for the info block on detail page
-					detailView.getAt(1).items.items[0].setData(vendorstore.data.all[i].data);
+					var data = vendorstore.data.all[i].data;
+					var info = ctrl.getDetailInfoBlock();
+					console.log("[onViewDpageListItemCommand] Setting vendor info in detail view.");
+					info.setData(data);
+					WhatsFresh.statmap.setSrc(ctrl.buildStaticMap(data));
 				}
-			}			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.getAt(1).items.items[0]._data) );
+			}
 			if(WhatsFresh.backFlag === 0){
 				// adding a log item to the "stack"
 				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
@@ -811,7 +846,7 @@ Ext.define('WhatsFresh.controller.List', {
 		        			num2 = w;
 		        		}
 		        	}
-		       		detailView.items.items[2].select(storeInventory.data.all[num2]);
+		       		ctrl.getDetailList().select(storeInventory.data.all[num2]);
 		        }
 	        	Ext.Viewport.animateActiveItem(detailView, this.slideRightTransition);
 	        }
@@ -965,7 +1000,7 @@ Ext.define('WhatsFresh.controller.List', {
 
 		// Components
 			// ON: List page
-			WhatsFresh.statmap = WhatsFresh.detailView.getAt(1).getComponent('staticmap');
+			WhatsFresh.statmap = ctrl.getDetailStatMap();
 
 			// ON: ProductDetail page
 			WhatsFresh.PDimage = WhatsFresh.productDetailView.getAt(1).getComponent('productDetailImage');
@@ -987,7 +1022,6 @@ Ext.define('WhatsFresh.controller.List', {
 			WhatsFresh.pcount = 0;
 			WhatsFresh.backFlag = 0;
 			// FOR: checkboxes
-			WhatsFresh.use2 = 1;
 			WhatsFresh.infowindowFlag = 0;
 
             // Define UI refresh listeners on Location and Product

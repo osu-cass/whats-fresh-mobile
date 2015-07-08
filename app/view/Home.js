@@ -5,9 +5,7 @@ Ext.define('WhatsFresh.view.Home', {
 	xtype: 'Home',
 	alias: 'widget.home',
 	config: {
-		scrollable: {
-			direction: 'vertical'
-		},
+		scrollable: { direction: 'vertical' },
 		items: [{
 			xtype: 'toolbar',
 			title: 'Oregon\'s Catch',
@@ -62,6 +60,14 @@ Ext.define('WhatsFresh.view.Home', {
 			}]
 		}, {
 			xtype: 'fieldset',
+			itemId: 'locationFieldSet',
+			hidden: true,
+			showAnimation: {
+			    type: 'fadeIn'
+			},
+			hideAnimation: {
+			    type: 'fadeOut'
+			},
 			items: [{
 				xtype: 'label',
 				styleHtmlContent: true,

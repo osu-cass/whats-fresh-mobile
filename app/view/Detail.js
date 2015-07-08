@@ -4,9 +4,7 @@ Ext.define('WhatsFresh.view.Detail', {
 	alias: 'widget.detail',
 	fullscreen: true,
 	config: {
-		layout: {
-			type: 'fit'
-		},
+		layout: 'vbox',
 		items: [
 			{
 				xtype: 'toolbar',
@@ -16,45 +14,46 @@ Ext.define('WhatsFresh.view.Detail', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						// text: 'Home',
-						iconCls: 'home',
-						itemId: 'backHomeButton'
+						iconCls: 'arrow_left',
+						itemId: 'backListButton'
+					},
+					{
+						xtype: 'spacer'
 					},
 					{
 						xtype: 'button',
 						ui: 'action',
-						text: 'back',
-						itemId: 'backListButton'
+						// text: 'Home',
+						iconCls: 'search',
+						itemId: 'backHomeButton'
 					}
 				]
 			},
 			{
-				xtype: 'fieldset',
-				id: 'Details',
-				scrollable: true,
-				items: [					
-					{
-						itemId: 'infoBlock',
-						id: 'InfoBlock',
-						tpl: '</pre><div class="list-item-title">{name}</div><div class="list-item-description">{description}</div><div class="list-item-phone">Phone #: {phone}</div><div class="list-item-description">Representative: {contact_name}</div><div class="list-item-email">E-mail: {email}</div><div class="list-item-website">Website: {website}</div><div class="list-item-address">Address: {street} {city} {state} {zip}</div><div class="list-item-location_description">{location_description}</div><pre>'
-					},
-					{
-						xtype: 'image',
-						id: 'StaticMap',
-						itemId: 'staticmap'
-					}		
-				]				
-			},		
+				flex: 0.4,
+				itemId: 'infoBlock',
+				id: 'InfoBlock',
+				tpl: '</pre><div class="list-item-title">{name}</div><div class="list-item-description">{description}</div><div class="list-item-phone">Phone #: {phone}</div><div class="list-item-description">Representative: {contact_name}</div><div class="list-item-email">E-mail: {email}</div><div class="list-item-website">Website: {website}</div><div class="list-item-address">Address: {street} {city} {state} {zip}</div><div class="list-item-location_description">{location_description}</div><pre>'
+			},
 			{
+				flex: 0.3,
+				xtype: 'image',
+				id: 'StaticMap',
+				itemId: 'staticmap'
+			},
+			{
+				flex: 0.3,
 				config: {
 					scrollable: {
-						direction: 'verticle',
+						direction: 'vertical',
 						directionLock: true
 					}
 				},
 				xtype: 'list',
 				id: 'DetailList',
 				store: 'VendorInventory',
+				ui			: 'normal',
+				pinHeaders	: false,
 				itemId: 'Dpagelist',
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',

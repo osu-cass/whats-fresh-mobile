@@ -16,16 +16,20 @@ Ext.define('WhatsFresh.view.Info', {
 				docked: 'top',
 				items: [
 					{
-						xtype: 'button', 
+						xtype: 'button',
 						ui: 'action',
-						iconCls: 'home',
-						itemId: 'backHomeButton'
+						iconCls: 'arrow_left',
+						itemId: 'backDetailButton'
+					},
+					{
+						xtype: 'spacer'
 					},
 					{
 						xtype: 'button',
 						ui: 'action',
-						text: 'back',
-						itemId: 'backDetailButton'
+						// text: 'Home',
+						iconCls: 'search',
+						itemId: 'backHomeButton'
 					}
 				]
 			},
@@ -40,18 +44,18 @@ Ext.define('WhatsFresh.view.Info', {
 						itemId: 'infoNameBlock',
 						tpl: '</pre><div class="list-item-title">{name}</div>'
 					},
-					{	
+					{
 						xtype: 'image',
 						id: 'InfoImage',
 						itemId: 'infoimage'
 					},
 					{
-						xtype: 'panel',			        	
+						xtype: 'panel',
 			        	id: 'history',
 			        	itemId: 'history',
 			        	tpl: '</pre><div class="history">{hist}</div><pre>'
 					}
-				]		
+				]
 			},
 			{
 				config: {
@@ -67,7 +71,7 @@ Ext.define('WhatsFresh.view.Info', {
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
 				itemTpl: '</pre><div class="list-item-listItem">{listItem}</div><pre>'
-			}			
+			}
 		],
 		listeners: [
 			{

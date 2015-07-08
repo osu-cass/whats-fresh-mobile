@@ -4,7 +4,7 @@ Ext.define('WhatsFresh.view.ListView', {
     xtype: 'ListView',
 	alias: 'widget.listview',
 	config: {
-		layout: 'fit',
+		layout: 'vbox',
 		items: [
 			{
 				xtype: 'toolbar',
@@ -14,24 +14,28 @@ Ext.define('WhatsFresh.view.ListView', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						iconCls: 'home',
-						itemId: 'backHomeButton'
+						iconCls: 'arrow_left',
+						itemId: 'HomeButton'
+					},
+					{
+						xtype: 'spacer'
 					},
 					{
 						xtype: 'button',
-						ui: 'action', 
-						text: 'back',
-						itemId: 'HomeButton'
-					}
-					
+						ui: 'action',
+						iconCls: 'search',
+						itemId: 'backHomeButton'
+					},
 				]
 			},
 			{
+				flex: 0.7,
 				xtype: 'SeaGrantMap',
 				id: 'ListMap',
 				itemId: 'listmap'
-			},					
+			},
 			{
+				flex: 0.3,
 				config: {
 					scrollable: {
 						direction: 'verticle',
@@ -41,6 +45,8 @@ Ext.define('WhatsFresh.view.ListView', {
 				xtype: 'list',
 				itemId: 'Lpagelist',
 				id: 'ListPageList',
+				ui			: 'normal',
+				pinHeaders	: false,
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
 				itemTpl: '</pre><div class="list-item-name">{preparation} {name}</div><pre>'
@@ -77,11 +83,11 @@ Ext.define('WhatsFresh.view.ListView', {
 		WhatsFresh.currentListItem = index.data.id;
 		// this way if a user has previously highlighted a list item, when they tap it again, they see its details
 		if(WhatsFresh.currentListItem === WhatsFresh.previousListItem){
-			this.fireEvent('viewLpageListItemCommand', this, record, index);			
+			this.fireEvent('viewLpageListItemCommand', this, record, index);
 		}else{
 			this.fireEvent('viewLpageListHighlightCommand', this, record, index);
 			WhatsFresh.previousListItem = WhatsFresh.currentListItem;
-		}		
+		}
 	},
 	onLpagelistDisclose: function(list, record, target, index, evt, options){
 		this.fireEvent('viewLpageListItemCommand', this, record, index);

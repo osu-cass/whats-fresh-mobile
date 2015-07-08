@@ -4,9 +4,7 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 	alias: 'widget.productdetail',
 	fullscreen: true,
 	config: {
-		layout: {
-			type: 'fit' 
-		}, 
+		layout: 'vbox',
 		items: [
 			{
 				xtype: 'toolbar',
@@ -17,18 +15,22 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						iconCls: 'home',
-						itemId: 'backHomeButton'
+						iconCls: 'arrow_left',
+						itemId: 'backListButton'
+					},
+					{
+						xtype: 'spacer'
 					},
 					{
 						xtype: 'button',
 						ui: 'action',
-						text: 'Back',
-						itemId: 'backListButton'
+						iconCls: 'search',
+						itemId: 'backHomeButton'
 					}
 				]
 			},
 			{
+				flex: 0.6,
 				xtype: 'fieldset',
 				id: 'ProductDetails',
 				scrollable: true,
@@ -39,7 +41,7 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 						itemId: 'productNameBlock',
 						tpl: '</pre><div class="list-item-title">{preparation} {name}</div>'
 					},
-					{	
+					{
 						xtype: 'image',
 						id: 'ProductDetailImage',
 						itemId: 'productDetailImage'
@@ -57,9 +59,10 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 						id: 'InfoButton',
 						itemId: 'infoButton'
 					}
-				]	
-			},		
+				]
+			},
 			{
+				flex: 0.4,
 				config: {
 					scrollable: {
 						direction: 'verticle',
@@ -70,8 +73,10 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 				id: 'ProductDetailList',
 				store: 'VendorInventory',
 				itemId: 'Dpagelist',
-				loadingText: 'Loading Notes ...',
-				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
+				ui			: 'normal',
+				pinHeaders	: false,
+				loadingText: 'Loading vendors...',
+				emptyText: '</pre><div class="notes-list-empty-text">No vendors found.</div><pre>',
 				itemTpl: '</pre><tpl><div>{name}</div></tpl><pre>'
 			}
 		],
