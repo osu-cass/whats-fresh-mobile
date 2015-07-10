@@ -1,188 +1,125 @@
-Ext.define('WhatsFresh.view.Home', {
+Ext.define('OregonsCatch.view.Home', {
 	extend: 'Ext.Panel',
-	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select', 'Ext.fx.Animation', 'WhatsFresh.view.Map'],
-	// fullscreen: true,
-	xtype: 'Home',
-	alias: 'widget.home',
+	requires: [
+		'Ext.form.FieldSet',
+		'Ext.Label',
+		'Ext.field.Radio',
+		'Ext.field.Select',
+		'Ext.field.Toggle'
+	],
+	xtype: 'HomeView',
 	config: {
 		scrollable: { direction: 'vertical' },
-		items: [{
-			xtype: 'toolbar',
-			title: 'Oregon\'s Catch',
-			itemId: 'homePageToolbar',
-			docked: 'top'
-		}, {
-			xtype: 'fieldset',
-			items: [{
-
-				xtype: 'label',
-				styleHtmlContent: true,
-				style: {
-					background: 'rgba(0,50,255,0.1)'
-				},
-				html: 'Select a type of seafood, if any.'
-
-			}, {
-				xtype: 'selectfield',
-				itemId: 'selectproduct',
-				label: 'Product',
-				labelWrap: true,
-				displayField: 'name',
-				store: 'Product',
-				value: "Loading, please wait...",
-				valueField: 'name'
-			}]
-		}, {
-			xtype: 'fieldset',
-			defaults: {
-				labelWidth: '60%'
+		items: [
+			{
+				xtype: 'toolbar',
+				docked: 'top',
+				title: 'Oregon\'s Catch'
 			},
-			items: [{
-				xtype: 'label',
-				styleHtmlContent: true,
-				style: {
-					background: 'rgba(0,50,255,0.1)'
-				},
-				html: 'Select a purpose for your search.'
-
-			}, {
-				xtype: 'radiofield',
-				name: 'buymode',
-				value: 'learn',
-				label: 'Learn About It',
-				checked: true
-			}, {
-				xtype: 'radiofield',
-				name: 'buymode',
-				itemId: 'buyModeRadio',
-				value: 'buy',
-				label: 'Buy It'
-			}]
-		}, {
-			xtype: 'fieldset',
-			itemId: 'locationFieldSet',
-			hidden: true,
-			showAnimation: {
-			    type: 'fadeIn'
-			},
-			hideAnimation: {
-			    type: 'fadeOut'
-			},
-			items: [{
-				xtype: 'label',
-				styleHtmlContent: true,
-				style: {
-					background: 'rgba(0,50,255,0.1)'
-				},
-				html: 'Select a location to limit your search.'
-
-			}, {
-				xtype: 'selectfield',
-				itemId: 'selectlocation',
-				label: 'Location',
-				labelWrap: true,
-				displayField: 'name',
-				store: 'Location',
-				value: "Loading, please wait...",
-				valueField: 'name'
-			}, {
-				xtype: 'togglefield',
-				name: 'userlocation',
-				label: 'Use current locaton',
-				labelWrap: true,
-				itemId: 'userlocation'
-			}, {
-				xtype: 'selectfield',
-				itemId: 'distance',
-				label: 'Search within',
-				labelWrap: true,
-				displayField: 'distance',
-				store: 'Distance'
-					// valueField: 'id'
-			}]
-		}, {
-			xtype: 'fieldset',
-			items: [{
-				xtype: 'label',
-				itemId: 'vendnum',
-				styleHtmlContent: true,
-				style: {
-					background: 'rgba(0,50,255,0.1)'
-				},
-				tpl: '<div class="vendnum">{th}{numItems}{v}{i}{loc}{w}{prod}{end}</div>'
-			}, {
+			{
 				xtype: 'fieldset',
-				itemId: 'errorStatus',
-				data: {
-					error: 'The app has failed to populate this error message.'
-				},
-				tpl: '<div class="vendnum">Oh no! {error}</div>',
+				defaults: { labelWidth: '40%' },
+				items: [
+					{
+						xtype: 'label',
+						style: { background: 'rgba(0,50,255,0.1)' },
+						html: 'Select a type of seafood, if any.',
+						styleHtmlContent: true
+					},
+					{
+						xtype: 'selectfield',
+						itemId: 'SeafoodSelect',
+						label: 'Seafood Type',
+						store: 'Products',
+						displayField: 'name',
+						valueField: 'id'
+					}
+				]
+			},
+			{
+				xtype: 'fieldset',
+				defaults: { labelWidth: '40%' },
+				items: [
+					{
+						xtype: 'label',
+						style: { background: 'rgba(0,50,255,0.1)' },
+						html: 'Select a purpose for your search.',
+						styleHtmlContent: true
+					},
+					{
+						xtype: 'radiofield',
+						name: 'buymode',
+						value: 'learn',
+						label: 'Learn More',
+						checked: true
+					},
+					{
+						xtype: 'radiofield',
+						itemId: 'BuyModeRadio',
+						name: 'buymode',
+						value: 'buy',
+						label: 'Buy It'
+					}
+				]
+			},
+			{
+				xtype: 'fieldset',
+				itemId: 'LocationFieldSet',
 				hidden: true,
-				hideAnimation: {
-					type: 'slideOut',
-					direction: 'up'
-				},
-				showAnimation: {
-					type: 'slide',
-					direction: 'down'
-				}
-			}, {
-				xtype: 'button',
-				ui: 'action',
-				text: 'Search',
-				itemId: 'goButton',
-				id: 'goButton'
-			}]
-		}],
-		listeners: [{
-			delegate: '#userlocation',
-			event: 'change',
-			fn: 'onUseLocation'
-		}, {
-			delegate: '#distance',
-			event: 'change',
-			fn: 'onDistance'
-		}, {
-			delegate: '#selectlocation',
-			event: 'change',
-			fn: 'onSelectLocation'
-		}, {
-			delegate: '#selectproduct',
-			event: 'change',
-			fn: 'onSelectProduct'
-		}, {
-			delegate: '#vendor',
-			event: 'change',
-			fn: 'onVendorSelect'
-		}, {
-			delegate: '#product',
-			event: 'change',
-			fn: 'onProductSelect'
-		}, {
-			delegate: '#goButton',
-			event: 'tap',
-			fn: 'onGoButtonTap'
-		}]
-	},
-	onUseLocation: function (record, newVal, oldVal, eOpts) {
-		this.fireEvent('setUseLocation', newVal);
-	},
-	onDistance: function (record) {
-		this.fireEvent('setDistance', this, record);
-	},
-	onSelectLocation: function (record, index) {
-		this.fireEvent('chosenLocation', this, record);
-	},
-	onSelectProduct: function (record) {
-		this.fireEvent('chosenProduct', this, record);
-	},
-	onVendorSelect: function (record) {
-		this.fireEvent('sortByVendorCommand', this, record);
-	},
-	onProductSelect: function (record) {
-		this.fireEvent('sortByProductCommand', this, record);
-	},
-	onGoButtonTap: function (list, record, target, index, evt, options) {
-		this.fireEvent('viewGoCommand');
+				showAnimation: { type: 'fadeIn' },
+				hideAnimation: { type: 'fadeOut' },
+				defaults: { labelWidth: '40%' },
+				items: [
+					{
+						xtype: 'label',
+						style: { background: 'rgba(0,50,255,0.1)' },
+						html: 'Select a location to limit your search.',
+						styleHtmlContent: true
+					},
+					{
+						xtype: 'selectfield',
+						itemId: 'LocationSelect',
+						label: 'City',
+						store: 'Locations',
+						displayField: 'name',
+						valueField: 'id'
+					},
+					{
+						xtype: 'togglefield',
+						itemId: 'LocationToggle',
+						label: 'Use my current location?',
+						labelWrap: true
+					},
+					{
+						xtype: 'selectfield',
+						itemId: 'LocationDistance',
+						label: 'Search Range',
+						labelWrap: true,
+						store: 'Distances',
+						displayField: 'distance',
+						valueField: 'value'
+					}
+				]
+			},
+			{
+				xtype: 'fieldset',
+				items: [
+					{
+						xtype: 'label',
+						itemId: 'SearchPrediction',
+						style: { background: 'rgba(0,50,255,0.1)' },
+						html: 'Predicting search results...',
+						styleHtmlContent: true
+					},
+					{
+						xtype: 'button',
+						itemId: 'SearchButton',
+						ui: 'action',
+						text: 'Search',
+						style: { height: '3em' }
+					}
+				]
+			}
+		]
 	}
 });

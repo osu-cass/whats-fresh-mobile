@@ -1,41 +1,65 @@
 /*
-    This file is generated and updated by Sencha Cmd. You can edit this file as
-    needed for your application, but these edits will have to be merged by
-    Sencha Cmd when it performs code generation tasks such as generating new
-    models, controllers or views and when running "sencha app upgrade".
+	This file is generated and updated by Sencha Cmd. You can edit this file as
+	needed for your application, but these edits will have to be merged by
+	Sencha Cmd when it performs code generation tasks such as generating new
+	models, controllers or views and when running "sencha app upgrade".
 
-    Ideally changes to this file would be limited and most work would be done
-    in other places (such as Controllers). If Sencha Cmd cannot merge your
-    changes and its generated code, it will produce a "merge conflict" that you
-    will need to resolve manually.
+	Ideally changes to this file would be limited and most work would be done
+	in other places (such as Controllers). If Sencha Cmd cannot merge your
+	changes and its generated code, it will produce a "merge conflict" that you
+	will need to resolve manually.
 */
 
-Ext.Loader.setConfig({
-	enabled: true,
-	disableCaching: false,
-	paths: {
-		"Ext": 'touch/src'
-	}
-});
-
-
 Ext.application({
-	name: 'WhatsFresh',
+	name: 'OregonsCatch',
 
-	controllers: ["List", "ErrorLoading"],
-	models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists", "Stories"],
-	stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList", "Story"],
-	views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail", "ErrorLoading"],
+	requires: [
+		'Ext.MessageBox'
+	],
 
-	requires: ['WhatsFresh.util.StoreLoadTracking'],
+	views: [
+		'Home'
+	],
+
+	controllers: [
+		'Home'
+	],
+
+	models: [
+		'Location',
+		'Product',
+		'Story',
+		'Vendor'
+	],
+
+	stores: [
+		'Distances',
+		'Locations',
+		'Products',
+		'Stories',
+		'Vendors'
+	],
+
+	icon: {
+		'57': 'resources/icons/Icon.png',
+		'72': 'resources/icons/Icon~ipad.png',
+		'114': 'resources/icons/Icon@2x.png',
+		'144': 'resources/icons/Icon~ipad@2x.png'
+	},
+
+	isIconPrecomposed: true,
+
+	startupImage: {
+		'320x460': 'resources/startup/320x460.jpg',
+		'640x920': 'resources/startup/640x920.png',
+		'768x1004': 'resources/startup/768x1004.png',
+		'748x1024': 'resources/startup/748x1024.png',
+		'1536x2008': 'resources/startup/1536x2008.png',
+		'1496x2048': 'resources/startup/1496x2048.png'
+	},
 
 	launch: function () {
-
-		var errorController = this.getController('ErrorLoading');
-
-		// Destroy the #appLoadingIndicator element
-		Ext.fly('appLoadingIndicator')
-			.destroy();
+		var app = this;
 
 		setTimeout(function () {
 			if (navigator.splashscreen) {
@@ -43,111 +67,45 @@ Ext.application({
 			}
 		}, 1000);
 
+		// Destroy the #appLoadingIndicator element
+		Ext.fly('appLoadingIndicator').destroy();
+
 		// Initialize the main view
-		Ext.Viewport.add(Ext.create('WhatsFresh.view.Home'));
-		Ext.Viewport.add(Ext.create('WhatsFresh.view.Map'));
-		Ext.Viewport.add(Ext.create('WhatsFresh.view.ListView'));
-		Ext.Viewport.add(Ext.create('WhatsFresh.view.Detail'));
-		Ext.Viewport.add(Ext.create('WhatsFresh.view.ProductDetail'));
-		Ext.Viewport.add(Ext.create('WhatsFresh.view.Info'));
-		Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
-		Ext.Viewport.add(Ext.create('WhatsFresh.view.ErrorLoading'));
+		Ext.Viewport.add(Ext.create('OregonsCatch.view.Home'));
 
-		var SLT = WhatsFresh.util.StoreLoadTracking;
-		SLT.registerStore('Location');
-		SLT.registerStore('Product');
-		SLT.registerStore('Vendor');
 
-		var locationStore = Ext.getStore('Location');
-		var productStore = Ext.getStore('Product');
-
-		SLT.StoreLoadError = function () {
-			errorController.onError();
-		};
-		SLT.StoreLoadSuccess = function () {
-
-			// inject placeholders
-			locationStore.insert(0, {
-				name: "All locations...",
-				is_not_filterable: true
+		Ext.getStore('Locations').addListener('load', function () {
+			Ext.getStore('Locations').insert(0, {
+				is_not_filterable: true,
+				name: 'Any city...',
+				id: -999
 			});
-			productStore.insert(0, {
-				name: "All products...",
-				is_not_filterable: true
-			});
-			errorController.onSuccess();
-		};
+		});
 
-		// This is used to implement android back button
-		function onBackKeyDown(eve) {
-			eve.preventDefault();
-			console.log("device back button was pressed");
-			if (Ext.Viewport.getActiveItem()
-				.xtype == WhatsFresh.view.Home.xtype) {
-				navigator.app.exitApp();
-			}
-			// Action is like a fired event from a view page, routes are assigned
-			// for the url sent back in the controller routes section. The routes
-			// section in the controller defines which function to call when an
-			// action is sent to the controller from the device back button
-			if (Ext.Viewport.getActiveItem()
-				.xtype == WhatsFresh.view.ListView.xtype) {
-				this.getApplication()
-					.getHistory()
-					.add(Ext.create('Ext.app.Action', {
-						url: 'listback'
-					}));
-			}
-			// Note after the device back button branch pull request is accepted and included
-			// in dev we will need to replace the detail view function with the commented
-			// out function below it in order to take into account navigation back from the
-			// productDetail page
-			if ((Ext.Viewport.getActiveItem()
-					.xtype == WhatsFresh.view.Detail.xtype) | (Ext.Viewport.getActiveItem()
-					.xtype == WhatsFresh.view.ProductDetail.xtype)) {
-				this.getApplication()
-					.getHistory()
-					.add(Ext.create('Ext.app.Action', {
-						url: 'detailback'
-					}));
-			}
-			// if((Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Detail.xtype) | (Ext.Viewport.getActiveItem().xtype ==  WhatsFresh.view.Productdetail.xtype)){
-			//     this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-			//         url: 'detailback'
-			//     }));
-			// }
-			if (Ext.Viewport.getActiveItem()
-				.xtype == WhatsFresh.view.Info.xtype) {
-				this.getApplication()
-					.getHistory()
-					.add(Ext.create('Ext.app.Action', {
-						url: 'infoback'
-					}));
-			}
-			if (Ext.Viewport.getActiveItem()
-				.xtype == WhatsFresh.view.Specific.xtype) {
-				this.getApplication()
-					.getHistory()
-					.add(Ext.create('Ext.app.Action', {
-						url: 'specificback'
-					}));
-			}
-		}
-		if (Ext.os.is('Android')) {
-			document.addEventListener("backButton", Ext.bind(onBackKeyDown, this), false);
-		}
+		Ext.getStore('Products').addListener('load', function () {
+			Ext.getStore('Products').insert(0, {
+				is_not_filterable: true,
+				name: 'Any type...',
+				id: -999
+			});
+		});
+
+		Ext.getStore('Locations').load();
+		Ext.getStore('Products').load();
+		Ext.getStore('Vendors').load();
+
+
 	},
 
-	onUpdated: function () {
+	onUpdated: function() {
 		Ext.Msg.confirm(
 			"Application Update",
 			"This application has just successfully been updated to the latest version. Reload now?",
-			function (buttonId) {
+			function(buttonId) {
 				if (buttonId === 'yes') {
 					window.location.reload();
 				}
 			}
 		);
 	}
-
 });

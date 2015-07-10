@@ -1,8 +1,8 @@
-Ext.define('WhatsFresh.store.Vendor', {
+Ext.define('OregonsCatch.store.Vendors', {
     extend: 'Ext.data.Store',
     config: {
-		model: 'WhatsFresh.model.Vendors',
-		autoLoad: true,
+		model: 'OregonsCatch.model.Vendor',
+		autoLoad: false,
 		proxy: {
 		    type: 'ajax',
 		    url: 'http://seagrant-staging-api.osuosl.org/1/vendors',
