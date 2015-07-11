@@ -2,10 +2,8 @@ Ext.define('OregonsCatch.controller.Home', {
 	extend: 'Ext.app.Controller',
 	requires: [
 		'Ext.MessageBox',
-		'Ext.device.Geolocation'
-		//'OregonsCatch.util.Link',
-		//'OregonsCatch.util.Messages',
-		//'OregonsCatch.util.Geography'
+		'Ext.device.Geolocation',
+		'OregonsCatch.util.CrossFilter'
 	],
 
 	config: {
@@ -14,11 +12,13 @@ Ext.define('OregonsCatch.controller.Home', {
 			SeafoodSelect		: 'HomeView #SeafoodSelect',
 			BuyModeRadio		: 'HomeView #BuyModeRadio',
 			LocationFieldSet	: 'HomeView #LocationFieldSet',
+			LocationError		: 'HomeView #LocationError',
 			LocationSelect		: 'HomeView #LocationSelect',
 			LocationToggle		: 'HomeView #LocationToggle',
 			LocationDistance	: 'HomeView #LocationDistance',
 			SearchPrediction	: 'HomeView #SearchPrediction',
-			SearchButton		: 'HomeView #SearchButton'
+			SearchButton		: 'HomeView #SearchButton',
+			ProductMapListView	: 'ProductMapListView',
 		},
 		control: {
 			SeafoodSelect: {
@@ -50,7 +50,7 @@ Ext.define('OregonsCatch.controller.Home', {
 		Ext.getStore('Locations').addListener('addrecords', function () {
 			ctlr.getLocationSelect().setValue(-999);
 		});
-		Ext.getStore('Vendors').addListener('refresh', function () {
+		Ext.getStore('Vendors').addListener('load', function () {
 			ctlr.onAnySearchChange();
 		});
 	},
@@ -64,61 +64,77 @@ Ext.define('OregonsCatch.controller.Home', {
 
 	onLocationToggle: function (p1, checked, p3, p4) {
 		var ctlr = this;
-		console.log('[onLocationToggle]: ' + checked);
-		ctlr.onAnySearchChange();
+		var calledBack = false;
+		if (checked) {
+			Ext.device.Geolocation.getCurrentPosition({
+				success: function (position) {
+					OregonsCatch.util.CrossFilter.parameters.position = position;
+					ctlr.getLocationSelect().setValue(-999);
+					ctlr.getLocationError().hide();
+					ctlr.onAnySearchChange();
+					calledBack = true;
+				},
+				failure: function (PositionError) {
+					console.log("PositionError: " + PositionError);
+					ctlr.getLocationToggle().setValue(0);
+					ctlr.getLocationError().show();
+					calledBack = true;
+				}
+			});
+
+			setTimeout(function () {
+				if (!OregonsCatch.util.CrossFilter.parameters.position && !calledBack) {
+					console.error("Geo never called back.");
+					ctlr.getLocationToggle().setValue(0);
+					ctlr.getLocationError().show();
+				}
+			}, 6000);
+
+		} else {
+			// toggle off == stop geolocation and clear position
+			OregonsCatch.util.CrossFilter.parameters.position = null;
+			ctlr.onAnySearchChange();
+		}
 	},
 
 	onAnySearchChange: function (p1, checked, p3, p4) {
 		var ctlr = this;
-
-		var Vendors = Ext.getStore('Vendors');
-		var totalVendors = Vendors.getCount();
-
-		var Products = Ext.getStore('Products');
-		var totalProducts = Products.getCount();
-
-		var product, location, vendor, distance;
-
-		function resetFilter () {
-			product		= null;
-			location	= null;
-			vendor		= null;
-			distance	= null;
+		var CF = OregonsCatch.util.CrossFilter;
+		// Update the UI.
+		if (CF.parameters.position) {
+			ctlr.getLocationSelect().disable();
+			ctlr.getLocationDistance().enable();
+		} else {
+			ctlr.getLocationSelect().enable();
+			ctlr.getLocationDistance().disable();
 		}
-
-		resetFilter();
-
-		// filterProducts()
-		// filterVendors()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		ctlr.getSearchPrediction().setHtml('There are ' + totalVendors + ' vendors.');
-
-		console.log('[onAnySearchChange]');
+		// Update the filters.
+		if (ctlr.getBuyModeRadio().getChecked()) {
+			CF.parameters.allprod	= false;
+			CF.parameters.product	= ctlr.getSeafoodSelect().getRecord();
+			CF.parameters.vendor	= null;
+			CF.parameters.distance	= ctlr.getLocationDistance().getRecord();
+			CF.parameters.location	= ctlr.getLocationSelect().getRecord();
+			//CF.parameters.position = null;
+		} else {
+			CF.parameters.allprod	= true;
+			CF.parameters.product	= ctlr.getSeafoodSelect().getRecord();
+			CF.parameters.vendor	= null;
+			CF.parameters.distance	= null;
+			CF.parameters.location	= null;
+			//CF.parameters.position = null;
+		}
+		CF.refilter();
+		ctlr.getSearchPrediction().setHtml(CF.toString());
 	},
 
 	onSearch: function () {
 		var ctlr = this;
 		console.log('[onSearch]');
+		if (ctlr.getBuyModeRadio().getChecked()) {
+		} else {
+			ctlr.getApplication().getController('ProductMapList').load();
+		}
 	}
 
 });

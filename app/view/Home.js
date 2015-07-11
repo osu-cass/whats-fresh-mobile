@@ -22,7 +22,7 @@ Ext.define('OregonsCatch.view.Home', {
 				items: [
 					{
 						xtype: 'label',
-						style: { background: 'rgba(0,50,255,0.1)' },
+						style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
 						html: 'Select a type of seafood, if any.',
 						styleHtmlContent: true
 					},
@@ -42,7 +42,7 @@ Ext.define('OregonsCatch.view.Home', {
 				items: [
 					{
 						xtype: 'label',
-						style: { background: 'rgba(0,50,255,0.1)' },
+						style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
 						html: 'Select a purpose for your search.',
 						styleHtmlContent: true
 					},
@@ -72,7 +72,7 @@ Ext.define('OregonsCatch.view.Home', {
 				items: [
 					{
 						xtype: 'label',
-						style: { background: 'rgba(0,50,255,0.1)' },
+						style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
 						html: 'Select a location to limit your search.',
 						styleHtmlContent: true
 					},
@@ -83,6 +83,14 @@ Ext.define('OregonsCatch.view.Home', {
 						store: 'Locations',
 						displayField: 'name',
 						valueField: 'id'
+					},
+					{
+						xtype: 'label',
+						itemId: 'LocationError',
+						hidden: true,
+						style: { background: 'rgba(255,50,0,0.2)', 'text-align': 'center' },
+						html: '<strong>Unable to locate you!</strong>',
+						styleHtmlContent: true
 					},
 					{
 						xtype: 'togglefield',
@@ -97,7 +105,8 @@ Ext.define('OregonsCatch.view.Home', {
 						labelWrap: true,
 						store: 'Distances',
 						displayField: 'distance',
-						valueField: 'value'
+						valueField: 'value',
+						disabled: true
 					}
 				]
 			},
@@ -107,7 +116,7 @@ Ext.define('OregonsCatch.view.Home', {
 					{
 						xtype: 'label',
 						itemId: 'SearchPrediction',
-						style: { background: 'rgba(0,50,255,0.1)' },
+						style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
 						html: 'Predicting search results...',
 						styleHtmlContent: true
 					},
