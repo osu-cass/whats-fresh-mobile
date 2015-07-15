@@ -1,4 +1,4 @@
-Ext.define('OregonsCatch.view.ProductMapList', {
+Ext.define('OregonsCatch.view.VendorMapList', {
 	extend: 'Ext.Panel',
 	requires: [
 		'Ext.form.FieldSet',
@@ -7,14 +7,14 @@ Ext.define('OregonsCatch.view.ProductMapList', {
 		'Ext.MessageBox',
 		'OregonsCatch.view.Map'
 	],
-    xtype: 'ProductMapListView',
+    xtype: 'VendorMapListView',
 	config: {
 		layout: 'vbox',
 		items: [
 			{
 				xtype: 'toolbar',
 				docked: 'top',
-				title: 'Seafood',
+				title: 'Vendors',
 				items: [
 					{
 						xtype: 'button',
@@ -34,24 +34,24 @@ Ext.define('OregonsCatch.view.ProductMapList', {
 				]
 			},
 			{
-				flex: 0.5,
+				flex: 0.7,
 				xtype: 'SeaGrantMap',
 				itemId: 'Map'
 			},
 			{
 				xtype: 'label',
 				style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
-				html: 'Select which seafood to learn about:',
+				html: 'Select which vendor to learn about:',
 				styleHtmlContent: true
 			},
 			{
-				flex: 0.5,
+				flex: 0.3,
 				xtype: 'list',
 				itemId: 'List',
 				loadingText: 'Loading...',
-				emptyText: 'No seafood available.',
+				emptyText: 'No matching vendors available.',
 				deferEmptyText: false,
-				itemTpl: '{preparation} {name}',
+				itemTpl: '{name}',
 				ui: 'normal',
 				pinHeaders: false,
 				onItemDisclosure: true

@@ -1,4 +1,4 @@
-Ext.define('OregonsCatch.controller.ProductMapList', {
+Ext.define('OregonsCatch.controller.VendorMapList', {
 	extend: 'Ext.app.Controller',
 	requires: [
 		'OregonsCatch.util.CrossFilter',
@@ -8,16 +8,15 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 	config: {
 		refs: {
 			HomeView			: 'HomeView',
-			ProductInfoView		: 'ProductInfoView',
+			VendorMapList		: 'VendorMapListView',
 			VendorInfo			: 'VendorInfoView',
-			PML					: 'ProductMapListView',
-			PML_Map				: 'ProductMapListView #Map',
-			PML_List			: 'ProductMapListView #List'
+			VendorMap			: 'VendorMapListView #Map',
+			VendorList			: 'VendorMapListView #List'
 		},
 		control: {
-			'ProductMapListView #BackButton': { tap: 'onBack' },
-			'ProductMapListView #HomeButton': { tap: 'onHome' },
-			PML_List: {
+			'VendorMapListView #BackButton': { tap: 'onBack' },
+			'VendorMapListView #HomeButton': { tap: 'onHome' },
+			VendorList: {
 				itemsingletap	: 'onListSingleTap',
 				disclose		: 'onDisclose',
 				refresh			: 'onListRefresh'
@@ -28,14 +27,13 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 	launch: function () {
 		var ctlr = this;
 		var CF = OregonsCatch.util.CrossFilter;
-		ctlr.getPML_List().setStore(CF.filtered.products);
-		// VendorMapList has this covered.
-		//Ext.Viewport.on('openVendor', ctlr.onMapClick, ctlr);
+		ctlr.getVendorList().setStore(CF.filtered.vendors);
+		Ext.Viewport.on('openVendor', ctlr.onMapClick, ctlr);
 	},
 
 	load: function () {
 		var ctlr = this;
-		ctlr.getPML_Map().center();
+		ctlr.getVendorMap().center();
 	},
 
 	onBack: function () { OregonsCatch.util.Back.pop(); },
@@ -45,43 +43,28 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 	onListSingleTap: function (p1, index, p3, product) {
 		var ctlr = this;
 		var CF = OregonsCatch.util.CrossFilter;
-		var markers = ctlr.getPML_Map().markers;
-		var map = ctlr.getPML_Map().map();
-		product = CF.filtered.products.getAt(index);
-		for (var i = 0; i < markers.length; i++) {
-			var vendor = CF.filtered.vendors.getAt(i);
-			var found = false;
-			if (vendor && product) {
-				for (var k = 0; k < vendor.get('products').length; k++) {
-					if (vendor.get('products')[k].product_id == product.get('id')) {
-						found = true;
-						break;
-					}
-				}
-			}
-			if (found) {
-				markers[i].icon = 'resources/images/blue.png';
-				markers[i].zIndex = 2;
-			} else {
-				markers[i].icon = 'resources/images/red.png';
-				markers[i].zIndex = 1;
-			}
-			// Doesn't change anything, but allows us to "redraw" the map markers.
-			markers[i].setMap(map);
-		}
+		var markers = ctlr.getVendorMap().markers;
+		google.maps.event.trigger(markers[index], 'click');
 	},
 
-	onDisclose: function (p1, product, p3, p4) {
+	onMapClick: function (index) {
 		var ctlr = this;
 		var CF = OregonsCatch.util.CrossFilter;
-		ctlr.getPML_List().select(product);
+		var vendor = CF.filtered.vendors.getAt(index);
+		ctlr.onDisclose(null, vendor);
+	},
+
+	onDisclose: function (p1, vendor, p3, p4) {
+		var ctlr = this;
+		var CF = OregonsCatch.util.CrossFilter;
+		ctlr.getVendorList().select(vendor);
 		OregonsCatch.util.Back.push();
-		ctlr.getApplication().getController('ProductInfo').load(product);
+		ctlr.getApplication().getController('VendorInfo').load(vendor);
 		var transition = {
 			type		: 'slide',
 			direction	: 'left'
 		};
-		Ext.Viewport.animateActiveItem(ctlr.getProductInfoView(), transition);
+		Ext.Viewport.animateActiveItem(ctlr.getVendorInfo(), transition);
 	},
 
 	/* ------------------------------------------------------------------------
@@ -90,7 +73,7 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 
 	onListRefresh: function () {
 		var ctlr = this;
-		var seagrantmap = ctlr.getPML_Map();
+		var seagrantmap = ctlr.getVendorMap();
 		var CF = OregonsCatch.util.CrossFilter;
 		var store = CF.filtered.vendors;
 
@@ -99,7 +82,7 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 		var customMarkerArray = [];
 
 		// Save the current selection to reselect it once updated.
-		var currentSelection = ctlr.getPML_List().getSelection();
+		var currentSelection = ctlr.getVendorList().getSelection();
 
 		// Build a custom click function for each marker.
 		// YOU CANNOT CREATE FUNCTIONS WITHIN A LOOP'S SCOPE.
@@ -107,13 +90,13 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 		// Needed for the loop below.
 		function getClickFunction (record) {
 			return function () {
-				ctlr.getPML_List().select(record);
+				ctlr.getVendorList().select(record);
 			};
 		}
 
 		// All marker info windows will deselect the list when closed.
 		// Needed for the loop below.
-		function commonCloseFunction () { ctlr.getPML_List().deselectAll(); }
+		function commonCloseFunction () { ctlr.getVendorList().deselectAll(); }
 
 		// This converts the store items into an array
 		// expected by view/Map.js addPoints() method.
@@ -140,8 +123,8 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 		if (currentSelection && currentSelection.length) {
 			var index = store.indexOf(currentSelection[0]);
 			if (index < 0) return;
-			ctlr.getPML_List().select(currentSelection[0]);
-			ctlr.onListSingleTap(ctlr.getPML_List(), index);
+			ctlr.getVendorList().select(currentSelection[0]);
+			ctlr.onListSingleTap(ctlr.getVendorList(), index);
 		}
 
 	}

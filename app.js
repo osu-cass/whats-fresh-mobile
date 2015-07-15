@@ -3,19 +3,32 @@ Ext.application({
 
 	requires: [
 		'Ext.MessageBox',
+		'OregonsCatch.util.API',
 		'OregonsCatch.util.CrossFilter'
 	],
 
 	views: [
 		'Home',
 		'ProductMapList',
-		'ProductInfo'
+		'ProductInfo',
+		'ProductEducation',
+		'SimpleTextView',
+		'SimpleImagesView',
+		'SimpleVideosView',
+		'VendorMapList',
+		'VendorInfo'
 	],
 
 	controllers: [
 		'Home',
 		'ProductMapList',
-		'ProductInfo'
+		'ProductInfo',
+		'ProductEducation',
+		'SimpleTextView',
+		'SimpleImagesView',
+		'SimpleVideosView',
+		'VendorMapList',
+		'VendorInfo'
 	],
 
 	models: [
@@ -49,6 +62,13 @@ Ext.application({
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.Home'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductMapList'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductInfo'));
+		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductEducation'));
+		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleTextView'));
+		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleImagesView'));
+		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleVideosView'));
+		Ext.Viewport.add(Ext.create('OregonsCatch.view.VendorMapList'));
+		Ext.Viewport.add(Ext.create('OregonsCatch.view.VendorInfo'));
+
 
 		Ext.getStore('Locations').addListener('load', function () {
 			Ext.getStore('Locations').insert(0, {

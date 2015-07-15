@@ -107,14 +107,14 @@ Ext.define('OregonsCatch.view.Map', {
 		var html = '';
 		html += '<h1>' + title + '</h1>';
 		html += '<p>' + text + '</p>';
-		html += '<a href="javascript:void(0);" onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' + id + '\')">Open details...</a>';
+		html += '<a href="javascript:void(0);" onclick="Ext.Viewport.fireEvent(\'openVendor\',\'' + id + '\')">Open details...</a>';
 
 		var marker	= new google.maps.Marker({
 			map				: gMap,
 			animation		: google.maps.Animation.DROP,
 			// opacity		: opnum,
-			// zIndex		: google.maps.Marker.MAX_ZINDEX + 1,
-			icon			: 'resources/images/mapdots/red.png',
+			zIndex			: 1, // google.maps.Marker.MAX_ZINDEX + 1,
+			icon			: 'resources/images/red.png',
 			position		: point,
 			clickable		: true,
 			info			: new google.maps.InfoWindow({

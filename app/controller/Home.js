@@ -9,6 +9,8 @@ Ext.define('OregonsCatch.controller.Home', {
 	config: {
 		refs: {
 			HomeView			: 'HomeView',
+			ProductMapList		: 'ProductMapListView',
+			VendorMapList		: 'VendorMapListView',
 			SeafoodSelect		: 'HomeView #SeafoodSelect',
 			BuyModeRadio		: 'HomeView #BuyModeRadio',
 			LocationFieldSet	: 'HomeView #LocationFieldSet',
@@ -18,7 +20,7 @@ Ext.define('OregonsCatch.controller.Home', {
 			LocationDistance	: 'HomeView #LocationDistance',
 			SearchPrediction	: 'HomeView #SearchPrediction',
 			SearchButton		: 'HomeView #SearchButton',
-			ProductMapListView	: 'ProductMapListView',
+			ProductMapListView	: 'ProductMapListView'
 		},
 		control: {
 			SeafoodSelect: {
@@ -131,9 +133,17 @@ Ext.define('OregonsCatch.controller.Home', {
 	onSearch: function () {
 		var ctlr = this;
 		console.log('[onSearch]');
+		OregonsCatch.util.Back.push();
+		var transition = {
+			type		: 'slide',
+			direction	: 'left'
+		};
 		if (ctlr.getBuyModeRadio().getChecked()) {
+			ctlr.getApplication().getController('VendorMapList').load();
+			Ext.Viewport.animateActiveItem(ctlr.getVendorMapList(), transition);
 		} else {
 			ctlr.getApplication().getController('ProductMapList').load();
+			Ext.Viewport.animateActiveItem(ctlr.getProductMapList(), transition);
 		}
 	}
 

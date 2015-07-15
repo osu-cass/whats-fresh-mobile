@@ -6,12 +6,14 @@ Ext.define('OregonsCatch.util.Back', {
 
 	history: [],
 
-	push: function () {
+	push: function (ctlr, record) {
 		var util = this;
 		var CF = OregonsCatch.util.CrossFilter;
 		util.history.push({
 			view	: Ext.Viewport.getActiveItem(),
-			params	: Ext.Object.merge({}, CF.parameters)
+			params	: Ext.Object.merge({}, CF.parameters),
+			ctlr	: ctlr,
+			record	: record
 		});
 	},
 
@@ -21,6 +23,7 @@ Ext.define('OregonsCatch.util.Back', {
 		var last = util.history.pop();
 		CF.parameters = last.params;
 		CF.refilter();
+		if (last.ctlr) { last.ctlr.load(last.record); }
 		var transition = {
 			type		: 'slide',
 			direction	: 'right'

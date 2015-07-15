@@ -5,7 +5,6 @@ Ext.define('OregonsCatch.store.Stories', {
 		autoLoad: false,
 		proxy: {
 			type: 'ajax',
-			url: 'http://seagrant-staging-api.osuosl.org/1/stories/1',
 			reader: {
 				type: 'json'
 			}
