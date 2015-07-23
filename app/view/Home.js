@@ -23,7 +23,7 @@ Ext.define('OregonsCatch.view.Home', {
 					{
 						xtype: 'label',
 						style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
-						html: 'Select a type of seafood, if any.',
+						html: 'Select a type of seafood.',
 						styleHtmlContent: true
 					},
 					{
@@ -33,17 +33,24 @@ Ext.define('OregonsCatch.view.Home', {
 						store: 'Products',
 						displayField: 'name',
 						valueField: 'id'
+					},
+					{
+						xtype: 'selectfield',
+						itemId: 'PreparationSelect',
+						label: 'Preparation',
+						displayField: 'name',
+						valueField: 'id'
 					}
 				]
 			},
 			{
 				xtype: 'fieldset',
-				defaults: { labelWidth: '40%' },
+				defaults: { labelWidth: '50%' },
 				items: [
 					{
 						xtype: 'label',
 						style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
-						html: 'Select a purpose for your search.',
+						html: 'Search Options',
 						styleHtmlContent: true
 					},
 					{
@@ -58,7 +65,7 @@ Ext.define('OregonsCatch.view.Home', {
 						itemId: 'BuyModeRadio',
 						name: 'buymode',
 						value: 'buy',
-						label: 'Buy It'
+						label: 'Where to Buy'
 					}
 				]
 			},
@@ -116,6 +123,9 @@ Ext.define('OregonsCatch.view.Home', {
 					{
 						xtype: 'label',
 						itemId: 'SearchPrediction',
+						hidden: true,
+						showAnimation: { type: 'fadeIn' },
+						hideAnimation: { type: 'fadeOut' },
 						style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
 						html: 'Predicting search results...',
 						styleHtmlContent: true

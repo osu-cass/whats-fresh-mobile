@@ -35,7 +35,9 @@ Ext.application({
 		'Location',
 		'Product',
 		'Story',
-		'Vendor'
+		'Vendor',
+		'Preparation',
+		'ProductPreparation'
 	],
 
 	stores: [
@@ -49,16 +51,12 @@ Ext.application({
 	launch: function () {
 		var app = this;
 
-		setTimeout(function () {
-			if (navigator.splashscreen) {
-				navigator.splashscreen.hide();
-			}
-		}, 1000);
+		// Load the API into the millions of stores.
 
-		// Destroy the #appLoadingIndicator element
-		Ext.fly('appLoadingIndicator').destroy();
+		OregonsCatch.util.CrossFilter.appStart();
 
-		// Initialize the main view
+		// Views must be manually instantiated.
+
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.Home'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductMapList'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductInfo'));
@@ -69,49 +67,30 @@ Ext.application({
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.VendorMapList'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.VendorInfo'));
 
+		// Android back button functionality.
 
-		Ext.getStore('Locations').addListener('load', function () {
-			Ext.getStore('Locations').insert(0, {
-				is_not_filterable: true,
-				name: 'Any city...',
-				id: -999
-			});
-		});
-
-		Ext.getStore('Products').addListener('load', function () {
-			Ext.getStore('Products').insert(0, {
-				is_not_filterable: true,
-				name: 'Any type...',
-				id: -999
-			});
-		});
-
-		Ext.getStore('Locations').load();
-		Ext.getStore('Products').load();
-		Ext.getStore('Vendors').load();
-
-		var CF = OregonsCatch.util.CrossFilter, i = 0;
-		CF.delayed_constructor();
-
-		var Products = Ext.getStore('Products');
-		Products.addListener('load', function () {
-			CF.filtered.products.removeAll();
-			for (i = 0; i < Products.getAllCount(); i++) {
-				if (!Products.getAt(i).get('is_not_filterable')) {
-					CF.filtered.products.add(Products.getAt(i));
-				}
+		function onBackKeyDown (e) {
+			e.preventDefault();
+			if (OregonsCatch.util.Back.history.length) {
+				OregonsCatch.util.Back.pop();
+			} else {
+				navigator.app.exitApp();
 			}
-			console.log('Copied ' + CF.filtered.products.getAllCount() + ' products.');
-		});
+		}
 
-		var Vendors = Ext.getStore('Vendors');
-		Vendors.addListener('load', function () {
-			CF.filtered.vendors.removeAll();
-			for (i = 0; i < Vendors.getAllCount(); i++) {
-				CF.filtered.vendors.add(Vendors.getAt(i));
+		if (Ext.os.is('Android')) {
+			document.addEventListener('backButton', Ext.bind(onBackKeyDown, this), false);
+		}
+
+		// Finally, bring the user into the app.
+
+		setTimeout(function () {
+			if (navigator.splashscreen) {
+				navigator.splashscreen.hide();
 			}
-			console.log('Copied ' + CF.filtered.vendors.getAllCount() + ' vendors.');
-		});
+		}, 1000);
+
+		Ext.fly('appLoadingIndicator').destroy();
 	},
 
 	onUpdated: function() {

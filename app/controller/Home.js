@@ -12,6 +12,7 @@ Ext.define('OregonsCatch.controller.Home', {
 			ProductMapList		: 'ProductMapListView',
 			VendorMapList		: 'VendorMapListView',
 			SeafoodSelect		: 'HomeView #SeafoodSelect',
+			PreparationSelect	: 'HomeView #PreparationSelect',
 			BuyModeRadio		: 'HomeView #BuyModeRadio',
 			LocationFieldSet	: 'HomeView #LocationFieldSet',
 			LocationError		: 'HomeView #LocationError',
@@ -24,6 +25,9 @@ Ext.define('OregonsCatch.controller.Home', {
 		},
 		control: {
 			SeafoodSelect: {
+				change			: 'onSeafoodSelect'
+			},
+			PreparationSelect: {
 				change			: 'onAnySearchChange'
 			},
 			BuyModeRadio: {
@@ -46,6 +50,7 @@ Ext.define('OregonsCatch.controller.Home', {
 
 	launch: function () {
 		var ctlr = this;
+		var CF = OregonsCatch.util.CrossFilter;
 		Ext.getStore('Products').addListener('addrecords', function () {
 			ctlr.getSeafoodSelect().setValue(-999);
 		});
@@ -55,12 +60,29 @@ Ext.define('OregonsCatch.controller.Home', {
 		Ext.getStore('Vendors').addListener('load', function () {
 			ctlr.onAnySearchChange();
 		});
+		ctlr.getPreparationSelect().setStore(CF.filtered.preparations);
+		CF.filtered.preparations.addListener('addrecords', function () {
+			ctlr.getPreparationSelect().setValue(-999);
+		});
+	},
+
+	onSeafoodSelect: function () {
+		var ctlr = this;
+		ctlr.getPreparationSelect().setValue(-999);
+		ctlr.onAnySearchChange();
 	},
 
 	onBuyModeToggle: function (p1, checked, p3, p4) {
 		var ctlr = this;
 		var fields = ctlr.getLocationFieldSet();
-		if (checked) fields.show(); else fields.hide();
+		var predic = ctlr.getSearchPrediction();
+		if (checked) {
+			fields.show();
+			predic.show();
+		} else {
+			fields.hide();
+			predic.hide();
+		}
 		ctlr.onAnySearchChange();
 	},
 
@@ -114,6 +136,7 @@ Ext.define('OregonsCatch.controller.Home', {
 		if (ctlr.getBuyModeRadio().getChecked()) {
 			CF.parameters.allprod	= false;
 			CF.parameters.product	= ctlr.getSeafoodSelect().getRecord();
+			CF.parameters.preparation = ctlr.getPreparationSelect().getRecord();
 			CF.parameters.vendor	= null;
 			CF.parameters.distance	= ctlr.getLocationDistance().getRecord();
 			CF.parameters.location	= ctlr.getLocationSelect().getRecord();
@@ -121,6 +144,7 @@ Ext.define('OregonsCatch.controller.Home', {
 		} else {
 			CF.parameters.allprod	= true;
 			CF.parameters.product	= ctlr.getSeafoodSelect().getRecord();
+			CF.parameters.preparation = ctlr.getPreparationSelect().getRecord();
 			CF.parameters.vendor	= null;
 			CF.parameters.distance	= null;
 			CF.parameters.location	= null;

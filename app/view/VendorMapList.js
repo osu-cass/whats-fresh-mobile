@@ -39,10 +39,8 @@ Ext.define('OregonsCatch.view.VendorMapList', {
 				itemId: 'Map'
 			},
 			{
-				xtype: 'label',
-				style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
-				html: 'Select which vendor to learn about:',
-				styleHtmlContent: true
+				xtype: 'toolbar',
+				title: 'Select a vendor:'
 			},
 			{
 				flex: 0.3,

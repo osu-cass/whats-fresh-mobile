@@ -10,44 +10,205 @@ Ext.define('OregonsCatch.util.CrossFilter', {
 		vendor		: null,
 		distance	: null,
 		position	: null,
+		preparation	: null,
 		allprod		: true
+	},
+
+	unfiltered: {
+		preparations: null
 	},
 
 	filtered: {
 		products	: null,
-		vendors		: null
+		vendors		: null,
+		prodpreps	: null
 	},
 
-	delayed_constructor: function () {
+	/*
+
+	This cross-filtering works by avoiding the cyclic nature of the data.
+
+	Vendors can be filtered on vendor, product, preparation, location, distance, position.
+	Vendors are listed under a product.
+	Vendors are listed in search results.
+
+	Products do not have preparation info, so they must be filtered after vendors.
+	Products can be filtered by existance in vendors, if allprod is false.
+
+	Product-Preparations must be manually populated.
+	Product-Preparations can be filtered by existance in products.
+	Product-Preparations are listed under a vendor.
+
+	Preparations can be filtered by existance in product-preparations.
+	Preparations are only shown on Home screen.
+
+	 */
+
+	createMillionsOfStores: function () {
+
 		var util = OregonsCatch.util.CrossFilter;
 
-		// Duplicate the Product store.
+		var setFilter = function (store, config) {
+			var criteria = new Ext.util.Filter(config);
+			store.clearFilter();
+			store.filter(criteria);
+		};
+
+		// Filtered Product Store
 
 		util.filtered.products = new Ext.data.Store({
 			model: OregonsCatch.model.Product
 		});
 
-		var productCriteria = new Ext.util.Filter({
+		setFilter(util.filtered.products, {
 			filterFn	: util.filterProductsFn(),
 			root		: 'data'
 		});
 
-		util.filtered.products.clearFilter();
-		util.filtered.products.filter(productCriteria);
-
-		// Duplicate the Vendor store.
+		// Filtered Vendor Store
 
 		util.filtered.vendors = new Ext.data.Store({
 			model: OregonsCatch.model.Vendor
 		});
 
-		var vendorCriteria = new Ext.util.Filter({
+		setFilter(util.filtered.vendors, {
 			filterFn	: util.filterVendorsFn(),
 			root		: 'data'
 		});
 
-		util.filtered.vendors.clearFilter();
-		util.filtered.vendors.filter(vendorCriteria);
+		// Filtered Product-Preparation Store
+
+		util.filtered.prodpreps = new Ext.data.Store({
+			model: OregonsCatch.model.ProductPreparation
+		});
+
+		setFilter(util.filtered.prodpreps, {
+			filterFn	: util.filterProdPrepsFn(),
+			root		: 'data'
+		});
+
+		// Filtered Preparation Store
+
+		util.filtered.preparations = new Ext.data.Store({
+			model: OregonsCatch.model.Preparation
+		});
+
+		setFilter(util.filtered.preparations, {
+			filterFn	: util.filterPreparationsFn(),
+			root		: 'data'
+		});
+	},
+
+	attachHandlers: function () {
+		var util		= this;
+		var Locations	= Ext.getStore('Locations');
+		var Products	= Ext.getStore('Products');
+		var Vendors		= Ext.getStore('Vendors');
+
+		// Add non-filterable references.
+
+		Locations.addListener('load', function () {
+			Ext.getStore('Locations').insert(0, {
+				is_not_filterable: true,
+				name: 'All cities...',
+				id: -999
+			});
+		});
+
+		Products.addListener('load', function () {
+			Ext.getStore('Products').insert(0, {
+				is_not_filterable: true,
+				name: 'All types...',
+				id: -999
+			});
+		});
+
+		// Copy data into utility stores.
+
+		Products.addListener('load', function () {
+			util.filtered.products.removeAll();
+			for (var i = 0; i < Products.getAllCount(); i++) {
+				if (!Products.getAt(i).get('is_not_filterable')) {
+					util.filtered.products.add(Products.getAt(i));
+				}
+			}
+			console.log('Copied %s products.', util.filtered.products.getAllCount());
+		});
+
+		Vendors.addListener('load', function () {
+			util.filtered.vendors.removeAll();
+			for (var i = 0; i < Vendors.getAllCount(); i++) {
+				var vendor = Vendors.getAt(i);
+				util.filtered.vendors.add(vendor);
+				var prods = vendor.get('products');
+				for (var j = 0; j < prods.length; j++) {
+					var prod = prods[j];
+					var added = false;
+					for (var n = 0; n < util.filtered.prodpreps.getCount(); n++) {
+						var prodprep = util.filtered.prodpreps.getAt(n).getData();
+						if (prodprep.product_id === prod.product_id) {
+							if (prodprep.preparation_id === prod.preparation_id) {
+								added = true;
+								break;
+							}
+						}
+					}
+					if (!added) {
+						console.log(prod);
+						util.filtered.prodpreps.add({
+							name			: prod.name,
+							product_id		: prod.product_id,
+							preparation		: prod.preparation,
+							preparation_id	: prod.preparation_id
+						});
+					}
+					added = false;
+					for (var k = 0; k < util.filtered.preparations.getCount(); k++) {
+						var preparation = util.filtered.preparations.getAt(k).getData();
+						if (preparation.id === prod.preparation_id) {
+							added = true;
+							break;
+						}
+					}
+					if (!added) {
+						util.filtered.preparations.add({
+							id: prod.preparation_id,
+							name: prod.preparation
+						});
+					}
+				}
+			}
+			util.filtered.preparations.insert(0, {
+				id: -999,
+				name: 'All types...',
+				is_not_filterable: true
+			});
+			console.log('Copied ' + util.filtered.vendors.getAllCount() + ' vendors.');
+			console.log('Copied ' + util.filtered.preparations.getAllCount() + ' preparations.');
+			console.log('Copied %s prodpreps.', util.filtered.prodpreps.getAllCount());
+		});
+
+	},
+
+	appStart: function () {
+		var util = this;
+		util.createMillionsOfStores();
+		util.attachHandlers();
+		Ext.getStore('Locations').load();
+		Ext.getStore('Products').load();
+		Ext.getStore('Vendors').load();
+	},
+
+	getProductByProdPrep: function (prodpred) {
+		var util = this;
+		var foundproduct = null;
+		Ext.getStore('Products').each(function (product) {
+			if (product.get('id') === prodpred.get('product_id')) {
+				foundproduct = product;
+			}
+		});
+		if (!foundproduct) throw new Error('no matching product');
+		return foundproduct;
 	},
 
 	filterVendorsFn: function () {
@@ -56,6 +217,7 @@ Ext.define('OregonsCatch.util.CrossFilter', {
 
 		return function (vendor) {
 			var p = (util.parameters.product) ? util.parameters.product.data : null;
+			var r = (util.parameters.preparation) ? util.parameters.preparation.data : null;
 			var l = (util.parameters.location) ? util.parameters.location.data : null;
 			var v = (util.parameters.vendor) ? util.parameters.vendor.data : null;
 			var d = (util.parameters.distance) ? util.parameters.distance.data : null;
@@ -69,13 +231,22 @@ Ext.define('OregonsCatch.util.CrossFilter', {
 				if (vendor.get('city') !== l.name) return false;
 			}
 
-			// Filter vendors that have chosen product.
+			// Filter vendors that have chosen product and preparation.
 			if (p && !p.is_not_filterable) {
 				var ok = false;
-				for (var i = 0; i < vendor.get('products').length; i++) {
-					if (vendor.get('products')[i].product_id === p.id) {
-						ok = true;
-						break;
+				var prods = vendor.get('products');
+				for (var i = 0; i < prods.length; i++) {
+					var prod = prods[i];
+					if (prod.product_id === p.id) {
+						if (r && !r.is_not_filterable) {
+							if (prod.preparation_id === r.id) {
+								ok = true;
+								break;
+							}
+						} else {
+							ok = true;
+							break;
+						}
 					}
 				}
 				if (!ok) return false;
@@ -130,26 +301,66 @@ Ext.define('OregonsCatch.util.CrossFilter', {
 		};
 	},
 
+	filterProdPrepsFn: function () {
+		var util = OregonsCatch.util.CrossFilter;
+		return function (prodprep) {
+			prodprep = prodprep.getData();
+			var ok = false;
+			util.filtered.products.each(function (item, index, length) {
+				item = item.getData();
+				if (prodprep.product_id === item.id) {
+					ok = true;
+				}
+			});
+			return ok;
+		};
+	},
+
+	filterPreparationsFn: function () {
+		var util = OregonsCatch.util.CrossFilter;
+		return function (preparation) {
+			preparation = preparation.getData();
+			if (preparation.is_not_filterable && util.filtered.prodpreps.getCount() > 1) {
+				return true;
+			}
+			var ok = false;
+			util.filtered.prodpreps.each(function (item, index, length) {
+				item = item.getData();
+				if (preparation.id === item.preparation_id) {
+					ok = true;
+				}
+			});
+			return ok;
+		};
+	},
+
 	refilter: function () {
 		var util = OregonsCatch.util.CrossFilter;
 		util.filtered.vendors.filter();
+		console.log('Filtered %s vendors.', util.filtered.vendors.getCount());
 		util.filtered.products.filter();
-		console.log('Filtered ' + util.filtered.products.getCount() + ' products.');
-		console.log('Filtered ' + util.filtered.vendors.getCount() + ' vendors.');
+		console.log('Filtered %s products.', util.filtered.products.getCount());
+		util.filtered.prodpreps.filter();
+		console.log('Filtered %s prodpreps.', util.filtered.prodpreps.getCount());
+		util.filtered.preparations.filter();
+		console.log('Filtered %s preparations.', util.filtered.preparations.getCount());
 	},
 
 	toString: function () {
 		var util = OregonsCatch.util.CrossFilter;
 		if (util.parameters.allprod) {
 			var p = util.filtered.products.getCount();
-			if (p == 1) return 'Learn about ' + util.filtered.products.first().data.name + '.';
+			if (p == 1) return 'Learn about ' + util.filtered.products.first().get('name') + '.';
 			return 'Learn about ' + p + ' types of seafood.';
 		} else {
 			var v = util.filtered.vendors.getCount();
-			if (util.parameters.location && !util.parameters.location.data.is_not_filterable) {
-				return 'Buy from ' + v + ' vendor(s) in ' + util.parameters.location.data.name + '.';
+			if (util.parameters.location && !util.parameters.location.get('is_not_filterable')) {
+				return v + ' vendor(s) in ' + util.parameters.location.get('name') + '.';
 			}
-			return 'Buy from ' + v + ' vendor(s) in Oregon.';
+			if (util.parameters.position) {
+				return v + ' vendor(s) within ' + util.parameters.distance.get('distance') + '.';
+			}
+			return v + ' vendor(s) in Oregon.';
 		}
 
 	}

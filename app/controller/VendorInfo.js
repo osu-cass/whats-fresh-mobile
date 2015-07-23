@@ -31,7 +31,7 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 	launch: function () {
 		var ctlr = this;
 		var CF = OregonsCatch.util.CrossFilter;
-		ctlr.getList().setStore(CF.filtered.products);
+		ctlr.getList().setStore(CF.filtered.prodpreps);
 	},
 
 	onBack: function () { OregonsCatch.util.Back.pop(); },
@@ -57,11 +57,11 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 		ctlr.getMapImage().setSrc(Link.getGoogleMapImageFromRecord(vendor));
 	},
 
-	onDisclose: function (p1, product) {
+	onDisclose: function (p1, prodprep) {
 		var ctlr = this;
-		console.log(product.get('name'));
-		ctlr.getList().select(product);
+		ctlr.getList().select(prodprep);
 		OregonsCatch.util.Back.push(ctlr, ctlr._vendor);
+		var product = OregonsCatch.util.CrossFilter.getProductByProdPrep(prodprep);
 		ctlr.getApplication().getController('ProductInfo').load(product);
 		var transition = {
 			type		: 'slide',

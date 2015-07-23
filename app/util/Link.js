@@ -4,9 +4,19 @@ Ext.define('OregonsCatch.util.Link', {
 	openNavigation: function(lat, lng) {
 		var data = 'daddr=' + lat + ',' + lng;
 		if (window.device && window.device.platform === 'iOS') {
-			this.openLink('maps:' + data);
+			this.openLink('https://maps.apple.com/?' + data);
 		} else {
 			this.openLink('https://maps.google.com/?' + data);
+		}
+	},
+
+	openAddressNavigation: function(street, city, state, zip) {
+		// http://stackoverflow.com/questions/1300838/how-to-convert-an-address-into-a-google-maps-link-not-map
+		var data = [street, city, state, zip].join('+');
+		if (window.device && window.device.platform === 'iOS') {
+			this.openLink('https://maps.apple.com/?daddr=' + data);
+		} else {
+			this.openLink('https://www.google.com/maps/place/' + data);
 		}
 	},
 
