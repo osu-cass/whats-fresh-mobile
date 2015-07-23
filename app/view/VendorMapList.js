@@ -14,6 +14,7 @@ Ext.define('OregonsCatch.view.VendorMapList', {
 			{
 				xtype: 'toolbar',
 				docked: 'top',
+				itemId: 'Title',
 				title: 'Vendors',
 				items: [
 					{

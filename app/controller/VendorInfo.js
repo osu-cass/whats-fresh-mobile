@@ -44,8 +44,14 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 		var CF = OregonsCatch.util.CrossFilter;
 		var Link = OregonsCatch.util.Link;
 		CF.parameters.product = null;
+		CF.parameters.preparation = null;
 		CF.parameters.vendor = vendor;
 		CF.refilter();
+
+		CF.filtered.prodpreps.removeAll();
+		for (var i = 0; i < vendor.get('products').length; i++) {
+			CF.filtered.prodpreps.add(vendor.get('products')[i]);
+		}
 
 		// Population
 		ctlr.getTitle().setTitle(vendor.get('name'));

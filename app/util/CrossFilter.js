@@ -82,21 +82,12 @@ Ext.define('OregonsCatch.util.CrossFilter', {
 			model: OregonsCatch.model.ProductPreparation
 		});
 
-		setFilter(util.filtered.prodpreps, {
-			filterFn	: util.filterProdPrepsFn(),
-			root		: 'data'
-		});
-
 		// Filtered Preparation Store
 
 		util.filtered.preparations = new Ext.data.Store({
 			model: OregonsCatch.model.Preparation
 		});
 
-		setFilter(util.filtered.preparations, {
-			filterFn	: util.filterPreparationsFn(),
-			root		: 'data'
-		});
 	},
 
 	attachHandlers: function () {
@@ -144,25 +135,6 @@ Ext.define('OregonsCatch.util.CrossFilter', {
 				for (var j = 0; j < prods.length; j++) {
 					var prod = prods[j];
 					var added = false;
-					for (var n = 0; n < util.filtered.prodpreps.getCount(); n++) {
-						var prodprep = util.filtered.prodpreps.getAt(n).getData();
-						if (prodprep.product_id === prod.product_id) {
-							if (prodprep.preparation_id === prod.preparation_id) {
-								added = true;
-								break;
-							}
-						}
-					}
-					if (!added) {
-						console.log(prod);
-						util.filtered.prodpreps.add({
-							name			: prod.name,
-							product_id		: prod.product_id,
-							preparation		: prod.preparation,
-							preparation_id	: prod.preparation_id
-						});
-					}
-					added = false;
 					for (var k = 0; k < util.filtered.preparations.getCount(); k++) {
 						var preparation = util.filtered.preparations.getAt(k).getData();
 						if (preparation.id === prod.preparation_id) {
@@ -185,7 +157,6 @@ Ext.define('OregonsCatch.util.CrossFilter', {
 			});
 			console.log('Copied ' + util.filtered.vendors.getAllCount() + ' vendors.');
 			console.log('Copied ' + util.filtered.preparations.getAllCount() + ' preparations.');
-			console.log('Copied %s prodpreps.', util.filtered.prodpreps.getAllCount());
 		});
 
 	},
@@ -301,49 +272,12 @@ Ext.define('OregonsCatch.util.CrossFilter', {
 		};
 	},
 
-	filterProdPrepsFn: function () {
-		var util = OregonsCatch.util.CrossFilter;
-		return function (prodprep) {
-			prodprep = prodprep.getData();
-			var ok = false;
-			util.filtered.products.each(function (item, index, length) {
-				item = item.getData();
-				if (prodprep.product_id === item.id) {
-					ok = true;
-				}
-			});
-			return ok;
-		};
-	},
-
-	filterPreparationsFn: function () {
-		var util = OregonsCatch.util.CrossFilter;
-		return function (preparation) {
-			preparation = preparation.getData();
-			if (preparation.is_not_filterable && util.filtered.prodpreps.getCount() > 1) {
-				return true;
-			}
-			var ok = false;
-			util.filtered.prodpreps.each(function (item, index, length) {
-				item = item.getData();
-				if (preparation.id === item.preparation_id) {
-					ok = true;
-				}
-			});
-			return ok;
-		};
-	},
-
 	refilter: function () {
 		var util = OregonsCatch.util.CrossFilter;
 		util.filtered.vendors.filter();
 		console.log('Filtered %s vendors.', util.filtered.vendors.getCount());
 		util.filtered.products.filter();
 		console.log('Filtered %s products.', util.filtered.products.getCount());
-		util.filtered.prodpreps.filter();
-		console.log('Filtered %s prodpreps.', util.filtered.prodpreps.getCount());
-		util.filtered.preparations.filter();
-		console.log('Filtered %s preparations.', util.filtered.preparations.getCount());
 	},
 
 	toString: function () {

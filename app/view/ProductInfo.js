@@ -4,6 +4,9 @@ Ext.define('OregonsCatch.view.ProductInfo', {
     xtype: 'ProductInfoView',
 	config: {
 		layout: 'vbox',
+		scrollable: {
+			vertical: true
+		},
 		items: [
 			{
 				xtype: 'toolbar',
@@ -29,66 +32,91 @@ Ext.define('OregonsCatch.view.ProductInfo', {
 				]
 			},
 			{
-				flex: 0.6,
+				xtype: 'image',
+				itemId: 'Image',
+				maxWidth: '100%',
+				height: '240px',
+				margin: '8px',
+				styleHtmlContent: true
+			},
+			{
+				xtype: 'fieldset',
+				itemId: 'Details',
+				styleHtmlContent: true,
+				tpl:	'<tpl if="origin"><div><strong>Origin</strong><span style="float:right">{origin}</span></div></tpl>' +
+						'<tpl if="alt_name"><div><strong>Other Name(s)</strong><span style="float:right">{alt_name}</span></div></tpl>' +
+						'<tpl if="variety"><div><strong>Variety</strong><span style="float:right">{variety}</span></div></tpl>' +
+						'<tpl if="season"><div><strong>Season</strong><span style="float:right">{season}</span></div></tpl>' +
+						'<tpl if="available"><div><strong>Availability</strong><span style="float:right">Available</span></div></tpl>' +
+						'<tpl if="!available"><div><strong>Availability</strong><span style="float:right">Unavailable</span></div></tpl>' +
+						'<tpl if="market_price"><div><strong>Market Price</strong><span style="float:right">{market_price}</span></div></tpl>',
+				data: { variety: 'Loading...' }
+			},
+			{
+				xtype: 'fieldset',
+				itemId: 'Description',
+				styleHtmlContent: true,
+				tpl: '{description}',
+				data: { description: 'Loading...' }
+			},
+			{
 				xtype: 'panel',
-				itemId: 'Info',
-				scrollable: true,
+				itemId: 'Story',
+				hidden: true,
+				showAnimation: { type: 'fadeIn' },
+				hideAnimation: { type: 'fadeOut' },
 				items: [
 					{
-						xtype: 'image',
-						itemId: 'Image',
-						maxWidth: '100%',
-						height: '240px',
-						margin: '8px',
-						styleHtmlContent: true
-					},
-					{
 						xtype: 'fieldset',
-						itemId: 'Description',
+						itemId: 'Facts',
 						styleHtmlContent: true,
-						tpl: '<strong>Description</strong><p>{description}</p><p>Scroll down for more information.</p>',
-						data: { description: 'Loading...' }
+						tpl: '{facts}'
 					},
 					{
 						xtype: 'fieldset',
-						itemId: 'Details',
+						itemId: 'Products',
 						styleHtmlContent: true,
-						tpl:	'<div><strong>Other Name(s)</strong><span style="float:right">{alt_name}</span></div>' +
-								'<div><strong>Variety</strong><span style="float:right">{variety}</span></div>' +
-								'<div><strong>Season</strong><span style="float:right">{season}</span></div>',
-						data: { variety: 'Loading...' }
+						tpl: '{products}'
 					},
 					{
 						xtype: 'fieldset',
-						items: [
-							{
-								xtype: 'button',
-								itemId: 'EducationButton',
-								html: 'Read More'
-							}
-						]
+						itemId: 'Preparing',
+						styleHtmlContent: true,
+						tpl: '{preparing}'
+					},
+					{
+						xtype: 'fieldset',
+						itemId: 'Buying',
+						styleHtmlContent: true,
+						tpl: '{buying}'
+					},
+					{
+						xtype: 'fieldset',
+						itemId: 'History',
+						styleHtmlContent: true,
+						tpl: '{history}'
+					},
+					{
+						xtype: 'button',
+						itemId: 'ImagesButton',
+						html: 'Images'
+					},
+					{
+						xtype: 'button',
+						itemId: 'VideosButton',
+						html: 'Videos'
 					}
 				]
 			},
 			{
-				xtype: 'label',
-				itemId: 'VendorTitle',
-				style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
-				tpl: 'These vendors sell {name}:',
-				data: { name: 'this seafood' },
-				styleHtmlContent: true
-			},
-			{
-				flex: 0.3,
-				xtype: 'list',
-				itemId: 'List',
-				loadingText: 'Loading...',
-				emptyText: 'No matching vendors available.',
-				deferEmptyText: false,
-				itemTpl: '{name}',
-				ui: 'normal',
-				pinHeaders: false,
-				onItemDisclosure: true
+				xtype: 'fieldset',
+				items: [
+					{
+						xtype: 'button',
+						itemId: 'BuyButton',
+						html: 'Where to Buy'
+					}
+				]
 			}
 		]
 	}

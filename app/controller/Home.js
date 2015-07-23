@@ -10,6 +10,7 @@ Ext.define('OregonsCatch.controller.Home', {
 		refs: {
 			HomeView			: 'HomeView',
 			ProductMapList		: 'ProductMapListView',
+			ProductInfo			: 'ProductInfoView',
 			VendorMapList		: 'VendorMapListView',
 			SeafoodSelect		: 'HomeView #SeafoodSelect',
 			PreparationSelect	: 'HomeView #PreparationSelect',
@@ -76,12 +77,15 @@ Ext.define('OregonsCatch.controller.Home', {
 		var ctlr = this;
 		var fields = ctlr.getLocationFieldSet();
 		var predic = ctlr.getSearchPrediction();
+		var prepst = ctlr.getPreparationSelect();
 		if (checked) {
 			fields.show();
 			predic.show();
+			prepst.show();
 		} else {
 			fields.hide();
 			predic.hide();
+			prepst.hide();
 		}
 		ctlr.onAnySearchChange();
 	},
@@ -156,7 +160,7 @@ Ext.define('OregonsCatch.controller.Home', {
 
 	onSearch: function () {
 		var ctlr = this;
-		console.log('[onSearch]');
+		var CF = OregonsCatch.util.CrossFilter;
 		OregonsCatch.util.Back.push();
 		var transition = {
 			type		: 'slide',
@@ -166,8 +170,13 @@ Ext.define('OregonsCatch.controller.Home', {
 			ctlr.getApplication().getController('VendorMapList').load();
 			Ext.Viewport.animateActiveItem(ctlr.getVendorMapList(), transition);
 		} else {
-			ctlr.getApplication().getController('ProductMapList').load();
-			Ext.Viewport.animateActiveItem(ctlr.getProductMapList(), transition);
+			if (CF.filtered.products.getCount() === 1) {
+				ctlr.getApplication().getController('ProductInfo').load(CF.filtered.products.first());
+				Ext.Viewport.animateActiveItem(ctlr.getProductInfo(), transition);
+			} else {
+				ctlr.getApplication().getController('ProductMapList').load();
+				Ext.Viewport.animateActiveItem(ctlr.getProductMapList(), transition);
+			}
 		}
 	}
 

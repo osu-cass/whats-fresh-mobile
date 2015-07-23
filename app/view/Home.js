@@ -38,6 +38,9 @@ Ext.define('OregonsCatch.view.Home', {
 						xtype: 'selectfield',
 						itemId: 'PreparationSelect',
 						label: 'Preparation',
+						hidden: true,
+						showAnimation: { type: 'fadeIn' },
+						hideAnimation: { type: 'fadeOut' },
 						displayField: 'name',
 						valueField: 'id'
 					}
