@@ -19,6 +19,7 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 			'ProductMapListView #HomeButton': { tap: 'onHome' },
 			PML_List: {
 				itemsingletap	: 'onListSingleTap',
+				itemdoubletap	: 'onListDoubleTap',
 				disclose		: 'onDisclose',
 				refresh			: 'onListRefresh'
 			}
@@ -69,6 +70,10 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 			// Doesn't change anything, but allows us to "redraw" the map markers.
 			markers[i].setMap(map);
 		}
+	},
+
+	onListDoubleTap: function (p1, index, p3, product) {
+		this.onDisclose(null, product);
 	},
 
 	onDisclose: function (p1, product, p3, p4) {

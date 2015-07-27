@@ -19,6 +19,7 @@ Ext.define('OregonsCatch.controller.VendorMapList', {
 			VendorList: {
 				itemsingletap	: 'onListSingleTap',
 				disclose		: 'onDisclose',
+				itemdoubletap	: 'onListDoubleTap',
 				refresh			: 'onListRefresh'
 			}
 		}
@@ -45,6 +46,11 @@ Ext.define('OregonsCatch.controller.VendorMapList', {
 		var CF = OregonsCatch.util.CrossFilter;
 		var markers = ctlr.getVendorMap().markers;
 		google.maps.event.trigger(markers[index], 'click');
+	},
+
+	onListDoubleTap: function (p1, index, p3, vendor) {
+		var ctlr = this;
+		ctlr.onDisclose(null, vendor);
 	},
 
 	onMapClick: function (index) {

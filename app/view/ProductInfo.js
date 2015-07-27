@@ -97,14 +97,26 @@ Ext.define('OregonsCatch.view.ProductInfo', {
 						tpl: '{history}'
 					},
 					{
-						xtype: 'button',
-						itemId: 'ImagesButton',
-						html: 'Images'
+						xtype: 'fieldset',
+						itemId: 'ImagesButtonField',
+						items: [
+							{
+								xtype: 'button',
+								itemId: 'ImagesButton',
+								html: 'Images'
+							}
+						]
 					},
 					{
-						xtype: 'button',
-						itemId: 'VideosButton',
-						html: 'Videos'
+						xtype: 'fieldset',
+						itemId: 'VideosButtonField',
+						items: [
+							{
+								xtype: 'button',
+								itemId: 'VideosButton',
+								html: 'Videos'
+							}
+						]
 					}
 				]
 			},

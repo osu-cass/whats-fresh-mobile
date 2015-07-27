@@ -27,7 +27,9 @@ Ext.define('OregonsCatch.controller.ProductInfo', {
 			Buying				: 'ProductInfoView #Buying',
 			History				: 'ProductInfoView #History',
 			BuyButton			: 'ProductInfoView #BuyButton',
+			ImagesButtonField	: 'ProductInfoView #ImagesButtonField',
 			ImagesButton		: 'ProductInfoView #ImagesButton',
+			VideosButtonField	: 'ProductInfoView #VideosButtonField',
 			VideosButton		: 'ProductInfoView #VideosButton',
 			SimpleImagesView	: 'SimpleImagesView',
 			SimpleVideosView	: 'SimpleVideosView'
@@ -77,10 +79,12 @@ Ext.define('OregonsCatch.controller.ProductInfo', {
 
 		ctlr._product = product;
 
-		if (product.get('story')) {
+		if (typeof product.get('story') === 'number') {
 			ctlr.loadStory();
 		} else {
+			console.log('Hiding story.');
 			ctlr.getStory().hide();
+			ctlr.getStory().setHidden(true);
 		}
 	},
 
@@ -100,21 +104,33 @@ Ext.define('OregonsCatch.controller.ProductInfo', {
 				console.log('Loaded story for product.');
 				var story = Stories.first().getData();
 				ctlr._story = Stories.first();
+
+				var ifShow = function (data, element) {
+					if (data) {
+						element.show();
+					} else {
+						element.hide();
+					}
+				};
+
 				ctlr.getFacts().setData(story);
+				ifShow(story.facts, ctlr.getFacts());
+
 				ctlr.getProducts().setData(story);
+				ifShow(story.products, ctlr.getProducts());
+
 				ctlr.getPreparing().setData(story);
+				ifShow(story.preparing, ctlr.getPreparing());
+
 				ctlr.getBuying().setData(story);
+				ifShow(story.buying, ctlr.getBuying());
+
 				ctlr.getHistory().setData(story);
-				if (story.images.length) {
-					ctlr.getImagesButton().show();
-				} else {
-					ctlr.getImagesButton().hide();
-				}
-				if (story.videos.length) {
-					ctlr.getVideosButton().show();
-				} else {
-					ctlr.getVideosButton().hide();
-				}
+				ifShow(story.history, ctlr.getHistory());
+
+				ifShow(story.images.length, ctlr.getImagesButtonField());
+				ifShow(story.videos.length, ctlr.getVideosButtonField());
+
 				ctlr.getStory().show();
 			} else {
 				ctlr.getStory().hide();
@@ -147,7 +163,7 @@ Ext.define('OregonsCatch.controller.ProductInfo', {
 
 	onImages: function () {
 		var ctlr = this;
-		OregonsCatch.util.Back.push(ctlr, ctlr._story);
+		OregonsCatch.util.Back.push(ctlr, ctlr._product);
 		ctlr.getApplication().getController('SimpleImagesView').load(ctlr._story.get('images'));
 		var transition = {
 			type		: 'slide',
@@ -158,7 +174,7 @@ Ext.define('OregonsCatch.controller.ProductInfo', {
 
 	onVideos: function () {
 		var ctlr = this;
-		OregonsCatch.util.Back.push(ctlr, ctlr._story);
+		OregonsCatch.util.Back.push(ctlr, ctlr._product);
 		ctlr.getApplication().getController('SimpleVideosView').load(ctlr._story.get('videos'));
 		var transition = {
 			type		: 'slide',

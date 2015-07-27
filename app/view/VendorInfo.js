@@ -47,7 +47,7 @@ Ext.define('OregonsCatch.view.VendorInfo', {
 						tpl:	'<div><strong>Contact</strong><span style="float:right">{contact_name}</span></div>' +
 								'<tpl if="phone"><strong>Phone</strong><span style="float:right">{phone}</span></tpl>' +
 								'<tpl if="email"><strong>Email</strong><span style="float:right">{email}</span></tpl>' +
-								'<tpl if="website" style="text-align:center"><a href="{website}" target="_system">Website</a></tpl>' +
+								'<tpl if="website" style="text-align:center"><div><strong>Website</strong><span style="float:right"><a href="{website}">Open Website</a></span></div></tpl>' +
 								'<tpl if="hours"><strong>Hours</strong><span style="float:right">{hours}</span></tpl>',
 					},
 					{
@@ -80,10 +80,8 @@ Ext.define('OregonsCatch.view.VendorInfo', {
 				]
 			},
 			{
-				xtype: 'label',
-				style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
-				html: 'This vendor sells:',
-				styleHtmlContent: true
+				xtype: 'toolbar',
+				title: 'This vendor sells:'
 			},
 			{
 				flex: 0.3,

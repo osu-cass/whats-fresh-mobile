@@ -2,6 +2,6 @@ Ext.define('OregonsCatch.util.API', {
 
 	singleton: true,
 
-	url: 'http://seagrant-staging-api.osuosl.org'
+	url: 'http://whats-fresh-api.osuosl.org'
 
 });

@@ -24,7 +24,10 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 			'VendorInfoView #BackButton': { tap: 'onBack' },
 			'VendorInfoView #HomeButton': { tap: 'onHome' },
 			MapImage: { tap: 'onNavigate' },
-			List: { disclose: 'onDisclose' }
+			List: {
+				disclose: 'onDisclose',
+				itemdoubletap: 'onListDoubleTap'
+			}
 		}
 	},
 
@@ -63,6 +66,10 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 		ctlr.getMapImage().setSrc(Link.getGoogleMapImageFromRecord(vendor));
 	},
 
+	onListDoubleTap: function (p1, p2, p3, prodprep) {
+		this.onDisclose(null, prodprep);
+	},
+
 	onDisclose: function (p1, prodprep) {
 		var ctlr = this;
 		ctlr.getList().select(prodprep);
@@ -79,9 +86,17 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 	onNavigate: function () {
 		var ctlr = this;
 		var Link = OregonsCatch.util.Link;
+		var street = ctlr._vendor.get('street');
+		var city = ctlr._vendor.get('city');
+		var state = ctlr._vendor.get('state');
+		var zip = ctlr._vendor.get('zip');
 		var lat = ctlr._vendor.get('lat');
 		var lng = ctlr._vendor.get('lng');
-		Link.openNavigation(lat, lng);
+		if (street) {
+			Link.openAddressNavigation(street, city, state, zip);
+		} else {
+			Link.openNavigation(lat, lng);
+		}
 	}
 
 });

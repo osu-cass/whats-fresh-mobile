@@ -39,10 +39,8 @@ Ext.define('OregonsCatch.view.ProductMapList', {
 				itemId: 'Map'
 			},
 			{
-				xtype: 'label',
-				style: { background: 'rgba(0,50,255,0.1)', 'text-align': 'center' },
-				html: 'Select which seafood to learn about:',
-				styleHtmlContent: true
+				xtype: 'toolbar',
+				title: 'Select a seafood:'
 			},
 			{
 				flex: 0.5,

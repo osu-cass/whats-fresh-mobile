@@ -1,6 +1,7 @@
 ### External Dependencies ###
 node_modules/*
-bootstrap.*
+bootstrap.js
+bootstrap.json
 
 ### Compiled Files ###
 build/*

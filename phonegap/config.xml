@@ -11,6 +11,8 @@
 	<access origin="*.gstatic.com" />
 	<access origin="*.osuosl.org" />
 	<access origin="img.youtube.com" />
+	<allow-intent href="http://*/*" />
+	<allow-intent href="https://*/*" />
 	<content src="index.html" />
 	<hook src="hooks/overwrite_ios_view.js" type="after_build" />
 	<preference name="permissions" value="none" />
@@ -64,7 +66,6 @@
 	<platform name="android">
 		<preference name="SplashScreen" value="screen" />
 		<preference name="SplashScreenDelay" value="3000" />
-		<allow-navigation href="*" />
 		<icon gap:qualifier="ldpi" height="36" src="../resources/icons/36.png" width="36" />
 		<icon gap:qualifier="mdpi" height="48" src="../resources/icons/48.png" width="48" />
 		<icon gap:qualifier="hdpi" height="72" src="../resources/icons/72.png" width="72" />

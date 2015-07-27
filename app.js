@@ -11,7 +11,6 @@ Ext.application({
 		'Home',
 		'ProductMapList',
 		'ProductInfo',
-		'ProductEducation',
 		'SimpleTextView',
 		'SimpleImagesView',
 		'SimpleVideosView',
@@ -23,7 +22,6 @@ Ext.application({
 		'Home',
 		'ProductMapList',
 		'ProductInfo',
-		'ProductEducation',
 		'SimpleTextView',
 		'SimpleImagesView',
 		'SimpleVideosView',
@@ -60,7 +58,6 @@ Ext.application({
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.Home'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductMapList'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductInfo'));
-		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductEducation'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleTextView'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleImagesView'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleVideosView'));
@@ -81,6 +78,17 @@ Ext.application({
 		if (Ext.os.is('Android')) {
 			document.addEventListener('backButton', Ext.bind(onBackKeyDown, this), false);
 		}
+
+
+		// This is a hacky solution to the problem:
+		// Cordova cannot handle inline hrefs to external pages.
+		// This forces links to open with JS instead.
+		Ext.Viewport.element.dom.addEventListener('click', function (e) {
+			if (e.target.tagName.toLowerCase() !== 'a') { return; }
+			var url = e.target.getAttribute('href');
+			e.preventDefault();
+			OregonsCatch.util.Link.openLink(url);
+		}, false);
 
 		// Finally, bring the user into the app.
 
