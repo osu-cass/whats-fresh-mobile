@@ -1,22 +1,22 @@
-Ext.define('WhatsFresh.util.Link',{
-
-    /**
-       The Link util defines a set of functions that navigate the user
-       out of the current app context an into either a navigation app
-       or a video app.
-
-       Each function is responsible for correctly rerouting the user
-       depending on their platform.
-     */
-
+Ext.define('OregonsCatch.util.Link', {
 	singleton: true,
 
-	openNavigation: function(lat, lng){
+	openNavigation: function(lat, lng) {
 		var data = 'daddr=' + lat + ',' + lng;
 		if (window.device && window.device.platform === 'iOS') {
-			this.openLink('maps:' + data);
+			this.openLink('https://maps.apple.com/?' + data);
 		} else {
 			this.openLink('https://maps.google.com/?' + data);
+		}
+	},
+
+	openAddressNavigation: function(street, city, state, zip) {
+		// http://stackoverflow.com/questions/1300838/how-to-convert-an-address-into-a-google-maps-link-not-map
+		var data = [street, city, state, zip].join('+');
+		if (window.device && window.device.platform === 'iOS') {
+			this.openLink('https://maps.apple.com/?daddr=' + data);
+		} else {
+			this.openLink('https://www.google.com/maps/place/' + data);
 		}
 	},
 
@@ -43,7 +43,16 @@ Ext.define('WhatsFresh.util.Link',{
 		return id;
 	},
 
-	// Legacy name is being forwarded.
-	formatVideoLink: function (link) { return this.getYoutubeIdFromLink(link); }
+	getYoutubeImageFromLink: function (link) {
+		var id = this.getYoutubeIdFromLink(link);
+		return 'http://img.youtube.com/vi/' + id + '/0.jpg';
+	},
+
+	getGoogleMapImageFromRecord: function (record) {
+        return 'http://maps.googleapis.com/maps/api/staticmap?center=' +
+            record.get('lat') +','+ record.get('lng') +
+            '&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C' +
+            record.get('lat') +','+ record.get('lng');
+	}
 
 });

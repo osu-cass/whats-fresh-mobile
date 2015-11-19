@@ -1,2 +1,0 @@
-Education Page Documentation
-============================

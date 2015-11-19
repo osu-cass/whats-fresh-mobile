@@ -2,15 +2,17 @@
 <widget id="edu.oregonstate.cass.WhatsFresh" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>OregonsCatch</name>
     <description>
-      A catalog of fresh sea food available on the Oregon coast.
-    </description>
+	  A catalog of fresh sea food available on the Oregon coast.
+	</description>
     <author email="support@phonegap.com" href="http://phonegap.com">
-        Oregon State University: Center for Applied Systems and Software
-    </author>
+		Oregon State University: Center for Applied Systems and Software
+	</author>
     <access origin="*.googleapis.com" />
     <access origin="*.gstatic.com" />
     <access origin="*.osuosl.org" />
     <access origin="img.youtube.com" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
     <content src="index.html" />
     <hook src="hooks/overwrite_ios_view.js" type="after_build" />
     <preference name="permissions" value="none" />
@@ -32,10 +34,10 @@
         <preference name="ShowSplashScreenSpinner" value="false" />
         <preference name="AutoHideSplashScreen" value="false" />
         <icon height="60" src="../resources/icons/64.png" width="60" />
-        <icon height="120" src="../resources/icons/144.png" width="120" />
+        <icon height="120" src="../resources/icons/120.png" width="120" />
         <icon height="180" src="../resources/icons/192.png" width="180" />
-        <icon height="76" src="../resources/icons/96.png" width="76" />
-        <icon height="152" src="../resources/icons/192.png" width="152" />
+        <icon height="76" src="../resources/icons/76.png" width="76" />
+        <icon height="152" src="../resources/icons/152.png" width="152" />
         <icon height="40" src="../resources/icons/48.png" width="40" />
         <icon height="80" src="../resources/icons/96.png" width="80" />
         <icon height="57" src="../resources/icons/57.png" width="57" />
@@ -64,7 +66,6 @@
     <platform name="android">
         <preference name="SplashScreen" value="screen" />
         <preference name="SplashScreenDelay" value="3000" />
-        <allow-navigation href="*" />
         <icon gap:qualifier="ldpi" height="36" src="../resources/icons/36.png" width="36" />
         <icon gap:qualifier="mdpi" height="48" src="../resources/icons/48.png" width="48" />
         <icon gap:qualifier="hdpi" height="72" src="../resources/icons/72.png" width="72" />
@@ -80,11 +81,11 @@
         <splash density="port-xhdpi" src="../resources/startup/android/XHDPIpor.9.png" />
         <splash density="land-xhdpi" src="../resources/startup/android/XHDPIlan.9.png" />
     </platform>
-    <engine name="ios" spec="^3.8.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
     <plugin name="cordova-plugin-device" spec="^1.0.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.0.1" />
     <plugin name="cordova-plugin-geolocation" spec="^1.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^2.1.0" />
     <engine name="android" spec="^4.0.2" />
+    <engine name="ios" spec="~3.9.2" />
 </widget>
