@@ -48,7 +48,7 @@
             "x-bootstrap": true
         },
         {
-            "path": "https://maps.googleapis.com/maps/api/js?sensor=true",
+            "path": "https://maps.googleapis.com/maps/api/js",
             "remote": true
         },
         {

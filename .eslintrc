@@ -1,0 +1,13 @@
+{
+	"env":
+	{
+		"browser": true,
+		"node": false
+	},
+	"plugins": [],
+	"rules":
+	{
+		"semi": [2, "always"],
+		"comma-dangle": [2, "never"]
+	}
+}
