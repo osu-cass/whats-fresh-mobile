@@ -15,6 +15,7 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 			View				: 'VendorInfoView',
 			Title				: 'VendorInfoView #Title',
 			Description			: 'VendorInfoView #Description',
+			LocationDescription			: 'VendorInfoView #LocationDescription',
 			Contact				: 'VendorInfoView #Contact',
 			Address				: 'VendorInfoView #Address',
 			MapImage			: 'VendorInfoView #MapImage',
@@ -60,6 +61,18 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 		ctlr.getTitle().setTitle(vendor.get('name'));
 		if (vendor.get('name').length > 14) { ctlr.getTitle().setTitle('Vendor Info'); }
 		ctlr.getDescription().setData(vendor.data);
+
+		var ifShow = function (data, element) {
+			if (data) {
+				element.show();
+			} else {
+				element.hide();
+			}
+		};
+
+		ctlr.getLocationDescription().setData(vendor.data);
+		ifShow(vendor.get('location_description'), ctlr.getLocationDescription())
+
 		ctlr.getContact().setData(vendor.data);
 
 		ctlr.getAddress().setData(vendor.data);

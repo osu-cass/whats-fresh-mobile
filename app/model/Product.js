@@ -4,7 +4,6 @@ Ext.define('OregonsCatch.model.Product', {
 		fields:[
 			'id',
 			'origin',
-			'available',
 			'description',
 			'variety',
 			'season',

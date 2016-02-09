@@ -42,8 +42,6 @@ Ext.define('OregonsCatch.view.ProductInfo', {
 				'<tpl if="alt_name"><div><strong>Other Name(s)</strong><span style="float:right">{alt_name}</span></div></tpl>' +
 				'<tpl if="variety"><div><strong>Variety</strong><span style="float:right">{variety}</span></div></tpl>' +
 				'<tpl if="season"><div><strong>Season</strong><span style="float:right">{season}</span></div></tpl>' +
-				'<tpl if="available"><div><strong>Availability</strong><span style="float:right">Available</span></div></tpl>' +
-				'<tpl if="!available"><div><strong>Availability</strong><span style="float:right">Unavailable</span></div></tpl>' +
 				'<tpl if="market_price"><div><strong>Market Price</strong><span style="float:right">{market_price}</span></div></tpl>',
 			data: {
 				variety: 'Loading...'

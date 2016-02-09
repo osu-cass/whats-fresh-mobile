@@ -8,6 +8,7 @@ Ext.application({
 	],
 
 	views: [
+		'Error',
 		'Home',
 		'ProductMapList',
 		'ProductInfo',
@@ -19,6 +20,7 @@ Ext.application({
 	],
 
 	controllers: [
+		'Error',
 		'Home',
 		'ProductMapList',
 		'ProductInfo',
@@ -55,6 +57,7 @@ Ext.application({
 
 		// Views must be manually instantiated.
 
+		// Add home view first to show it.
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.Home'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductMapList'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductInfo'));
@@ -63,6 +66,7 @@ Ext.application({
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleVideosView'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.VendorMapList'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.VendorInfo'));
+		Ext.Viewport.add(Ext.create('OregonsCatch.view.Error'));
 
 		// Android back button functionality.
 

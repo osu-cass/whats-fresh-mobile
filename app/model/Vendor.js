@@ -19,6 +19,7 @@ Ext.define('OregonsCatch.model.Vendor', {
 			'products',
 			'lat',
 			'contact_name',
+			'hours',
 			'story',
 			'name'
 		]

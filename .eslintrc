@@ -4,10 +4,15 @@
 		"browser": true,
 		"node": false
 	},
+	"globals": {
+		"Ext": true,
+		"OregonsCatch": true
+	},
 	"plugins": [],
 	"rules":
 	{
-		"semi": [2, "always"],
-		"comma-dangle": [2, "never"]
+		"semi": [1, "always"],
+		"comma-dangle": [1, "never"],
+		"no-undef": 2
 	}
 }

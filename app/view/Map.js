@@ -1,6 +1,8 @@
 Ext.define('OregonsCatch.view.Map', {
 	extend: 'Ext.Container',
-	requires: ['Ext.Map'],
+	requires: [
+		'Ext.Map'
+	],
 	xtype: 'SeaGrantMap',
 	config: {
 		layout: 'fit',
@@ -8,8 +10,8 @@ Ext.define('OregonsCatch.view.Map', {
 			{
 				xtype: 'map',
 				mapOptions: {
-					center: new google.maps.LatLng(43, -123),
-					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					center: window.google ? new google.maps.LatLng(43, -123) : null,
+					mapTypeId: window.google ? google.maps.MapTypeId.ROADMAP : null,
 					zoom: 13,
 					// The point of this piece is so that the
 					// points of interest are removed from the map.

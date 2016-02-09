@@ -47,6 +47,15 @@ Ext.define('OregonsCatch.view.VendorInfo', {
 					'<tpl if="hours"><strong>Hours</strong><span style="float:right">{hours}</span></tpl>'
 			}, {
 				xtype: 'fieldset',
+				itemId: 'LocationDescription',
+				styleHtmlContent: true,
+				tpl: '{location_description}',
+				data: {
+					description: 'Loading...'
+				},
+			},
+			{
+				xtype: 'fieldset',
 				itemId: 'Navigation',
 				items: [{
 					xtype: 'label',
@@ -56,7 +65,8 @@ Ext.define('OregonsCatch.view.VendorInfo', {
 						'text-align': 'center'
 					},
 					tpl: '{street}, {city}, {state}, {zip}'
-				}, {
+				},
+				{
 					xtype: 'image',
 					itemId: 'MapImage',
 					styleHtmlContent: true,
