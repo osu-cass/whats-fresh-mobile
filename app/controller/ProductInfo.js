@@ -150,7 +150,7 @@ Ext.define('OregonsCatch.controller.ProductInfo', {
         ifShow(story.history, ctlr.getHistory());
 
         ctlr.getManagement().setData(story);
-        ifShow(story.management, ctlr.getManagement());
+        ifShow(story.season, ctlr.getManagement());
 
         ifShow(story.images.length, ctlr.getImagesButtonField());
         ifShow(story.videos.length, ctlr.getVideosButtonField());

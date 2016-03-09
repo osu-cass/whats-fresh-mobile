@@ -20,7 +20,7 @@ Ext.define('OregonsCatch.view.ProductMapList', {
 						xtype: 'button',
 						itemId: 'BackButton',
 						ui: 'action',
-						iconCls: 'arrow_left',
+						iconCls: 'arrow_left'
 					},
 					{
 						xtype: 'spacer'

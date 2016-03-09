@@ -12,7 +12,6 @@ Ext.application({
 		'Home',
 		'ProductMapList',
 		'ProductInfo',
-		'SimpleTextView',
 		'SimpleImagesView',
 		'SimpleVideosView',
 		'VendorMapList',
@@ -24,7 +23,6 @@ Ext.application({
 		'Home',
 		'ProductMapList',
 		'ProductInfo',
-		'SimpleTextView',
 		'SimpleImagesView',
 		'SimpleVideosView',
 		'VendorMapList',
@@ -61,7 +59,6 @@ Ext.application({
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.Home'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductMapList'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.ProductInfo'));
-		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleTextView'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleImagesView'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.SimpleVideosView'));
 		Ext.Viewport.add(Ext.create('OregonsCatch.view.VendorMapList'));

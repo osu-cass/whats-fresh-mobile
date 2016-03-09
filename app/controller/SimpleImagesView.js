@@ -11,7 +11,7 @@ Ext.define('OregonsCatch.controller.SimpleImagesView', {
 		},
 		control: {
 			'SimpleImagesView #BackButton': { tap: 'onBack' },
-			'SimpleImagesView #HomeButton': { tap: 'onHome' },
+			'SimpleImagesView #HomeButton': { tap: 'onHome' }
 		}
 	},
 

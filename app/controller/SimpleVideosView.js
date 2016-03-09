@@ -12,7 +12,7 @@ Ext.define('OregonsCatch.controller.SimpleVideosView', {
 		},
 		control: {
 			'SimpleVideosView #BackButton': { tap: 'onBack' },
-			'SimpleVideosView #HomeButton': { tap: 'onHome' },
+			'SimpleVideosView #HomeButton': { tap: 'onHome' }
 		}
 	},
 

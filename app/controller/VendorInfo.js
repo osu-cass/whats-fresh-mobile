@@ -19,7 +19,7 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 			Contact				: 'VendorInfoView #Contact',
 			Address				: 'VendorInfoView #Address',
 			MapImage			: 'VendorInfoView #MapImage',
-			List				: 'VendorInfoView #List',
+			List				: 'VendorInfoView #List'
 		},
 		control: {
 			'VendorInfoView #BackButton': { tap: 'onBack' },
@@ -71,7 +71,7 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
 		};
 
 		ctlr.getLocationDescription().setData(vendor.data);
-		ifShow(vendor.get('location_description'), ctlr.getLocationDescription())
+		ifShow(vendor.get('location_description'), ctlr.getLocationDescription());
 
 		ctlr.getContact().setData(vendor.data);
 

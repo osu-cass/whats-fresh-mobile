@@ -32,7 +32,7 @@ Ext.define('OregonsCatch.view.VendorInfo', {
 				xtype: 'fieldset',
 				itemId: 'Description',
 				styleHtmlContent: true,
-				tpl: '<strong>{name}</strong><br/>{description}',
+				tpl: '{description}',
 				data: {
 					description: 'Loading...'
 				}
@@ -52,7 +52,7 @@ Ext.define('OregonsCatch.view.VendorInfo', {
 				tpl: '{location_description}',
 				data: {
 					description: 'Loading...'
-				},
+				}
 			},
 			{
 				xtype: 'fieldset',

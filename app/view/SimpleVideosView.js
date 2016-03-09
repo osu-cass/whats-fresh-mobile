@@ -19,7 +19,7 @@ Ext.define('OregonsCatch.view.SimpleVideosView', {
 						xtype: 'button',
 						itemId: 'BackButton',
 						ui: 'action',
-						iconCls: 'arrow_left',
+						iconCls: 'arrow_left'
 					},
 					{
 						xtype: 'spacer'

@@ -30,8 +30,9 @@ Ext.define('OregonsCatch.view.ProductInfo', {
 		}, {
 			xtype: 'image',
 			itemId: 'Image',
+			id: 'ProductImage',
 			maxWidth: '100%',
-			height: '240px',
+			minHeight: '240px',
 			margin: '8px',
 			styleHtmlContent: true
 		}, {
@@ -73,7 +74,7 @@ Ext.define('OregonsCatch.view.ProductInfo', {
 				xtype: 'fieldset',
 				itemId: 'Management',
 				styleHtmlContent: true,
-				tpl: '{management}'
+				tpl: '{season}'
 			}, {
 				xtype: 'fieldset',
 				itemId: 'History',

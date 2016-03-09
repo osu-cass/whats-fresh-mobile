@@ -1,12 +1,12 @@
 {
 	"env":
 	{
-		"browser": true,
-		"node": false
+		"browser": true
 	},
 	"globals": {
 		"Ext": true,
-		"OregonsCatch": true
+		"OregonsCatch": true,
+		"google": true
 	},
 	"plugins": [],
 	"rules":
