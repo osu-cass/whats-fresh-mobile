@@ -1,5 +1,6 @@
 ### External Dependencies ###
 node_modules/*
+keystores/*
 bootstrap.js
 bootstrap.json
 
@@ -14,7 +15,6 @@ resources/css/*
 phonegap/*
 !phonegap/config.xml
 !phonegap/hooks
-
 
 ### temp and log Files ###
 **/*.temp*
