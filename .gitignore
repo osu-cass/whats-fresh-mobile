@@ -1,12 +1,20 @@
 ### External Dependencies ###
-node_modules/
-bootstrap.*
+node_modules/*
+keystores/*
+bootstrap.js
+bootstrap.json
 
 ### Compiled Files ###
-build/
-**/.sass-cache/
-resources/css/
-phonegap/
+build/*
+docs/build/*
+resources/sass/.sass-cache/*
+resources/css/*
+.sencha_backup
+
+# Preserve phonegap's config.xml file
+phonegap/*
+!phonegap/config.xml
+!phonegap/hooks
 
 ### temp and log Files ###
 **/*.temp*

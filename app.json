@@ -2,7 +2,7 @@
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
-    "name": "SeaGrant_Proto",
+    "name": "OregonsCatch",
 
     /**
      * The file path to this application's front HTML document, relative to this app.json file
@@ -32,17 +32,13 @@
      *                                      //  - "delta" to enable over-the-air delta update for this file
      *                                      //  - "full" means full update will be made when this file changes
      *          "x-bootstrap": true         // (Optional)
-     *                                      // Indicates a development mode only dependency.  
+     *                                      // Indicates a development mode only dependency.
      *                                      // These files will not be copied into the build directory or referenced
      *                                      // in the generate app.json manifest for the micro loader.
      *
      *      }
      */
     "js": [
-		{
-			"path": "phonegap.js",
-			"remote": true
-		},
         {
             "path": "touch/sencha-touch.js",
             "x-bootstrap": true
@@ -50,6 +46,10 @@
         {
             "path": "bootstrap.js",
             "x-bootstrap": true
+        },
+        {
+            "path": "https://maps.googleapis.com/maps/api/js",
+            "remote": true
         },
         {
             "path": "app.js",
@@ -107,11 +107,39 @@
      * Extra resources to be copied along when build
      */
     "resources": [
-		"config.xml",
         "resources/images",
         "resources/icons",
         "resources/startup"
     ],
+
+    "builds": {
+
+        "web": {
+        	"default": true
+        },
+
+        "android": {
+            "packager": "phonegap",
+            "phonegap" : {
+                "config": {
+                    "platform": "android",
+                    "id": "edu.oregonstate.cass.OregonsCatch",
+                    "name": "OregonsCatch"
+                }
+            }
+        },
+
+        "ios": {
+            "packager": "phonegap",
+            "phonegap" : {
+                "config": {
+                    "platform": "ios",
+                    "id": "edu.oregonstate.cass.OregonsCatch",
+                    "name": "OregonsCatch"
+                }
+            }
+        }
+    },
 
     /**
      * File / directory name matchers to ignore when copying to the builds, must be valid regular expressions
@@ -136,5 +164,5 @@
      * Uniquely generated id for this application, used as prefix for localStorage keys.
      * Normally you should never change this value.
      */
-    "id": "3b3e9719-1a91-4856-96c5-a469f46b243f"
+    "id": "445411a8-bbdf-4539-96dc-8aa9d390a5f4"
 }

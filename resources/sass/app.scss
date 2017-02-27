@@ -6,31 +6,9 @@
 
 // Custom code goes here..
 
-
-
-#ext-SeaGrantMap-2{
-	height: 40%;
-}
-
-#ext-list-1{
-	height: 60%;
-	top: 40%;
-}	
-
-
-#ext-element-49{
-	background-color: #00FF00;
-}
-#ext-element-40{
-	background-color: red;
-}
-#ext-input-4{
-	background-color: #990099;
-}
-#ext-input-5{
-	background-color: #33CC00;
-}
-
-
 // Examples of using the icon mixin:
 // @include icon('user');
+
+#ProductImage {
+  background-size: 90% auto;
+}
