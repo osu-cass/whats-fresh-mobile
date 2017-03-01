@@ -47,7 +47,6 @@ Ext.application({
 	],
 
 	launch: function () {
-		var app = this;
 
 		// Load the API into the millions of stores.
 
