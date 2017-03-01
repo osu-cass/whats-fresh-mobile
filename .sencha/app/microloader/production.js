@@ -57,6 +57,7 @@
             }
             else {
                 uri = toAbsoluteUri(asset.path);
+                asset.version = asset.hash;
             }
 
             asset.uri = uri;

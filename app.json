@@ -1,4 +1,5 @@
 {
+    "framework": "touch",
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
