@@ -49,12 +49,16 @@
             "x-bootstrap": true
         },
         {
-            "path": "https://maps.googleapis.com/maps/api/js",
+            "path": "https://maps.googleapis.com/maps/api/js?key=AIzaSyCutbIDKpBhhv8EYkIl7DLnBohgjttimOM",
+            "remote": true
+        },
+        {
+            "path": "https://www.google-analytics.com/analytics.js",
             "remote": true
         },
         {
             "path": "app.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
+            "bundle": true,
             "update": "delta"
         }
     ],
@@ -115,9 +119,7 @@
 
     "builds": {
 
-        "web": {
-        	"default": true
-        },
+        "web": {},
 
         "android": {
             "packager": "phonegap",
@@ -125,7 +127,7 @@
                 "config": {
                     "platform": "android",
                     "id": "edu.oregonstate.cass.OregonsCatch",
-                    "name": "OregonsCatch"
+                    "name": "Oregon's Catch"
                 }
             }
         },
@@ -136,10 +138,23 @@
                 "config": {
                     "platform": "ios",
                     "id": "edu.oregonstate.cass.OregonsCatch",
-                    "name": "OregonsCatch"
+                    "name": "Oregon's Catch"
+                }
+            }
+        },
+
+        "browser": {
+            "default": true,
+            "packager": "phonegap",
+            "phonegap" : {
+                "config": {
+                    "platform": "browser",
+                    "id": "edu.oregonstate.cass.OregonsCatch",
+                    "name": "Oregon's Catch"
                 }
             }
         }
+
     },
 
     /**

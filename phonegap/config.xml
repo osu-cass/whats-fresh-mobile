@@ -82,6 +82,14 @@
         <preference name="SplashMaintainAspectRatio" value="false" />
         <preference name="SplashShowOnlyFirstTime" value="false" />
     </platform>
+    <platform name="browser">
+        <preference name="SplashScreen" value="../resources/icons/192.png" />
+        <preference name="SplashScreenDelay" value="3000" />
+        <preference name="SplashScreenBackgroundColor" value="#464646" />
+        <preference name="ShowSplashScreen" value="true" />
+        <preference name="SplashScreenWidth" value="192" />
+        <preference name="SplashScreenHeight" value="192" />
+    </platform>
     <plugin name="cordova-plugin-device" spec="~1.1.4" />
     <plugin name="cordova-plugin-geolocation" spec="~2.4.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="We'll only use your location to limit results to nearby vendors." />
@@ -96,4 +104,5 @@
     <preference name="StatusBarStyle" value="lightcontent" />
     <engine name="android" spec="~6.0.0" />
     <engine name="ios" spec="~4.3.1" />
+    <engine name="browser" spec="~4.1.0" />
 </widget>
