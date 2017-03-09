@@ -1,13 +1,12 @@
 env:
   browser: true
-  es6: true
 
 globals:
   Ext: true
+  OregonsCatch: true
   google: true
   ga: true
   cordova: true
-  OregonsCatch: true
 
 extends:
   - eslint:recommended

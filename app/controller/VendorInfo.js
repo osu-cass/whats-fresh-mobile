@@ -57,7 +57,7 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
       CF.filtered.prodpreps.add(vendor.get('products')[i]);
     }
 
-		// Population
+    // Population
     ctlr.getTitle().setTitle(vendor.get('name'));
     if (vendor.get('name').length > 14) { ctlr.getTitle().setTitle('Vendor Info'); }
     ctlr.getDescription().setData(vendor.data);
@@ -78,7 +78,7 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
     ctlr.getAddress().setData(vendor.data);
     ctlr.getMapImage().setSrc(Link.getGoogleMapImageFromRecord(vendor));
 
-    ga('send', 'screenview', { 'screenName': 'VendorInfo: ' + vendor.get('name') });
+    ga.trackView('VendorInfo: ' + vendor.get('name'));
   },
 
   onListDoubleTap: function (p1, p2, p3, prodprep) {
@@ -109,7 +109,7 @@ Ext.define('OregonsCatch.controller.VendorInfo', {
     } else {
       Link.openNavigation(lat, lng);
     }
-    ga('send', 'event', 'Open Map', ctlr._vendor.get('name'));
+    ga.trackEvent('Open Map', ctlr._vendor.get('name'));
   }
 
 });

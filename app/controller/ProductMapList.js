@@ -37,7 +37,7 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
   load: function () {
     var ctlr = this;
     ctlr.getPML_Map().center();
-    ga('send', 'screenview', { 'screenName': 'ProductMapList' });
+    ga.trackView('ProductMapList');
   },
 
   onBack: function () { OregonsCatch.util.Back.pop(); },
@@ -79,14 +79,10 @@ Ext.define('OregonsCatch.controller.ProductMapList', {
 
   onDisclose: function (p1, product, p3, p4) {
     var ctlr = this;
-    var CF = OregonsCatch.util.CrossFilter;
     ctlr.getPML_List().select(product);
     OregonsCatch.util.Back.push();
     ctlr.getApplication().getController('ProductInfo').load(product);
-    var transition = {
-      type: 'slide',
-      direction: 'left'
-    };
+    var transition = { type: 'slide', direction: 'left' };
     Ext.Viewport.animateActiveItem(ctlr.getProductInfoView(), transition);
   },
 

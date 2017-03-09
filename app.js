@@ -85,19 +85,24 @@ Ext.application({
       if (e.target.tagName.toLowerCase() !== 'a') { return; }
       var url = e.target.getAttribute('href');
       e.preventDefault();
-      ga('send', 'event', 'Open Link', url);
+      ga.trackEvent('Open Link', url);
       OregonsCatch.util.Link.openLink(url);
     }, false);
 
     // Finally, bring the user into the app.
     setTimeout(function () {
-      if (typeof navigator.splashscreen !== 'undefined') {
+      try {
+        // Destroy the #appLoadingIndicator element
+        Ext.fly('appLoadingIndicator').destroy();
+        // Splashscreen auto-hide is disabled
         navigator.splashscreen.hide();
-        ga('create', 'UA-92979122-1', 'auto');
-        ga('set', 'appName', 'whats-fresh-mobile');
-        ga('set', 'appId', 'edu.oregonstate.cass.OregonsCatch');
-        // ga('set', 'appVersion', '0.0.0');
+        // Google Analytics: What's Fresh Beta
+        ga.startTrackerWithId('UA-92638695-1');
+        // Send initial load event
         _this.getController('Home').load();
+      } catch (err) {
+        console.error(err);
+        _this.getController('Error').goto();
       }
     }, 2000);
   }

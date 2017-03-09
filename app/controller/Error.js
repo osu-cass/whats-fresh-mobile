@@ -21,6 +21,8 @@ Ext.define('OregonsCatch.controller.Error', {
           return true;
         }
       }
+      if (typeof google === 'undefined') { return true; }
+      if (typeof ga === 'undefined') { return true; }
     }
 
     function isShowingError () {
@@ -31,13 +33,7 @@ Ext.define('OregonsCatch.controller.Error', {
       Ext.getStore(storeName)
       .addListener('load', function (store, records, successful, operation, eOpts) {
         goods[storeName] = successful;
-        if (!window.google || hasErrors() && !isShowingError()) {
-          console.log('Displaying error screen.');
-					// null values prevent the util from trying to load data
-          OregonsCatch.util.Back.push(null, null);
-          Ext.Viewport.animateActiveItem(ctlr.getErrorView(), {type: 'fade'});
-          ga('send', 'screenview', { 'screenName': 'Error' });
-        }
+        if (hasErrors() && !isShowingError()) ctlr.goto();
       });
     }
 
@@ -47,6 +43,15 @@ Ext.define('OregonsCatch.controller.Error', {
     handleErrors('Products');
     handleErrors('Vendors');
     handleErrors('Stories');
+  },
+
+  goto: function () {
+    const _this = this;
+    console.log('Displaying error screen.');
+    OregonsCatch.util.Back.push(null, null); // null values prevent the util from trying to load data
+    Ext.Viewport.animateActiveItem(_this.getErrorView(), {type: 'fade'});
+    ga.trackView('Error');
+    ga.trackException('Load Error', true);
   }
 
 });

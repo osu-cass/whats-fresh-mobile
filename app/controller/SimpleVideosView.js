@@ -17,7 +17,10 @@ Ext.define('OregonsCatch.controller.SimpleVideosView', {
   },
 
   load: function (videos) {
-    var ctlr = this, image, panel, i = 0;
+    var ctlr = this;
+    var image;
+    var panel;
+    var i = 0;
     var Link = OregonsCatch.util.Link;
     ctlr.getVideosPanel().removeAll();
 
@@ -49,7 +52,7 @@ Ext.define('OregonsCatch.controller.SimpleVideosView', {
       ctlr.getVideosPanel().add(panel);
     }
 
-    ga('send', 'screenview', { 'screenName': 'SimpleImagesView' });
+    ga.trackView('SimplevideosView');
   },
 
   onBack: function () { OregonsCatch.util.Back.pop(); },

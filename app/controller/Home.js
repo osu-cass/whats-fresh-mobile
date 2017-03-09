@@ -69,7 +69,7 @@ Ext.define('OregonsCatch.controller.Home', {
 
   /** Called only by Back.js when returning to Home from another screen. */
   load: function () {
-    ga('send', 'screenview', { 'screenName': 'Home' });
+    ga.trackView('Home');
   },
 
   onSeafoodSelect: function () {
@@ -106,14 +106,14 @@ Ext.define('OregonsCatch.controller.Home', {
           ctlr.getLocationError().hide();
           ctlr.onAnySearchChange();
           calledBack = true;
-          ga('send', 'event', 'Location', 'enable');
+          ga.trackEvent('Location', 'Enable');
         },
         failure: function (PositionError) {
           console.log('PositionError: ' + PositionError);
           ctlr.getLocationToggle().setValue(0);
           ctlr.getLocationError().show();
           calledBack = true;
-          ga('send', 'event', 'Location', 'error');
+          ga.trackEvent('Location', 'Failure');
         }
       });
 
@@ -122,14 +122,14 @@ Ext.define('OregonsCatch.controller.Home', {
           console.error('Geo never called back.');
           ctlr.getLocationToggle().setValue(0);
           ctlr.getLocationError().show();
-          ga('send', 'event', 'Location', 'timeout');
+          ga.trackEvent('Location', 'Timeout');
         }
-      }, 9000);
+      }, 6000);
     } else {
       // toggle off == stop geolocation and clear position
       OregonsCatch.util.CrossFilter.parameters.position = null;
       ctlr.onAnySearchChange();
-      ga('send', 'event', 'Location', 'disable');
+      ga.trackEvent('Location', 'Disable');
     }
   },
 

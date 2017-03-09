@@ -16,7 +16,9 @@ Ext.define('OregonsCatch.controller.SimpleImagesView', {
   },
 
   load: function (images) {
-    var ctlr = this, image = null, i = 0;
+    var ctlr = this;
+    var image = null;
+    var i = 0;
     ctlr.getImagesPanel().removeAll();
     for (i = 0; i < images.length; i++) {
       image = Ext.create('Ext.Img', {
@@ -27,7 +29,8 @@ Ext.define('OregonsCatch.controller.SimpleImagesView', {
       });
       ctlr.getImagesPanel().add(image);
     }
-    ga('send', 'screenview', { 'screenName': 'SimpleImagesView' });
+
+    ga.trackView('SimpleImagesView');
   },
 
   onBack: function () { OregonsCatch.util.Back.pop(); },
