@@ -61,13 +61,13 @@ Ext.define('OregonsCatch.controller.ProductInfo', {
   },
 
   launch: function () {
-    var ctlr = this;
-    var CF = OregonsCatch.util.CrossFilter;
+    // Nothing to do but wait for load call
   },
 
   onBack: function () {
     OregonsCatch.util.Back.pop();
   },
+
   onHome: function () {
     OregonsCatch.util.Back.clear();
   },
@@ -105,14 +105,16 @@ Ext.define('OregonsCatch.controller.ProductInfo', {
       ctlr.getStory().hide();
       ctlr.getStory().setHidden(true);
     }
+
+    ga.trackView('ProductInfo: ' + product.get('name'));
   },
 
   loadStory: function () {
     var ctlr = this;
-    var CF = OregonsCatch.util.CrossFilter;
+    // var CF = OregonsCatch.util.CrossFilter;
     var url = OregonsCatch.util.API.url;
     var Stories = Ext.getStore('Stories');
-    var proxy = Stories.getProxy();
+    // var proxy = Stories.getProxy();
     Stories.setProxy({
       type: 'ajax',
       url: url + '/1/stories/' + ctlr._product.get('story'),

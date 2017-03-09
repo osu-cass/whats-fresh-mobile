@@ -1,43 +1,42 @@
 {
-    /**
-     * The application's namespace, used by Sencha Command to generate classes
-     */
     "name": "OregonsCatch",
 
-    /**
-     * The file path to this application's front HTML document, relative to this app.json file
-     */
     "indexHtmlPath": "index.html",
 
-    /**
-     * The absolute URL to this application in development environment, i.e: the URL to run this application
-     * on your web browser during development, e.g: "http://localhost/myapp/index.html".
-     *
-     * This value is needed when build to resolve your application's dependencies if it requires server-side resources
-     * that are not accessible via file system protocol.
-     */
+    "framework": "touch",
+
     "url": null,
 
-    /**
-     * List of all JavaScript assets in the right execution order.
-     * Each item is an object with the following format:
-     *      {
-     *          "path": "path/to/script.js" // Path to file, if local file it must be relative to this app.json file
-     *          "remote": true              // (Optional)
-     *                                      // - Defaults to undefined (falsey) to signal a local file which will be copied
-     *                                      // - Specify true if this file is a remote file which will not to be copied
-     *          "update": "delta"           // (Optional)
-     *                                      //  - If not specified, this file will only be loaded once, and
-     *                                      //    cached inside localStorage until this value is changed.
-     *                                      //  - "delta" to enable over-the-air delta update for this file
-     *                                      //  - "full" means full update will be made when this file changes
-     *          "x-bootstrap": true         // (Optional)
-     *                                      // Indicates a development mode only dependency.
-     *                                      // These files will not be copied into the build directory or referenced
-     *                                      // in the generate app.json manifest for the micro loader.
-     *
-     *      }
-     */
+    "phonegap": {
+        "config": {
+            "name": "${app.name}",
+            "id": "edu.oregonstate.cass.${app.name}",
+            "verbose": true,
+            "path": "${app.dir}/phonegap"
+        }
+    },
+
+    "builds": {
+      "android": {
+          "packager": "phonegap",
+          "phonegap" : {
+              "config": {
+                  "platform": "android"
+              }
+          }
+      },
+
+      "ios": {
+          "packager": "phonegap",
+          "phonegap" : {
+              "config": {
+                  "platform": "ios"
+              }
+          }
+      }
+
+    },
+
     "js": [
         {
             "path": "touch/sencha-touch.js",
@@ -48,12 +47,12 @@
             "x-bootstrap": true
         },
         {
-            "path": "https://maps.googleapis.com/maps/api/js",
+            "path": "https://maps.googleapis.com/maps/api/js?key=AIzaSyA7nQlijpeKNz6sEl9wBPwGrEqHHf8Mt4c",
             "remote": true
         },
         {
             "path": "app.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
+            "bundle": true,
             "update": "delta"
         }
     ],
@@ -108,38 +107,8 @@
      */
     "resources": [
         "resources/images",
-        "resources/icons",
         "resources/startup"
     ],
-
-    "builds": {
-
-        "web": {
-        	"default": true
-        },
-
-        "android": {
-            "packager": "phonegap",
-            "phonegap" : {
-                "config": {
-                    "platform": "android",
-                    "id": "edu.oregonstate.cass.OregonsCatch",
-                    "name": "OregonsCatch"
-                }
-            }
-        },
-
-        "ios": {
-            "packager": "phonegap",
-            "phonegap" : {
-                "config": {
-                    "platform": "ios",
-                    "id": "edu.oregonstate.cass.OregonsCatch",
-                    "name": "OregonsCatch"
-                }
-            }
-        }
-    },
 
     /**
      * File / directory name matchers to ignore when copying to the builds, must be valid regular expressions

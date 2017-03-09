@@ -16,7 +16,7 @@
       "cbdf9712e9b5d37cecb4d0530ba1fccd0ed004a3": "eJytkUEOwjAMBO+8YkXv/QF/4MAHAnGpRbArxy3i97gFQbk3t6ycmbXS4LDl2TU49VzRcSEMphNnqkgCncgsLhiUxdGpIVOXxuKYknE6l5iLhIUyWBCgeJ7Hi7NK+xmtbWQDmTPVNkRUF8knQTKCSnmC74OaB+jRk+A8csks10DOWu8J+x97D5KJTeVO4u2uianjD7lq5N+9PN1mL6uxP5fN3o5Vuwh87hO0pVHRlAMz+//cy7sa2o2/4QV6LJW9"
     },
     "sencha.cfg.tpl.merge": {
-      "1c8816ae68410194920503d7ebb08a9cbfde5e97": "eJxtUDEOwjAM3PsKSzCi0o2pCw/gBSwmdWmgbSLbFaqq/h2nqIWBJTndXey7YIx5jx2VUzrnLEMjajb8Cvwspw1evrJrUSSiNuX+OhTF6ZzIyvN8TOAhhz90lu1AGy8QOURiHUEiOV97EkBwoesQhCIyKlXQelEINaQlYmqv6Hvf320Ik4SBnT3TYEoc060NwW3wbQW2j5wGHpekqzlfBpWf+IsxBVvjp3rWx2ybNB9/Oiw/8wYVQWpA"
+      "44881c454b83bede915fb06fde85969d8e7fc37a": "eJxtTzEOwjAM3PsKSzCi0o2pC+9gMalLDW0S2a5Qhfp3kqAiBhbbujvbdxhj7XGi9pXrWlWYADeiakQb2v1lbprTOYMdy3rMw10Pf+Cq2oENrBAlRBJbQCM57pkUEFyYJgSliIJGHYysBqGH/EQT6w3Zs7+lI0IaZnFpzUJi4pK7DQTXmccO0j9yFmQpTjdxXQ61H/tFmI1t9p9BHilPkn2p9fiToUR/AxN4Xms\u003d"
     },
     "testing.properties.merge": {
       "360e715956c81757e53736789fe20be045acb544": "eJytkMENwjAMRe+d4oveuwE7cGCBoLjUItiVY4q6PW6pKAM0t1g/732nxfnI07S4DlzRcyGMphNnqkgCncgsLhiVxdGrIVOfXsUxJeN0K5GLCQtlsCBATtVZ7t2Wq13wRjJnql1YqK6GbYJkBJUyg5+jmgflPZDg9uKSgxK8xekD4bSBTyCZ2FSeJN41bUQuO++vi/828vRYpKzGPq87fQV/1WLgS5mgrXWKphyYRb6L10c1nAf//gdqIpHi"
@@ -48,6 +48,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -68,6 +69,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -88,6 +90,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -108,6 +111,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -128,6 +132,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -140,7 +145,7 @@
     },
     ".sencha/app/sencha.cfg": {
       "source": "sencha.cfg.tpl.merge",
-      "version": "1c8816ae68410194920503d7ebb08a9cbfde5e97",
+      "version": "44881c454b83bede915fb06fde85969d8e7fc37a",
       "parameters": {
         "appControllers": "",
         "appModels": "",
@@ -148,6 +153,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -168,6 +174,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -188,6 +195,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -248,6 +256,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
@@ -268,6 +277,7 @@
         "appStores": "",
         "appViews": "",
         "controllerNamespace": "OregonsCatch.controller",
+        "frameworkKey": "touch",
         "frameworkName": "touch",
         "frameworkPath": "touch",
         "library": "core",
