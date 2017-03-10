@@ -8,9 +8,10 @@ resources/sass/.sass-cache/
 resources/css/
 bootstrap.js
 bootstrap.json
-phonegap/*
-!phonegap/config.xml
-!phonegap/icon.png
+phonegap/platforms
+phonegap/plugins
+phonegap/res
+phonegap/www
 
 ### temp and log Files ###
 **/*.temp*

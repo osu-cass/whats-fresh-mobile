@@ -25,6 +25,7 @@
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
     <preference name="Orientation" value="portrait" />
     <platform name="ios">
+        <hook src="hooks/cordova-icon.sh" type="after_prepare" />
         <preference name="BackupWebStorage" value="local" />
         <preference name="TopActivityIndicator" value="black" />
         <preference name="target-device" value="universal" />
@@ -44,6 +45,8 @@
         <splash height="1242" src="../resources/startup/ios/iphone6plus_lan.png" width="2208" />
     </platform>
     <platform name="android">
+        <hook src="hooks/cordova-icon.sh" type="after_prepare" />
+        <hook src="hooks/android-copy-res.sh" type="after_prepare" />
         <preference name="android-minSdkVersion" value="14" />
         <preference name="android-installLocation" value="auto" />
         <splash density="port-ldpi" src="../resources/startup/android/LDPI_por.9.png" />
