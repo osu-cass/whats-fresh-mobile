@@ -97,7 +97,7 @@ Ext.application({
         // Splashscreen auto-hide is disabled
         navigator.splashscreen.hide();
         // Google Analytics: What's Fresh Beta
-        ga.startTrackerWithId('UA-92638695-1');
+        ga.startTrackerWithId('UA-92638695-2');
         // Send initial load event
         _this.getController('Home').load();
       } catch (err) {
